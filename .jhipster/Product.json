@@ -1,0 +1,71 @@
+{
+  "name": "Product",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "photoId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "stock",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modelName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "color",
+      "fieldType": "Color",
+      "fieldValues": "PURPLE,BLUE,GREEN,YELLOW,ORANGE,RED"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "subFamily",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "subFamily"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "brand",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "brand"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "tag",
+      "otherEntityRelationshipName": "products",
+      "relationshipName": "tags",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "order",
+      "otherEntityRelationshipName": "products",
+      "relationshipName": "order",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "product",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211125140129"
+}

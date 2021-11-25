@@ -1,0 +1,30 @@
+{
+  "jHipsterExerciseApp": {
+    "order": {
+      "home": {
+        "title": "Orders",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Order",
+        "createOrEditLabel": "Créer ou éditer un Order",
+        "notFound": "Aucun Order trouvé"
+      },
+      "created": "Un nouveau Order a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Order avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Order avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Order {{ id }} ?"
+      },
+      "detail": {
+        "title": "Order"
+      },
+      "id": "ID",
+      "sum": "Sum",
+      "deliveyAdress": "Delivey Adress",
+      "deliveryDateTime": "Delivery Date Time",
+      "quantity": "Quantity",
+      "billingMethod": "Billing Method",
+      "products": "Products",
+      "client": "Client"
+    }
+  }
+}

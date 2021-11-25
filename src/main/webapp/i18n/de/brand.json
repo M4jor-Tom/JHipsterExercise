@@ -1,0 +1,24 @@
+{
+  "jHipsterExerciseApp": {
+    "brand": {
+      "home": {
+        "title": "Brands",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Brand erstellen",
+        "createOrEditLabel": "Brand erstellen oder bearbeiten",
+        "notFound": "Keine Brands gefunden"
+      },
+      "created": "Brand erstellt mit ID {{ param }}",
+      "updated": "Brand aktualisiert mit ID {{ param }}",
+      "deleted": "Brand gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Brand {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Brand"
+      },
+      "id": "ID",
+      "name": "Name"
+    }
+  }
+}

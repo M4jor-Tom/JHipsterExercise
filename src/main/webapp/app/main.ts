@@ -28,6 +28,14 @@ import TranslationService from '@/locale/translation.service';
 import UserOAuth2Service from '@/entities/user/user.oauth2.service';
 /* tslint:disable */
 
+import ClientService from '@/entities/client/client.service';
+import OrderService from '@/entities/order/order.service';
+import ConnectionService from '@/entities/connection/connection.service';
+import ProductService from '@/entities/product/product.service';
+import TagService from '@/entities/tag/tag.service';
+import BrandService from '@/entities/brand/brand.service';
+import FamilyService from '@/entities/family/family.service';
+import SubFamilyService from '@/entities/sub-family/sub-family.service';
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
 /* tslint:enable */
@@ -86,6 +94,14 @@ new Vue({
 
     userOAuth2Service: () => new UserOAuth2Service(),
     translationService: () => translationService,
+    clientService: () => new ClientService(),
+    orderService: () => new OrderService(),
+    connectionService: () => new ConnectionService(),
+    productService: () => new ProductService(),
+    tagService: () => new TagService(),
+    brandService: () => new BrandService(),
+    familyService: () => new FamilyService(),
+    subFamilyService: () => new SubFamilyService(),
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
     accountService: () => accountService,
     alertService: () => new AlertService(),

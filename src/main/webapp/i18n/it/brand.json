@@ -1,0 +1,24 @@
+{
+  "jHipsterExerciseApp": {
+    "brand": {
+      "home": {
+        "title": "Brands",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Brand",
+        "createOrEditLabel": "Genera o modifica un Brand",
+        "notFound": "No Brands found"
+      },
+      "created": "&Egrave; stato generato un nuovo Brand con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Brand identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Brand con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Brand {{ id }}?"
+      },
+      "detail": {
+        "title": "Brand"
+      },
+      "id": "ID",
+      "name": "Name"
+    }
+  }
+}
