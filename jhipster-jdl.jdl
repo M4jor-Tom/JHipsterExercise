@@ -15,7 +15,13 @@ entity Client {
 entity Order {
 	sum Double,
     deliveyAdress String,
-    deliveryDateTime ZonedDateTime
+    deliveryDateTime ZonedDateTime,
+    billingMethod BillingMethod
+}
+
+enum BillingMethod {
+	PAYPAL,
+    CREDIT_CARD
 }
 
 // Table contenant les informations de connexions
