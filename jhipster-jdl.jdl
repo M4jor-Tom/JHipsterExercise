@@ -72,8 +72,8 @@ relationship ManyToOne {
 	Model{brand} to Brand
 }
 
-relationship OneToMany {
-    Order{products} to Product
+relationship ManyToMany {
+    Order{products} to Product{order}
 }
 
 relationship OneToMany {
@@ -85,9 +85,5 @@ relationship OneToOne {
 }
 
 relationship ManyToOne {
-	Model{famille} to Family
-}
-
-relationship ManyToMany {
-	Commande{produit} to Produit{commande}
+	Model{family} to Family
 }
