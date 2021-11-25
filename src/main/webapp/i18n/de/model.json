@@ -1,0 +1,26 @@
+{
+  "jHipsterExerciseApp": {
+    "model": {
+      "home": {
+        "title": "Models",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Model erstellen",
+        "createOrEditLabel": "Model erstellen oder bearbeiten",
+        "notFound": "Keine Models gefunden"
+      },
+      "created": "Model erstellt mit ID {{ param }}",
+      "updated": "Model aktualisiert mit ID {{ param }}",
+      "deleted": "Model gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Model {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Model"
+      },
+      "id": "ID",
+      "name": "Name",
+      "brand": "Brand",
+      "family": "Family"
+    }
+  }
+}

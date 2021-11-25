@@ -1,0 +1,24 @@
+{
+  "jHipsterExerciseApp": {
+    "family": {
+      "home": {
+        "title": "Families",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Family erstellen",
+        "createOrEditLabel": "Family erstellen oder bearbeiten",
+        "notFound": "Keine Families gefunden"
+      },
+      "created": "Family erstellt mit ID {{ param }}",
+      "updated": "Family aktualisiert mit ID {{ param }}",
+      "deleted": "Family gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Family {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Family"
+      },
+      "id": "ID",
+      "name": "Name"
+    }
+  }
+}
