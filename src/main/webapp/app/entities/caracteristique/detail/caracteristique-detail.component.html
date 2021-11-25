@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="caracteristique">
+      <h2 data-cy="caracteristiqueDetailsHeading">
+        <span jhiTranslate="jHipsterExerciseApp.caracteristique.detail.title">Caracteristique</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ caracteristique.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.caracteristique.iDCaracteristique">I D Caracteristique</span></dt>
+        <dd>
+          <span>{{ caracteristique.iDCaracteristique }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.caracteristique.marque">Marque</span></dt>
+        <dd>
+          <span>{{ caracteristique.marque }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.caracteristique.modele">Modele</span></dt>
+        <dd>
+          <span>{{ caracteristique.modele }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.caracteristique.taille">Taille</span></dt>
+        <dd>
+          <span>{{ caracteristique.taille }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.caracteristique.couleur">Couleur</span></dt>
+        <dd>
+          <span>{{ caracteristique.couleur }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/caracteristique', caracteristique.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

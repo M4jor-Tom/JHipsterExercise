@@ -1,0 +1,82 @@
+<div>
+  <h2 id="page-heading" data-cy="ConnexionHeading">
+    <span jhiTranslate="jHipsterExerciseApp.connexion.home.title">Connexions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="jHipsterExerciseApp.connexion.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-connexion"
+        [routerLink]="['/connexion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="jHipsterExerciseApp.connexion.home.createLabel"> Create a new Connexion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="connexions?.length === 0">
+    <span jhiTranslate="jHipsterExerciseApp.connexion.home.notFound">No connexions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="connexions && connexions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.connexion.iDConnexion">I D Connexion</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.connexion.username">Username</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.connexion.password">Password</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let connexion of connexions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/connexion', connexion.id, 'view']">{{ connexion.id }}</a>
+          </td>
+          <td>{{ connexion.iDConnexion }}</td>
+          <td>{{ connexion.username }}</td>
+          <td>{{ connexion.password }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/connexion', connexion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/connexion', connexion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(connexion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

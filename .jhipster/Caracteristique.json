@@ -1,0 +1,44 @@
+{
+  "name": "Caracteristique",
+  "fields": [
+    {
+      "fieldName": "iDCaracteristique",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "marque",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modele",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "taille",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "couleur",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "produit",
+      "otherEntityRelationshipName": "caracteristique",
+      "relationshipName": "produit",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "caracteristique",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211125083707"
+}

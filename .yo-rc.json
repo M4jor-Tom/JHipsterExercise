@@ -43,7 +43,23 @@
     "clientThemeVariant": "",
     "languages": ["en"],
     "enableGradleEnterprise": false,
-    "entities": ["Region", "Country", "Location", "Department", "Task", "Employee", "Job", "JobHistory"],
-    "lastLiquibaseTimestamp": 1636099940000
+    "entities": [
+      "Region",
+      "Country",
+      "Location",
+      "Department",
+      "Task",
+      "Employee",
+      "Job",
+      "JobHistory",
+      "Client",
+      "Commande",
+      "Connexion",
+      "Produit",
+      "Caracteristique",
+      "Famille",
+      "SousFamille"
+    ],
+    "lastLiquibaseTimestamp": 1637829429000
   }
 }

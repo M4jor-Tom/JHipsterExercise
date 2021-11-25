@@ -1,0 +1,66 @@
+{
+  "name": "Client",
+  "fields": [
+    {
+      "fieldName": "iDClient",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dateAjout",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephone",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "adresse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pays",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "codePostale",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "connexion",
+      "otherEntityRelationshipName": "client",
+      "relationshipName": "connexion",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "commande",
+      "otherEntityRelationshipName": "client",
+      "relationshipName": "commande"
+    }
+  ],
+  "entityTableName": "client",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211125083703"
+}

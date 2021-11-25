@@ -1,0 +1,80 @@
+<div>
+  <h2 id="page-heading" data-cy="SousFamilleHeading">
+    <span jhiTranslate="jHipsterExerciseApp.sousFamille.home.title">Sous Familles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="jHipsterExerciseApp.sousFamille.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-sous-famille"
+        [routerLink]="['/sous-famille/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="jHipsterExerciseApp.sousFamille.home.createLabel"> Create a new Sous Famille </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="sousFamilles?.length === 0">
+    <span jhiTranslate="jHipsterExerciseApp.sousFamille.home.notFound">No sousFamilles found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="sousFamilles && sousFamilles.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.sousFamille.iDSousFamille">I D Sous Famille</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.sousFamille.sousFamille">Sous Famille</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sousFamille of sousFamilles; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/sous-famille', sousFamille.id, 'view']">{{ sousFamille.id }}</a>
+          </td>
+          <td>{{ sousFamille.iDSousFamille }}</td>
+          <td>{{ sousFamille.sousFamille }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/sous-famille', sousFamille.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/sous-famille', sousFamille.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(sousFamille)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

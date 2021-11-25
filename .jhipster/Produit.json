@@ -1,0 +1,66 @@
+{
+  "name": "Produit",
+  "fields": [
+    {
+      "fieldName": "iDProduit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "stock",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "tags",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "tarif",
+      "fieldType": "Float"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "caracteristique",
+      "otherEntityRelationshipName": "produit",
+      "relationshipName": "caracteristique",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "famille",
+      "otherEntityRelationshipName": "produit",
+      "relationshipName": "famille",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "commande",
+      "otherEntityRelationshipName": "produit",
+      "relationshipName": "commande",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "produit",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211125083706"
+}

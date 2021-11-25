@@ -1,0 +1,111 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-client-heading" data-cy="ClientCreateUpdateHeading" jhiTranslate="jHipsterExerciseApp.client.home.createOrEditLabel">
+        Create or edit a Client
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.iDClient" for="field_iDClient">I D Client</label>
+          <input type="number" class="form-control" name="iDClient" id="field_iDClient" data-cy="iDClient" formControlName="iDClient" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.dateAjout" for="field_dateAjout">Date Ajout</label>
+          <div class="d-flex">
+            <input
+              id="field_dateAjout"
+              data-cy="dateAjout"
+              type="datetime-local"
+              class="form-control"
+              name="dateAjout"
+              formControlName="dateAjout"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.nom" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.prenom" for="field_prenom">Prenom</label>
+          <input type="text" class="form-control" name="prenom" id="field_prenom" data-cy="prenom" formControlName="prenom" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.telephone" for="field_telephone">Telephone</label>
+          <input type="number" class="form-control" name="telephone" id="field_telephone" data-cy="telephone" formControlName="telephone" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.adresse" for="field_adresse">Adresse</label>
+          <input type="text" class="form-control" name="adresse" id="field_adresse" data-cy="adresse" formControlName="adresse" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.pays" for="field_pays">Pays</label>
+          <input type="text" class="form-control" name="pays" id="field_pays" data-cy="pays" formControlName="pays" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.codePostale" for="field_codePostale"
+            >Code Postale</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="codePostale"
+            id="field_codePostale"
+            data-cy="codePostale"
+            formControlName="codePostale"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.client.connexion" for="field_connexion">Connexion</label>
+          <select class="form-control" id="field_connexion" data-cy="connexion" name="connexion" formControlName="connexion">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="connexionOption.id === editForm.get('connexion')!.value?.id ? editForm.get('connexion')!.value : connexionOption"
+              *ngFor="let connexionOption of connexionsCollection; trackBy: trackConnexionById"
+            >
+              {{ connexionOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

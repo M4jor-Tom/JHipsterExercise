@@ -1,115 +1,83 @@
+// Ensemble des tables et de leurs arguments
 
-entity Region {
-	regionName String
+// Table contenant toutes les infos client
+entity Client {
+	IDClient Integer,
+    DateAjout ZonedDateTime,
+    Nom String,
+    Prenom String,
+    Email String,
+    Telephone Integer,
+    Adresse String,
+    Pays String,
+    CodePostale Integer
+}
+// Table contenant le détail de la commande
+entity Commande {
+	IDCommande Integer,
+    ListeProduit Integer,
+    Somme Float, //bonjour
+    AddresseLivraison String,
+    ModePaiement Integer,
+    DateLivraison ZonedDateTime
 }
 
-entity Country {
-	countryName String
+// Table contenant les informations de connexions
+entity Connexion {
+	IDConnexion Integer,
+    Username String,
+    Password String
 }
 
-// an ignored comment
-/** not an ignored comment */
-entity Location {
-	streetAddress String,
-	postalCode String,
-	city String,
-	stateProvince String
+// Table contenant les infos générales d'un Produit
+entity Produit {
+	IDProduit Integer,
+    Nom String,
+    Description String,
+    Photo Integer,
+    Stock Integer,
+    Tags String,
+    Tarif Float
 }
-
-entity Department {
-	departmentName String required
+// Table contenant les caractéristiques Produits
+entity Caracteristique {
+	IDCaracteristique Integer,
+    Marque String,
+    Modele String,
+    Taille String,
+    Couleur String
 }
-
-/**
- * Task entity.
- * @author The JHipster team.
- */
-entity Task {
-	title String,
-	description String
+// Table contenant les informations d'une famille de produits
+entity Famille {
+	IDFamille Integer,
+    Famille String
 }
-
-/**
- * The Employee entity.
- */
-entity Employee {
-	/**
-	* The firstname attribute.
-	*/
-	firstName String,
-	lastName String,
-	email String,
-	phoneNumber String,
-	hireDate Instant,
-	salary Long,
-	commissionPct Long
+// Table contenant les informations d'une sous-famille de produits
+entity SousFamille {
+	IDSousFamille Integer,
+    SousFamille String
 }
-
-entity Job {
-	jobTitle String,
-	minSalary Long,
-	maxSalary Long
-}
-
-entity JobHistory {
-	startDate Instant,
-	endDate Instant,
-	language Language
-}
-
-enum Language {
-    FRENCH, ENGLISH, SPANISH
-}
-
-relationship OneToOne {
-	Country{region} to Region
+// Relation entre les différentes tables
+relationship OneToMany {
+  Client{commande} to Commande
 }
 
 relationship OneToOne {
-	Location{country} to Country
+  Client{connexion} to Connexion
 }
 
 relationship OneToOne {
-	Department{location} to Location
+	Produit to Caracteristique
+}
+
+relationship OneToOne {
+	Produit{famille} to Famille
+}
+
+relationship OneToOne {
+	Famille to SousFamille
 }
 
 relationship ManyToMany {
-	Job{task(title)} to Task{job}
+	Commande{produit} to Produit{commande}
 }
-
-// defining multiple OneToMany relationships with comments
-relationship OneToMany {
-	Employee to Job{employee},
-	/**
-	* A relationship
-	*/
-	Department to
-	/**
-	* Another side of the same relationship
-	*/
-	Employee{department}
-}
-
-relationship ManyToOne {
-	Employee{manager} to Employee
-}
-
-// defining multiple oneToOne relationships
-relationship OneToOne {
-	JobHistory{job} to Job,
-	JobHistory{department} to Department,
-	JobHistory{employee} to Employee
-}
-
-// Set pagination options
-paginate JobHistory, Employee with infinite-scroll
-paginate Job with pagination
-
-// Use Data Transfer Objects (DTO)
-// dto * with mapstruct
-
-// Set service options to all except few
-service all with serviceImpl except Employee, Job
-
-// Set an angular suffix
-// angularSuffix * with mySuffix
