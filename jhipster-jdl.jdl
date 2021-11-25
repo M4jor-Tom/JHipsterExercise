@@ -1,0 +1,96 @@
+// Ensemble des tables et de leurs arguments
+
+// Table contenant toutes les infos client
+entity Client {
+    addedDateTime ZonedDateTime required,
+    lastName String required,
+    firstName String required,
+    email String,
+    phone String,
+    adress String,
+    country String required,
+    postalCode String required
+}
+// Table contenant le détail de la commande
+entity Order {
+	sum Double,
+    deliveyAdress String required,
+    deliveryDateTime ZonedDateTime required,
+    quantity Long required,
+    billingMethod BillingMethod required
+}
+
+enum BillingMethod {
+	PAYPAL,
+    CREDIT_CARD
+}
+
+// Table contenant les informations de connexions
+entity Connection {
+    username String required,
+    password String required
+}
+
+// Table contenant les infos générales d'un Produit
+entity Product {
+    description String,
+    photoId Long,
+    stock Long required,
+    price Double required,
+    modelName String required,
+    color Color
+}
+
+entity Tag {
+	name String required
+}
+
+enum Color {
+	PURPLE,
+    BLUE,
+    GREEN,
+    YELLOW,
+	ORANGE,
+    RED
+}
+
+entity Brand {
+	name String required
+}
+
+// Table contenant les informations d'une famille de produits
+entity Family {
+    name String required
+}
+
+entity SubFamily {
+	name String required
+}
+
+relationship ManyToMany {
+	Product{tags} to Tag{products}
+}
+
+relationship ManyToOne {
+	Product{subFamily} to SubFamily
+}
+
+relationship ManyToOne {
+	SubFamily{family} to Family
+}
+
+relationship ManyToOne {
+	Product{brand} to Brand
+}
+
+relationship ManyToMany {
+    Order{products} to Product{order}
+}
+
+relationship OneToMany {
+	Client{order} to Order
+}
+
+relationship OneToOne {
+	Client{connection} to Connection
+}
