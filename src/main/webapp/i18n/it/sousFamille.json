@@ -1,0 +1,26 @@
+{
+  "jHipsterExerciseApp": {
+    "sousFamille": {
+      "home": {
+        "title": "SousFamilles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Sous Famille",
+        "createOrEditLabel": "Genera o modifica un Sous Famille",
+        "notFound": "No Sous Familles found"
+      },
+      "created": "&Egrave; stato generato un nuovo Sous Famille con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Sous Famille identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Sous Famille con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Sous Famille {{ id }}?"
+      },
+      "detail": {
+        "title": "Sous Famille"
+      },
+      "id": "ID",
+      "iDSousFamille": "I D Sous Famille",
+      "sousFamille": "Sous Famille",
+      "famille": "Famille"
+    }
+  }
+}

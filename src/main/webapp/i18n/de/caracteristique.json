@@ -1,0 +1,29 @@
+{
+  "jHipsterExerciseApp": {
+    "caracteristique": {
+      "home": {
+        "title": "Caracteristiques",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Caracteristique erstellen",
+        "createOrEditLabel": "Caracteristique erstellen oder bearbeiten",
+        "notFound": "Keine Caracteristiques gefunden"
+      },
+      "created": "Caracteristique erstellt mit ID {{ param }}",
+      "updated": "Caracteristique aktualisiert mit ID {{ param }}",
+      "deleted": "Caracteristique gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Caracteristique {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Caracteristique"
+      },
+      "id": "ID",
+      "iDCaracteristique": "I D Caracteristique",
+      "marque": "Marque",
+      "modele": "Modele",
+      "taille": "Taille",
+      "couleur": "Couleur",
+      "produit": "Produit"
+    }
+  }
+}

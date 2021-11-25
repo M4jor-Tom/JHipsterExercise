@@ -1,0 +1,26 @@
+{
+  "jHipsterExerciseApp": {
+    "sousFamille": {
+      "home": {
+        "title": "Sous Familles",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Sous Famille erstellen",
+        "createOrEditLabel": "Sous Famille erstellen oder bearbeiten",
+        "notFound": "Keine Sous Familles gefunden"
+      },
+      "created": "Sous Famille erstellt mit ID {{ param }}",
+      "updated": "Sous Famille aktualisiert mit ID {{ param }}",
+      "deleted": "Sous Famille gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Sous Famille {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Sous Famille"
+      },
+      "id": "ID",
+      "iDSousFamille": "I D Sous Famille",
+      "sousFamille": "Sous Famille",
+      "famille": "Famille"
+    }
+  }
+}

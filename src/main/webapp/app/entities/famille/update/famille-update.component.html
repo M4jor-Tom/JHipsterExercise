@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-famille-heading" data-cy="FamilleCreateUpdateHeading" jhiTranslate="jHipsterExerciseApp.famille.home.createOrEditLabel">
+        Create or edit a Famille
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.famille.iDFamille" for="field_iDFamille">I D Famille</label>
+          <input type="number" class="form-control" name="iDFamille" id="field_iDFamille" data-cy="iDFamille" formControlName="iDFamille" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.famille.famille" for="field_famille">Famille</label>
+          <input type="text" class="form-control" name="famille" id="field_famille" data-cy="famille" formControlName="famille" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.famille.sousFamille" for="field_sousFamille"
+            >Sous Famille</label
+          >
+          <select class="form-control" id="field_sousFamille" data-cy="sousFamille" name="sousFamille" formControlName="sousFamille">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                sousFamilleOption.id === editForm.get('sousFamille')!.value?.id ? editForm.get('sousFamille')!.value : sousFamilleOption
+              "
+              *ngFor="let sousFamilleOption of sousFamillesCollection; trackBy: trackSousFamilleById"
+            >
+              {{ sousFamilleOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

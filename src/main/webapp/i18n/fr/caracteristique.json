@@ -1,0 +1,29 @@
+{
+  "jHipsterExerciseApp": {
+    "caracteristique": {
+      "home": {
+        "title": "Caracteristiques",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Caracteristique",
+        "createOrEditLabel": "Créer ou éditer un Caracteristique",
+        "notFound": "Aucun Caracteristique trouvé"
+      },
+      "created": "Un nouveau Caracteristique a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Caracteristique avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Caracteristique avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Etes-vous certain de vouloir supprimer le Caracteristique {{ id }} ?"
+      },
+      "detail": {
+        "title": "Caracteristique"
+      },
+      "id": "ID",
+      "iDCaracteristique": "I D Caracteristique",
+      "marque": "Marque",
+      "modele": "Modele",
+      "taille": "Taille",
+      "couleur": "Couleur",
+      "produit": "Produit"
+    }
+  }
+}

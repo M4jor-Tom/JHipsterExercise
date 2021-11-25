@@ -1,0 +1,65 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="commande">
+      <h2 data-cy="commandeDetailsHeading"><span jhiTranslate="jHipsterExerciseApp.commande.detail.title">Commande</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ commande.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.iDCommande">I D Commande</span></dt>
+        <dd>
+          <span>{{ commande.iDCommande }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.listeProduit">Liste Produit</span></dt>
+        <dd>
+          <span>{{ commande.listeProduit }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.somme">Somme</span></dt>
+        <dd>
+          <span>{{ commande.somme }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.addresseLivraison">Addresse Livraison</span></dt>
+        <dd>
+          <span>{{ commande.addresseLivraison }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.modePaiement">Mode Paiement</span></dt>
+        <dd>
+          <span>{{ commande.modePaiement }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.dateLivraison">Date Livraison</span></dt>
+        <dd>
+          <span>{{ commande.dateLivraison | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.produit">Produit</span></dt>
+        <dd>
+          <span *ngFor="let produit of commande.produits; let last = last">
+            <a [routerLink]="['/produit', produit?.id, 'view']">{{ produit.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.commande.client">Client</span></dt>
+        <dd>
+          <div *ngIf="commande.client">
+            <a [routerLink]="['/client', commande.client?.id, 'view']">{{ commande.client?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/commande', commande.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+{
+  "name": "Commande",
+  "fields": [
+    {
+      "fieldName": "iDCommande",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "listeProduit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "somme",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "addresseLivraison",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modePaiement",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "dateLivraison",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "produit",
+      "otherEntityRelationshipName": "commande",
+      "relationshipName": "produit",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "client",
+      "otherEntityRelationshipName": "commande",
+      "relationshipName": "client"
+    }
+  ],
+  "entityTableName": "commande",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211125101924"
+}

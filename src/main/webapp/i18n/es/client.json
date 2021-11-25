@@ -1,0 +1,34 @@
+{
+  "jHipsterExerciseApp": {
+    "client": {
+      "home": {
+        "title": "Clients",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Client",
+        "createOrEditLabel": "Crear o editar Client",
+        "notFound": "Ningún Clients encontrado"
+      },
+      "created": "Un nuevo Client ha sido creado con el identificador {{ param }}",
+      "updated": "Un Client ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Client ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Client {{ id }}?"
+      },
+      "detail": {
+        "title": "Client"
+      },
+      "id": "ID",
+      "iDClient": "I D Client",
+      "dateAjout": "Date Ajout",
+      "nom": "Nom",
+      "prenom": "Prenom",
+      "email": "Email",
+      "telephone": "Telephone",
+      "adresse": "Adresse",
+      "pays": "Pays",
+      "codePostale": "Code Postale",
+      "connexion": "Connexion",
+      "commande": "Commande"
+    }
+  }
+}

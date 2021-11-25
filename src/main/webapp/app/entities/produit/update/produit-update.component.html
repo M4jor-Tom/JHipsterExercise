@@ -1,0 +1,116 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-produit-heading" data-cy="ProduitCreateUpdateHeading" jhiTranslate="jHipsterExerciseApp.produit.home.createOrEditLabel">
+        Create or edit a Produit
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.iDProduit" for="field_iDProduit">I D Produit</label>
+          <input type="number" class="form-control" name="iDProduit" id="field_iDProduit" data-cy="iDProduit" formControlName="iDProduit" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.nom" for="field_nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.description" for="field_description"
+            >Description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.photo" for="field_photo">Photo</label>
+          <input type="number" class="form-control" name="photo" id="field_photo" data-cy="photo" formControlName="photo" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.stock" for="field_stock">Stock</label>
+          <input type="number" class="form-control" name="stock" id="field_stock" data-cy="stock" formControlName="stock" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.tags" for="field_tags">Tags</label>
+          <input type="text" class="form-control" name="tags" id="field_tags" data-cy="tags" formControlName="tags" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.tarif" for="field_tarif">Tarif</label>
+          <input type="number" class="form-control" name="tarif" id="field_tarif" data-cy="tarif" formControlName="tarif" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.caracteristique" for="field_caracteristique"
+            >Caracteristique</label
+          >
+          <select
+            class="form-control"
+            id="field_caracteristique"
+            data-cy="caracteristique"
+            name="caracteristique"
+            formControlName="caracteristique"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                caracteristiqueOption.id === editForm.get('caracteristique')!.value?.id
+                  ? editForm.get('caracteristique')!.value
+                  : caracteristiqueOption
+              "
+              *ngFor="let caracteristiqueOption of caracteristiquesCollection; trackBy: trackCaracteristiqueById"
+            >
+              {{ caracteristiqueOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="jHipsterExerciseApp.produit.famille" for="field_famille">Famille</label>
+          <select class="form-control" id="field_famille" data-cy="famille" name="famille" formControlName="famille">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="familleOption.id === editForm.get('famille')!.value?.id ? editForm.get('famille')!.value : familleOption"
+              *ngFor="let familleOption of famillesCollection; trackBy: trackFamilleById"
+            >
+              {{ familleOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

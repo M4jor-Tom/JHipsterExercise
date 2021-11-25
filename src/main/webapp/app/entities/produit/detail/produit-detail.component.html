@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="produit">
+      <h2 data-cy="produitDetailsHeading"><span jhiTranslate="jHipsterExerciseApp.produit.detail.title">Produit</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ produit.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.iDProduit">I D Produit</span></dt>
+        <dd>
+          <span>{{ produit.iDProduit }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.nom">Nom</span></dt>
+        <dd>
+          <span>{{ produit.nom }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.description">Description</span></dt>
+        <dd>
+          <span>{{ produit.description }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.photo">Photo</span></dt>
+        <dd>
+          <span>{{ produit.photo }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.stock">Stock</span></dt>
+        <dd>
+          <span>{{ produit.stock }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.tags">Tags</span></dt>
+        <dd>
+          <span>{{ produit.tags }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.tarif">Tarif</span></dt>
+        <dd>
+          <span>{{ produit.tarif }}</span>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.caracteristique">Caracteristique</span></dt>
+        <dd>
+          <div *ngIf="produit.caracteristique">
+            <a [routerLink]="['/caracteristique', produit.caracteristique?.id, 'view']">{{ produit.caracteristique?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="jHipsterExerciseApp.produit.famille">Famille</span></dt>
+        <dd>
+          <div *ngIf="produit.famille">
+            <a [routerLink]="['/famille', produit.famille?.id, 'view']">{{ produit.famille?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/produit', produit.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

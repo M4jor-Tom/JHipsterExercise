@@ -1,0 +1,33 @@
+{
+  "jHipsterExerciseApp": {
+    "produit": {
+      "home": {
+        "title": "Produits",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Produit",
+        "createOrEditLabel": "Genera o modifica un Produit",
+        "notFound": "No Produits found"
+      },
+      "created": "&Egrave; stato generato un nuovo Produit con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Produit identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Produit con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Produit {{ id }}?"
+      },
+      "detail": {
+        "title": "Produit"
+      },
+      "id": "ID",
+      "iDProduit": "I D Produit",
+      "nom": "Nom",
+      "description": "Description",
+      "photo": "Photo",
+      "stock": "Stock",
+      "tags": "Tags",
+      "tarif": "Tarif",
+      "caracteristique": "Caracteristique",
+      "famille": "Famille",
+      "commande": "Commande"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+<div>
+  <h2 id="page-heading" data-cy="ClientHeading">
+    <span jhiTranslate="jHipsterExerciseApp.client.home.title">Clients</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="jHipsterExerciseApp.client.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-client"
+        [routerLink]="['/client/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="jHipsterExerciseApp.client.home.createLabel"> Create a new Client </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="clients?.length === 0">
+    <span jhiTranslate="jHipsterExerciseApp.client.home.notFound">No clients found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="clients && clients.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span jhiTranslate="global.field.id">ID</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.iDClient">I D Client</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.dateAjout">Date Ajout</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.nom">Nom</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.prenom">Prenom</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.email">Email</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.telephone">Telephone</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.adresse">Adresse</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.pays">Pays</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.codePostale">Code Postale</span></th>
+          <th scope="col"><span jhiTranslate="jHipsterExerciseApp.client.connexion">Connexion</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/client', client.id, 'view']">{{ client.id }}</a>
+          </td>
+          <td>{{ client.iDClient }}</td>
+          <td>{{ client.dateAjout | formatMediumDatetime }}</td>
+          <td>{{ client.nom }}</td>
+          <td>{{ client.prenom }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.telephone }}</td>
+          <td>{{ client.adresse }}</td>
+          <td>{{ client.pays }}</td>
+          <td>{{ client.codePostale }}</td>
+          <td>
+            <div *ngIf="client.connexion">
+              <a [routerLink]="['/connexion', client.connexion?.id, 'view']">{{ client.connexion?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/client', client.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/client', client.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(client)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "jHipsterExerciseApp": {
+    "famille": {
+      "home": {
+        "title": "Familles",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Famille",
+        "createOrEditLabel": "Crear o editar Famille",
+        "notFound": "Ningún Familles encontrado"
+      },
+      "created": "Un nuevo Famille ha sido creado con el identificador {{ param }}",
+      "updated": "Un Famille ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Famille ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Famille {{ id }}?"
+      },
+      "detail": {
+        "title": "Famille"
+      },
+      "id": "ID",
+      "iDFamille": "I D Famille",
+      "famille": "Famille",
+      "sousFamille": "Sous Famille"
+    }
+  }
+}

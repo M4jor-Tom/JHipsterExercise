@@ -1,0 +1,26 @@
+{
+  "jHipsterExerciseApp": {
+    "connexion": {
+      "home": {
+        "title": "Connexions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Connexion",
+        "createOrEditLabel": "Create or edit a Connexion",
+        "notFound": "No Connexions found"
+      },
+      "created": "A new Connexion is created with identifier {{ param }}",
+      "updated": "A Connexion is updated with identifier {{ param }}",
+      "deleted": "A Connexion is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Connexion {{ id }}?"
+      },
+      "detail": {
+        "title": "Connexion"
+      },
+      "id": "ID",
+      "iDConnexion": "I D Connexion",
+      "username": "Username",
+      "password": "Password"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "SousFamille",
+  "fields": [
+    {
+      "fieldName": "iDSousFamille",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "sousFamille",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "famille",
+      "otherEntityRelationshipName": "sousFamille",
+      "relationshipName": "famille",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "sous_famille",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20211125101929"
+}
