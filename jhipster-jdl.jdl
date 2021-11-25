@@ -1,0 +1,83 @@
+// Ensemble des tables et de leurs arguments
+
+// Table contenant toutes les infos client
+entity Client {
+	IDClient Integer,
+    DateAjout ZonedDateTime,
+    Nom String,
+    Prenom String,
+    Email String,
+    Telephone Integer,
+    Adresse String,
+    Pays String,
+    CodePostale Integer
+}
+// Table contenant le détail de la commande
+entity Commande {
+	IDCommande Integer,
+    ListeProduit Integer,
+    Somme Float, //bonjour
+    AddresseLivraison String,
+    ModePaiement Integer,
+    DateLivraison ZonedDateTime
+}
+
+// Table contenant les informations de connexions
+entity Connexion {
+	IDConnexion Integer,
+    Username String,
+    Password String
+}
+
+// Table contenant les infos générales d'un Produit
+entity Produit {
+	IDProduit Integer,
+    Nom String,
+    Description String,
+    Photo Integer,
+    Stock Integer,
+    Tags String,
+    Tarif Float
+}
+// Table contenant les caractéristiques Produits
+entity Caracteristique {
+	IDCaracteristique Integer,
+    Marque String,
+    Modele String,
+    Taille String,
+    Couleur String
+}
+// Table contenant les informations d'une famille de produits
+entity Famille {
+	IDFamille Integer,
+    Famille String
+}
+// Table contenant les informations d'une sous-famille de produits
+entity SousFamille {
+	IDSousFamille Integer,
+    SousFamille String
+}
+// Relation entre les différentes tables
+relationship OneToMany {
+  Client{commande} to Commande
+}
+
+relationship OneToOne {
+  Client{connexion} to Connexion
+}
+
+relationship OneToOne {
+	Produit to Caracteristique
+}
+
+relationship OneToOne {
+	Produit{famille} to Famille
+}
+
+relationship OneToOne {
+	Famille to SousFamille
+}
+
+relationship ManyToMany {
+	Commande{produit} to Produit{commande}
+}
