@@ -26,6 +26,8 @@ export default class Order extends Vue {
   public orders: IOrder[] = [];
 
   public isFetching = false;
+  public propOrder = 'id';
+  public reverse = false;
 
   public mounted(): void {
     this.retrieveAllOrders();
@@ -38,7 +40,9 @@ export default class Order extends Vue {
   public retrieveAllOrders(): void {
     this.isFetching = true;
     this.orderService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.orders = res.data;
@@ -98,5 +102,23 @@ export default class Order extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllOrders();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 }
