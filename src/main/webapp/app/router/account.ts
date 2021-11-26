@@ -1,6 +1,7 @@
 import { Authority } from '@/shared/security/authority';
 
 const Register = () => import('@/account/register/register.vue');
+//const oauth_login = () => import('@/account/auth/oauth_login.vue');
 const Activate = () => import('@/account/activate/activate.vue');
 const ResetPasswordInit = () => import('@/account/reset-password/init/reset-password-init.vue');
 const ResetPasswordFinish = () => import('@/account/reset-password/finish/reset-password-finish.vue');
@@ -13,6 +14,11 @@ export default [
     name: 'Register',
     component: Register,
   },
+  //  {
+  //    path: '/oauth_login',
+  //    name: 'oauth_login',
+  //    component: oauth_login,
+  //  },
   {
     path: '/account/activate',
     name: 'Activate',

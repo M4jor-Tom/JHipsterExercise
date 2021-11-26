@@ -116,6 +116,7 @@
             <font-awesome-icon icon="sign-in-alt" />
             <span v-text="$t('global.menu.account.login')">Sign in</span>
           </b-dropdown-item>
+
           <b-dropdown-item
             data-cy="register"
             to="/register"

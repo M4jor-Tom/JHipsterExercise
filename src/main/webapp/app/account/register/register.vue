@@ -205,6 +205,8 @@
           <button type="submit" :disabled="$v.$invalid" class="btn btn-primary" v-text="$t('register.form.button')" data-cy="submit">
             Register
           </button>
+
+          <a href="/oauth_login">Login with Google or Facebook</a>
         </form>
         <p></p>
         <div class="alert alert-warning">
