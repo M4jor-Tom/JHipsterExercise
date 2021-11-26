@@ -20,6 +20,9 @@ export default class Model extends Vue {
 
   public isFetching = false;
 
+  public propOrder = 'id';
+  public reverse = false;
+
   public mounted(): void {
     this.retrieveAllModels();
   }
@@ -31,7 +34,9 @@ export default class Model extends Vue {
   public retrieveAllModels(): void {
     this.isFetching = true;
     this.modelService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.models = res.data;
@@ -78,5 +83,23 @@ export default class Model extends Vue {
 
   public closeDialog(): void {
     (<any>this.$refs.removeEntity).hide();
+  }
+
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllModels();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 }
