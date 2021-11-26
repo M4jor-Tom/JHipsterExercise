@@ -18,14 +18,15 @@
         "title": "Product"
       },
       "id": "ID",
-      "name": "Name",
       "description": "Description",
       "photoId": "Photo Id",
       "stock": "Stock",
-      "tag": "Tag",
-      "tariff": "Tariff",
+      "price": "Price",
+      "modelName": "Model Name",
       "color": "Color",
-      "model": "Model",
+      "subFamily": "Sub Family",
+      "brand": "Brand",
+      "tags": "Tags",
       "order": "Order"
     }
   }

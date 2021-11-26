@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class ClientResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/clients")
-    public ResponseEntity<Client> createClient(@RequestBody Client client) throws URISyntaxException {
+    public ResponseEntity<Client> createClient(@Valid @RequestBody Client client) throws URISyntaxException {
         log.debug("REST request to save Client : {}", client);
         if (client.getId() != null) {
             throw new BadRequestAlertException("A new client cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,8 +71,10 @@ public class ClientResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/clients/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable(value = "id", required = false) final Long id, @RequestBody Client client)
-        throws URISyntaxException {
+    public ResponseEntity<Client> updateClient(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Client client
+    ) throws URISyntaxException {
         log.debug("REST request to update Client : {}, {}", id, client);
         if (client.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -104,7 +108,7 @@ public class ClientResource {
     @PatchMapping(value = "/clients/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Client> partialUpdateClient(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Client client
+        @NotNull @RequestBody Client client
     ) throws URISyntaxException {
         log.debug("REST request to partial update Client partially : {}, {}", id, client);
         if (client.getId() == null) {

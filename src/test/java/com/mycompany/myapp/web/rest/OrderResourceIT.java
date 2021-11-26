@@ -52,6 +52,9 @@ class OrderResourceIT {
     private static final ZonedDateTime DEFAULT_DELIVERY_DATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DELIVERY_DATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
+    private static final Long DEFAULT_QUANTITY = 1L;
+    private static final Long UPDATED_QUANTITY = 2L;
+
     private static final BillingMethod DEFAULT_BILLING_METHOD = BillingMethod.PAYPAL;
     private static final BillingMethod UPDATED_BILLING_METHOD = BillingMethod.CREDIT_CARD;
 
@@ -86,6 +89,7 @@ class OrderResourceIT {
             .sum(DEFAULT_SUM)
             .deliveyAdress(DEFAULT_DELIVEY_ADRESS)
             .deliveryDateTime(DEFAULT_DELIVERY_DATE_TIME)
+            .quantity(DEFAULT_QUANTITY)
             .billingMethod(DEFAULT_BILLING_METHOD);
         return order;
     }
@@ -101,6 +105,7 @@ class OrderResourceIT {
             .sum(UPDATED_SUM)
             .deliveyAdress(UPDATED_DELIVEY_ADRESS)
             .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
+            .quantity(UPDATED_QUANTITY)
             .billingMethod(UPDATED_BILLING_METHOD);
         return order;
     }
@@ -126,6 +131,7 @@ class OrderResourceIT {
         assertThat(testOrder.getSum()).isEqualTo(DEFAULT_SUM);
         assertThat(testOrder.getDeliveyAdress()).isEqualTo(DEFAULT_DELIVEY_ADRESS);
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(DEFAULT_DELIVERY_DATE_TIME);
+        assertThat(testOrder.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(DEFAULT_BILLING_METHOD);
     }
 
@@ -149,6 +155,74 @@ class OrderResourceIT {
 
     @Test
     @Transactional
+    void checkDeliveyAdressIsRequired() throws Exception {
+        int databaseSizeBeforeTest = orderRepository.findAll().size();
+        // set the field null
+        order.setDeliveyAdress(null);
+
+        // Create the Order, which fails.
+
+        restOrderMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
+            .andExpect(status().isBadRequest());
+
+        List<Order> orderList = orderRepository.findAll();
+        assertThat(orderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDeliveryDateTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = orderRepository.findAll().size();
+        // set the field null
+        order.setDeliveryDateTime(null);
+
+        // Create the Order, which fails.
+
+        restOrderMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
+            .andExpect(status().isBadRequest());
+
+        List<Order> orderList = orderRepository.findAll();
+        assertThat(orderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkQuantityIsRequired() throws Exception {
+        int databaseSizeBeforeTest = orderRepository.findAll().size();
+        // set the field null
+        order.setQuantity(null);
+
+        // Create the Order, which fails.
+
+        restOrderMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
+            .andExpect(status().isBadRequest());
+
+        List<Order> orderList = orderRepository.findAll();
+        assertThat(orderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkBillingMethodIsRequired() throws Exception {
+        int databaseSizeBeforeTest = orderRepository.findAll().size();
+        // set the field null
+        order.setBillingMethod(null);
+
+        // Create the Order, which fails.
+
+        restOrderMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
+            .andExpect(status().isBadRequest());
+
+        List<Order> orderList = orderRepository.findAll();
+        assertThat(orderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllOrders() throws Exception {
         // Initialize the database
         orderRepository.saveAndFlush(order);
@@ -162,6 +236,7 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.[*].sum").value(hasItem(DEFAULT_SUM.doubleValue())))
             .andExpect(jsonPath("$.[*].deliveyAdress").value(hasItem(DEFAULT_DELIVEY_ADRESS)))
             .andExpect(jsonPath("$.[*].deliveryDateTime").value(hasItem(sameInstant(DEFAULT_DELIVERY_DATE_TIME))))
+            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
             .andExpect(jsonPath("$.[*].billingMethod").value(hasItem(DEFAULT_BILLING_METHOD.toString())));
     }
 
@@ -198,6 +273,7 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.sum").value(DEFAULT_SUM.doubleValue()))
             .andExpect(jsonPath("$.deliveyAdress").value(DEFAULT_DELIVEY_ADRESS))
             .andExpect(jsonPath("$.deliveryDateTime").value(sameInstant(DEFAULT_DELIVERY_DATE_TIME)))
+            .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY.intValue()))
             .andExpect(jsonPath("$.billingMethod").value(DEFAULT_BILLING_METHOD.toString()));
     }
 
@@ -224,6 +300,7 @@ class OrderResourceIT {
             .sum(UPDATED_SUM)
             .deliveyAdress(UPDATED_DELIVEY_ADRESS)
             .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
+            .quantity(UPDATED_QUANTITY)
             .billingMethod(UPDATED_BILLING_METHOD);
 
         restOrderMockMvc
@@ -241,6 +318,7 @@ class OrderResourceIT {
         assertThat(testOrder.getSum()).isEqualTo(UPDATED_SUM);
         assertThat(testOrder.getDeliveyAdress()).isEqualTo(UPDATED_DELIVEY_ADRESS);
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(UPDATED_DELIVERY_DATE_TIME);
+        assertThat(testOrder.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(UPDATED_BILLING_METHOD);
     }
 
@@ -312,7 +390,11 @@ class OrderResourceIT {
         Order partialUpdatedOrder = new Order();
         partialUpdatedOrder.setId(order.getId());
 
-        partialUpdatedOrder.sum(UPDATED_SUM).deliveryDateTime(UPDATED_DELIVERY_DATE_TIME).billingMethod(UPDATED_BILLING_METHOD);
+        partialUpdatedOrder
+            .sum(UPDATED_SUM)
+            .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
+            .quantity(UPDATED_QUANTITY)
+            .billingMethod(UPDATED_BILLING_METHOD);
 
         restOrderMockMvc
             .perform(
@@ -329,6 +411,7 @@ class OrderResourceIT {
         assertThat(testOrder.getSum()).isEqualTo(UPDATED_SUM);
         assertThat(testOrder.getDeliveyAdress()).isEqualTo(DEFAULT_DELIVEY_ADRESS);
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(UPDATED_DELIVERY_DATE_TIME);
+        assertThat(testOrder.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(UPDATED_BILLING_METHOD);
     }
 
@@ -348,6 +431,7 @@ class OrderResourceIT {
             .sum(UPDATED_SUM)
             .deliveyAdress(UPDATED_DELIVEY_ADRESS)
             .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
+            .quantity(UPDATED_QUANTITY)
             .billingMethod(UPDATED_BILLING_METHOD);
 
         restOrderMockMvc
@@ -365,6 +449,7 @@ class OrderResourceIT {
         assertThat(testOrder.getSum()).isEqualTo(UPDATED_SUM);
         assertThat(testOrder.getDeliveyAdress()).isEqualTo(UPDATED_DELIVEY_ADRESS);
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(UPDATED_DELIVERY_DATE_TIME);
+        assertThat(testOrder.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(UPDATED_BILLING_METHOD);
     }
 

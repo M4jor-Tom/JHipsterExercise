@@ -1,5 +1,7 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
+import { required } from 'vuelidate/lib/validators';
+
 import AlertService from '@/shared/alert/alert.service';
 
 import { IBrand, Brand } from '@/shared/model/brand.model';
@@ -7,7 +9,9 @@ import BrandService from './brand.service';
 
 const validations: any = {
   brand: {
-    name: {},
+    name: {
+      required,
+    },
   },
 };
 

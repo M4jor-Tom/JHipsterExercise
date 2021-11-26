@@ -2,6 +2,7 @@ package com.mycompany.myapp.domain;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -20,10 +21,12 @@ public class Connection implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
+    @NotNull
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password")
+    @NotNull
+    @Column(name = "password", nullable = false)
     private String password;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

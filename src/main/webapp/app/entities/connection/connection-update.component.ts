@@ -1,5 +1,7 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
+import { required } from 'vuelidate/lib/validators';
+
 import AlertService from '@/shared/alert/alert.service';
 
 import { IConnection, Connection } from '@/shared/model/connection.model';
@@ -7,8 +9,12 @@ import ConnectionService from './connection.service';
 
 const validations: any = {
   connection: {
-    username: {},
-    password: {},
+    username: {
+      required,
+    },
+    password: {
+      required,
+    },
   },
 };
 

@@ -26,9 +26,22 @@
                 class="form-control"
                 name="addedDateTime"
                 :class="{ valid: !$v.client.addedDateTime.$invalid, invalid: $v.client.addedDateTime.$invalid }"
+                required
                 :value="convertDateTimeFromServer($v.client.addedDateTime.$model)"
                 @change="updateZonedDateTimeField('addedDateTime', $event)"
               />
+            </div>
+            <div v-if="$v.client.addedDateTime.$anyDirty && $v.client.addedDateTime.$invalid">
+              <small class="form-text text-danger" v-if="!$v.client.addedDateTime.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+              <small
+                class="form-text text-danger"
+                v-if="!$v.client.addedDateTime.ZonedDateTimelocal"
+                v-text="$t('entity.validation.ZonedDateTimelocal')"
+              >
+                This field should be a date and time.
+              </small>
             </div>
           </div>
           <div class="form-group">
@@ -41,7 +54,13 @@
               data-cy="lastName"
               :class="{ valid: !$v.client.lastName.$invalid, invalid: $v.client.lastName.$invalid }"
               v-model="$v.client.lastName.$model"
+              required
             />
+            <div v-if="$v.client.lastName.$anyDirty && $v.client.lastName.$invalid">
+              <small class="form-text text-danger" v-if="!$v.client.lastName.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.client.firstName')" for="client-firstName">First Name</label>
@@ -53,7 +72,13 @@
               data-cy="firstName"
               :class="{ valid: !$v.client.firstName.$invalid, invalid: $v.client.firstName.$invalid }"
               v-model="$v.client.firstName.$model"
+              required
             />
+            <div v-if="$v.client.firstName.$anyDirty && $v.client.firstName.$invalid">
+              <small class="form-text text-danger" v-if="!$v.client.firstName.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.client.email')" for="client-email">Email</label>
@@ -101,7 +126,13 @@
               data-cy="country"
               :class="{ valid: !$v.client.country.$invalid, invalid: $v.client.country.$invalid }"
               v-model="$v.client.country.$model"
+              required
             />
+            <div v-if="$v.client.country.$anyDirty && $v.client.country.$invalid">
+              <small class="form-text text-danger" v-if="!$v.client.country.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.client.postalCode')" for="client-postalCode"
@@ -115,7 +146,13 @@
               data-cy="postalCode"
               :class="{ valid: !$v.client.postalCode.$invalid, invalid: $v.client.postalCode.$invalid }"
               v-model="$v.client.postalCode.$model"
+              required
             />
+            <div v-if="$v.client.postalCode.$anyDirty && $v.client.postalCode.$invalid">
+              <small class="form-text text-danger" v-if="!$v.client.postalCode.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.client.connection')" for="client-connection"

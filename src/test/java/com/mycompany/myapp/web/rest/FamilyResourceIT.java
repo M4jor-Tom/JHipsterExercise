@@ -112,6 +112,23 @@ class FamilyResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = familyRepository.findAll().size();
+        // set the field null
+        family.setName(null);
+
+        // Create the Family, which fails.
+
+        restFamilyMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(family)))
+            .andExpect(status().isBadRequest());
+
+        List<Family> familyList = familyRepository.findAll();
+        assertThat(familyList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllFamilies() throws Exception {
         // Initialize the database
         familyRepository.saveAndFlush(family);

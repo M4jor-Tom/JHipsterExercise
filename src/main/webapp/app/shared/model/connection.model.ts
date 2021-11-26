@@ -1,9 +1,9 @@
 export interface IConnection {
   id?: number;
-  username?: string | null;
-  password?: string | null;
+  username?: string;
+  password?: string;
 }
 
 export class Connection implements IConnection {
-  constructor(public id?: number, public username?: string | null, public password?: string | null) {}
+  constructor(public id?: number, public username?: string, public password?: string) {}
 }

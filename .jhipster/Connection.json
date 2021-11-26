@@ -3,11 +3,13 @@
   "fields": [
     {
       "fieldName": "username",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "password",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [],
@@ -20,5 +22,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20211125131221"
+  "changelogDate": "20211125140128"
 }

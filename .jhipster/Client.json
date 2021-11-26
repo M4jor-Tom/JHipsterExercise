@@ -3,15 +3,18 @@
   "fields": [
     {
       "fieldName": "addedDateTime",
-      "fieldType": "ZonedDateTime"
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "lastName",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "firstName",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "email",
@@ -27,11 +30,13 @@
     },
     {
       "fieldName": "country",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "postalCode",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
@@ -58,5 +63,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20211125131219"
+  "changelogDate": "20211125140126"
 }

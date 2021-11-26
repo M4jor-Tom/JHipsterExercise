@@ -21,6 +21,7 @@
       "sum": "Sum",
       "deliveyAdress": "Delivey Adress",
       "deliveryDateTime": "Delivery Date Time",
+      "quantity": "Quantity",
       "billingMethod": "Billing Method",
       "products": "Products",
       "client": "Client"
