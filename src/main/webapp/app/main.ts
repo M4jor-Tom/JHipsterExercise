@@ -32,10 +32,14 @@ import ClientService from '@/entities/client/client.service';
 import OrderService from '@/entities/order/order.service';
 import ConnectionService from '@/entities/connection/connection.service';
 import ProductService from '@/entities/product/product.service';
-import ModelService from '@/entities/model/model.service';
+import TagService from '@/entities/tag/tag.service';
 import BrandService from '@/entities/brand/brand.service';
 import FamilyService from '@/entities/family/family.service';
+import SubFamilyService from '@/entities/sub-family/sub-family.service';
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
+
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 
 /* tslint:enable */
 Vue.config.productionTip = false;
@@ -97,9 +101,10 @@ new Vue({
     orderService: () => new OrderService(),
     connectionService: () => new ConnectionService(),
     productService: () => new ProductService(),
-    modelService: () => new ModelService(),
+    tagService: () => new TagService(),
     brandService: () => new BrandService(),
     familyService: () => new FamilyService(),
+    subFamilyService: () => new SubFamilyService(),
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
     accountService: () => accountService,
     alertService: () => new AlertService(),

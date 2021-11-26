@@ -43,7 +43,7 @@
     "clientThemeVariant": "",
     "languages": ["en", "fr", "de", "it", "es"],
     "enableGradleEnterprise": false,
-    "entities": ["Client", "Order", "Connection", "Product", "Model", "Brand", "Family"],
-    "lastLiquibaseTimestamp": 1637845945000
+    "entities": ["Client", "Order", "Connection", "Product", "Tag", "Brand", "Family", "SubFamily"],
+    "lastLiquibaseTimestamp": 1637848893000
   }
 }

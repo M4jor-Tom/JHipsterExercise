@@ -1,9 +1,17 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
+import { numeric, required, decimal } from 'vuelidate/lib/validators';
+
 import AlertService from '@/shared/alert/alert.service';
 
-import ModelService from '@/entities/model/model.service';
-import { IModel } from '@/shared/model/model.model';
+import SubFamilyService from '@/entities/sub-family/sub-family.service';
+import { ISubFamily } from '@/shared/model/sub-family.model';
+
+import BrandService from '@/entities/brand/brand.service';
+import { IBrand } from '@/shared/model/brand.model';
+
+import TagService from '@/entities/tag/tag.service';
+import { ITag } from '@/shared/model/tag.model';
 
 import OrderService from '@/entities/order/order.service';
 import { IOrder } from '@/shared/model/order.model';
@@ -14,12 +22,19 @@ import { Color } from '@/shared/model/enumerations/color.model';
 
 const validations: any = {
   product: {
-    name: {},
     description: {},
     photoId: {},
-    stock: {},
-    tag: {},
-    tariff: {},
+    stock: {
+      required,
+      numeric,
+    },
+    price: {
+      required,
+      decimal,
+    },
+    modelName: {
+      required,
+    },
     color: {},
   },
 };
@@ -33,9 +48,17 @@ export default class ProductUpdate extends Vue {
 
   public product: IProduct = new Product();
 
-  @Inject('modelService') private modelService: () => ModelService;
+  @Inject('subFamilyService') private subFamilyService: () => SubFamilyService;
 
-  public models: IModel[] = [];
+  public subFamilies: ISubFamily[] = [];
+
+  @Inject('brandService') private brandService: () => BrandService;
+
+  public brands: IBrand[] = [];
+
+  @Inject('tagService') private tagService: () => TagService;
+
+  public tags: ITag[] = [];
 
   @Inject('orderService') private orderService: () => OrderService;
 
@@ -61,6 +84,7 @@ export default class ProductUpdate extends Vue {
         this.currentLanguage = this.$store.getters.currentLanguage;
       }
     );
+    this.product.tags = [];
   }
 
   public save(): void {
@@ -122,15 +146,36 @@ export default class ProductUpdate extends Vue {
   }
 
   public initRelationships(): void {
-    this.modelService()
+    this.subFamilyService()
       .retrieve()
       .then(res => {
-        this.models = res.data;
+        this.subFamilies = res.data;
+      });
+    this.brandService()
+      .retrieve()
+      .then(res => {
+        this.brands = res.data;
+      });
+    this.tagService()
+      .retrieve()
+      .then(res => {
+        this.tags = res.data;
       });
     this.orderService()
       .retrieve()
       .then(res => {
         this.orders = res.data;
       });
+  }
+
+  public getSelected(selectedVals, option): any {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

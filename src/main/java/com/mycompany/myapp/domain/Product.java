@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,31 +25,44 @@ public class Product implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "description")
     private String description;
 
     @Column(name = "photo_id")
     private Long photoId;
 
-    @Column(name = "stock")
+    @NotNull
+    @Column(name = "stock", nullable = false)
     private Long stock;
 
-    @Column(name = "tag")
-    private String tag;
+    @NotNull
+    @Column(name = "price", nullable = false)
+    private Double price;
 
-    @Column(name = "tariff")
-    private Double tariff;
+    @NotNull
+    @Column(name = "model_name", nullable = false)
+    private String modelName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "color")
     private Color color;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "brand", "family" }, allowSetters = true)
-    private Model model;
+    @JsonIgnoreProperties(value = { "family" }, allowSetters = true)
+    private SubFamily subFamily;
+
+    @ManyToOne
+    private Brand brand;
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_product__tags",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "tags_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "products" }, allowSetters = true)
+    private Set<Tag> tags = new HashSet<>();
 
     @ManyToMany(mappedBy = "products")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -68,19 +82,6 @@ public class Product implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Product name(String name) {
-        this.setName(name);
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -122,30 +123,30 @@ public class Product implements Serializable {
         this.stock = stock;
     }
 
-    public String getTag() {
-        return this.tag;
+    public Double getPrice() {
+        return this.price;
     }
 
-    public Product tag(String tag) {
-        this.setTag(tag);
+    public Product price(Double price) {
+        this.setPrice(price);
         return this;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public Double getTariff() {
-        return this.tariff;
+    public String getModelName() {
+        return this.modelName;
     }
 
-    public Product tariff(Double tariff) {
-        this.setTariff(tariff);
+    public Product modelName(String modelName) {
+        this.setModelName(modelName);
         return this;
     }
 
-    public void setTariff(Double tariff) {
-        this.tariff = tariff;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
     public Color getColor() {
@@ -161,16 +162,54 @@ public class Product implements Serializable {
         this.color = color;
     }
 
-    public Model getModel() {
-        return this.model;
+    public SubFamily getSubFamily() {
+        return this.subFamily;
     }
 
-    public void setModel(Model model) {
-        this.model = model;
+    public void setSubFamily(SubFamily subFamily) {
+        this.subFamily = subFamily;
     }
 
-    public Product model(Model model) {
-        this.setModel(model);
+    public Product subFamily(SubFamily subFamily) {
+        this.setSubFamily(subFamily);
+        return this;
+    }
+
+    public Brand getBrand() {
+        return this.brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Product brand(Brand brand) {
+        this.setBrand(brand);
+        return this;
+    }
+
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Product tags(Set<Tag> tags) {
+        this.setTags(tags);
+        return this;
+    }
+
+    public Product addTags(Tag tag) {
+        this.tags.add(tag);
+        tag.getProducts().add(this);
+        return this;
+    }
+
+    public Product removeTags(Tag tag) {
+        this.tags.remove(tag);
+        tag.getProducts().remove(this);
         return this;
     }
 
@@ -229,12 +268,11 @@ public class Product implements Serializable {
     public String toString() {
         return "Product{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", photoId=" + getPhotoId() +
             ", stock=" + getStock() +
-            ", tag='" + getTag() + "'" +
-            ", tariff=" + getTariff() +
+            ", price=" + getPrice() +
+            ", modelName='" + getModelName() + "'" +
             ", color='" + getColor() + "'" +
             "}";
     }

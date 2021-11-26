@@ -1,8 +1,8 @@
 export interface IFamily {
   id?: number;
-  name?: string | null;
+  name?: string;
 }
 
 export class Family implements IFamily {
-  constructor(public id?: number, public name?: string | null) {}
+  constructor(public id?: number, public name?: string) {}
 }

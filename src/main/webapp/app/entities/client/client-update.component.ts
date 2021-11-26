@@ -1,5 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
+import { required } from 'vuelidate/lib/validators';
 import dayjs from 'dayjs';
 import { DATE_TIME_LONG_FORMAT } from '@/shared/date/filters';
 
@@ -16,14 +17,24 @@ import ClientService from './client.service';
 
 const validations: any = {
   client: {
-    addedDateTime: {},
-    lastName: {},
-    firstName: {},
+    addedDateTime: {
+      required,
+    },
+    lastName: {
+      required,
+    },
+    firstName: {
+      required,
+    },
     email: {},
     phone: {},
     adress: {},
-    country: {},
-    postalCode: {},
+    country: {
+      required,
+    },
+    postalCode: {
+      required,
+    },
   },
 };
 

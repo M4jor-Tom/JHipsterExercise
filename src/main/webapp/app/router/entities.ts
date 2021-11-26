@@ -27,11 +27,11 @@ const ProductUpdate = () => import('@/entities/product/product-update.vue');
 // prettier-ignore
 const ProductDetails = () => import('@/entities/product/product-details.vue');
 // prettier-ignore
-const Model = () => import('@/entities/model/model.vue');
+const Tag = () => import('@/entities/tag/tag.vue');
 // prettier-ignore
-const ModelUpdate = () => import('@/entities/model/model-update.vue');
+const TagUpdate = () => import('@/entities/tag/tag-update.vue');
 // prettier-ignore
-const ModelDetails = () => import('@/entities/model/model-details.vue');
+const TagDetails = () => import('@/entities/tag/tag-details.vue');
 // prettier-ignore
 const Brand = () => import('@/entities/brand/brand.vue');
 // prettier-ignore
@@ -44,6 +44,12 @@ const Family = () => import('@/entities/family/family.vue');
 const FamilyUpdate = () => import('@/entities/family/family-update.vue');
 // prettier-ignore
 const FamilyDetails = () => import('@/entities/family/family-details.vue');
+// prettier-ignore
+const SubFamily = () => import('@/entities/sub-family/sub-family.vue');
+// prettier-ignore
+const SubFamilyUpdate = () => import('@/entities/sub-family/sub-family-update.vue');
+// prettier-ignore
+const SubFamilyDetails = () => import('@/entities/sub-family/sub-family-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 export default [
@@ -144,27 +150,27 @@ export default [
     meta: { authorities: [Authority.USER] },
   },
   {
-    path: '/model',
-    name: 'Model',
-    component: Model,
+    path: '/tag',
+    name: 'Tag',
+    component: Tag,
     meta: { authorities: [Authority.USER] },
   },
   {
-    path: '/model/new',
-    name: 'ModelCreate',
-    component: ModelUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    path: '/tag/new',
+    name: 'TagCreate',
+    component: TagUpdate,
+    meta: { authorities: [Authority.USER] },
   },
   {
-    path: '/model/:modelId/edit',
-    name: 'ModelEdit',
-    component: ModelUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    path: '/tag/:tagId/edit',
+    name: 'TagEdit',
+    component: TagUpdate,
+    meta: { authorities: [Authority.USER] },
   },
   {
-    path: '/model/:modelId/view',
-    name: 'ModelView',
-    component: ModelDetails,
+    path: '/tag/:tagId/view',
+    name: 'TagView',
+    component: TagDetails,
     meta: { authorities: [Authority.USER] },
   },
   {
@@ -213,6 +219,30 @@ export default [
     path: '/family/:familyId/view',
     name: 'FamilyView',
     component: FamilyDetails,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/sub-family',
+    name: 'SubFamily',
+    component: SubFamily,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/sub-family/new',
+    name: 'SubFamilyCreate',
+    component: SubFamilyUpdate,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/sub-family/:subFamilyId/edit',
+    name: 'SubFamilyEdit',
+    component: SubFamilyUpdate,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/sub-family/:subFamilyId/view',
+    name: 'SubFamilyView',
+    component: SubFamilyDetails,
     meta: { authorities: [Authority.USER] },
   },
   // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here

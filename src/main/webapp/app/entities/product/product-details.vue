@@ -7,12 +7,6 @@
         </h2>
         <dl class="row jh-entity-details">
           <dt>
-            <span v-text="$t('jHipsterExerciseApp.product.name')">Name</span>
-          </dt>
-          <dd>
-            <span>{{ product.name }}</span>
-          </dd>
-          <dt>
             <span v-text="$t('jHipsterExerciseApp.product.description')">Description</span>
           </dt>
           <dd>
@@ -31,16 +25,16 @@
             <span>{{ product.stock }}</span>
           </dd>
           <dt>
-            <span v-text="$t('jHipsterExerciseApp.product.tag')">Tag</span>
+            <span v-text="$t('jHipsterExerciseApp.product.price')">Price</span>
           </dt>
           <dd>
-            <span>{{ product.tag }}</span>
+            <span>{{ product.price }}</span>
           </dd>
           <dt>
-            <span v-text="$t('jHipsterExerciseApp.product.tariff')">Tariff</span>
+            <span v-text="$t('jHipsterExerciseApp.product.modelName')">Model Name</span>
           </dt>
           <dd>
-            <span>{{ product.tariff }}</span>
+            <span>{{ product.modelName }}</span>
           </dd>
           <dt>
             <span v-text="$t('jHipsterExerciseApp.product.color')">Color</span>
@@ -49,12 +43,31 @@
             <span v-text="$t('jHipsterExerciseApp.Color.' + product.color)">{{ product.color }}</span>
           </dd>
           <dt>
-            <span v-text="$t('jHipsterExerciseApp.product.model')">Model</span>
+            <span v-text="$t('jHipsterExerciseApp.product.subFamily')">Sub Family</span>
           </dt>
           <dd>
-            <div v-if="product.model">
-              <router-link :to="{ name: 'ModelView', params: { modelId: product.model.id } }">{{ product.model.id }}</router-link>
+            <div v-if="product.subFamily">
+              <router-link :to="{ name: 'SubFamilyView', params: { subFamilyId: product.subFamily.id } }">{{
+                product.subFamily.id
+              }}</router-link>
             </div>
+          </dd>
+          <dt>
+            <span v-text="$t('jHipsterExerciseApp.product.brand')">Brand</span>
+          </dt>
+          <dd>
+            <div v-if="product.brand">
+              <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.id }}</router-link>
+            </div>
+          </dd>
+          <dt>
+            <span v-text="$t('jHipsterExerciseApp.product.tags')">Tags</span>
+          </dt>
+          <dd>
+            <span v-for="(tags, i) in product.tags" :key="tags.id"
+              >{{ i > 0 ? ', ' : '' }}
+              <router-link :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.id }}</router-link>
+            </span>
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

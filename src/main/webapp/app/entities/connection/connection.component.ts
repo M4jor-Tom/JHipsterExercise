@@ -86,7 +86,7 @@ export default class Connection extends Vue {
   public closeDialog(): void {
     (<any>this.$refs.removeEntity).hide();
   }
-  
+
   public get authenticated(): boolean {
     return this.$store.getters.authenticated;
   }

@@ -6,6 +6,7 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,13 +25,16 @@ public class Client implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "added_date_time")
+    @NotNull
+    @Column(name = "added_date_time", nullable = false)
     private ZonedDateTime addedDateTime;
 
-    @Column(name = "last_name")
+    @NotNull
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "first_name")
+    @NotNull
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Column(name = "email")
@@ -42,10 +46,12 @@ public class Client implements Serializable {
     @Column(name = "adress")
     private String adress;
 
-    @Column(name = "country")
+    @NotNull
+    @Column(name = "country", nullable = false)
     private String country;
 
-    @Column(name = "postal_code")
+    @NotNull
+    @Column(name = "postal_code", nullable = false)
     private String postalCode;
 
     @OneToOne

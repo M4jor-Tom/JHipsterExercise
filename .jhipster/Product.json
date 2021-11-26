@@ -2,10 +2,6 @@
   "name": "Product",
   "fields": [
     {
-      "fieldName": "name",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "description",
       "fieldType": "String"
     },
@@ -15,15 +11,18 @@
     },
     {
       "fieldName": "stock",
-      "fieldType": "Long"
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "tag",
-      "fieldType": "String"
+      "fieldName": "price",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "tariff",
-      "fieldType": "Double"
+      "fieldName": "modelName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "color",
@@ -34,9 +33,22 @@
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "model",
+      "otherEntityName": "subFamily",
       "otherEntityRelationshipName": "product",
-      "relationshipName": "model"
+      "relationshipName": "subFamily"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "brand",
+      "otherEntityRelationshipName": "product",
+      "relationshipName": "brand"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "tag",
+      "otherEntityRelationshipName": "products",
+      "relationshipName": "tags",
+      "ownerSide": true
     },
     {
       "relationshipType": "many-to-many",
@@ -55,5 +67,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20211125131222"
+  "changelogDate": "20211125140129"
 }

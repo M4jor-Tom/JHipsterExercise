@@ -45,9 +45,9 @@
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.product')">Product</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/model">
+          <b-dropdown-item to="/tag">
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.model')">Model</span>
+            <span v-text="$t('global.menu.entities.tag')">Tag</span>
           </b-dropdown-item>
           <b-dropdown-item to="/brand">
             <font-awesome-icon icon="asterisk" />
@@ -56,6 +56,10 @@
           <b-dropdown-item to="/family">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.family')">Family</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/sub-family">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.subFamily')">Sub Family</span>
           </b-dropdown-item>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </b-nav-item-dropdown>

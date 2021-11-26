@@ -24,7 +24,13 @@
               data-cy="name"
               :class="{ valid: !$v.family.name.$invalid, invalid: $v.family.name.$invalid }"
               v-model="$v.family.name.$model"
+              required
             />
+            <div v-if="$v.family.name.$anyDirty && $v.family.name.$invalid">
+              <small class="form-text text-danger" v-if="!$v.family.name.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
         </div>
         <div>

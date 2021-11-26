@@ -25,6 +25,12 @@
             <span v-if="order.deliveryDateTime">{{ $d(Date.parse(order.deliveryDateTime), 'long') }}</span>
           </dd>
           <dt>
+            <span v-text="$t('jHipsterExerciseApp.order.quantity')">Quantity</span>
+          </dt>
+          <dd>
+            <span>{{ order.quantity }}</span>
+          </dd>
+          <dt>
             <span v-text="$t('jHipsterExerciseApp.order.billingMethod')">Billing Method</span>
           </dt>
           <dd>

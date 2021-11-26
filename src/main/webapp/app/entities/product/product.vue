@@ -30,14 +30,15 @@
         <thead>
           <tr>
             <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.name')">Name</span></th>
             <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.description')">Description</span></th>
             <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.photoId')">Photo Id</span></th>
             <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.stock')">Stock</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.tag')">Tag</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.tariff')">Tariff</span></th>
+            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.price')">Price</span></th>
+            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.modelName')">Model Name</span></th>
             <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.color')">Color</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.model')">Model</span></th>
+            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.subFamily')">Sub Family</span></th>
+            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.brand')">Brand</span></th>
+            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.tags')">Tags</span></th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -46,17 +47,29 @@
             <td>
               <router-link :to="{ name: 'ProductView', params: { productId: product.id } }">{{ product.id }}</router-link>
             </td>
-            <td>{{ product.name }}</td>
             <td>{{ product.description }}</td>
             <td>{{ product.photoId }}</td>
             <td>{{ product.stock }}</td>
-            <td>{{ product.tag }}</td>
-            <td>{{ product.tariff }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.modelName }}</td>
             <td v-text="$t('jHipsterExerciseApp.Color.' + product.color)">{{ product.color }}</td>
             <td>
-              <div v-if="product.model">
-                <router-link :to="{ name: 'ModelView', params: { modelId: product.model.id } }">{{ product.model.id }}</router-link>
+              <div v-if="product.subFamily">
+                <router-link :to="{ name: 'SubFamilyView', params: { subFamilyId: product.subFamily.id } }">{{
+                  product.subFamily.id
+                }}</router-link>
               </div>
+            </td>
+            <td>
+              <div v-if="product.brand">
+                <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.id }}</router-link>
+              </div>
+            </td>
+            <td>
+              <span v-for="(tags, i) in product.tags" :key="tags.id"
+                >{{ i > 0 ? ', ' : '' }}
+                <router-link class="form-control-static" :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.id }}</router-link>
+              </span>
             </td>
             <td class="text-right">
               <div class="btn-group">
@@ -67,7 +80,12 @@
                   </button>
                 </router-link>
                 <router-link :to="{ name: 'ProductEdit', params: { productId: product.id } }" custom v-slot="{ navigate }">
-                  <button v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated" @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
+                  <button
+                    v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+                    @click="navigate"
+                    class="btn btn-primary btn-sm edit"
+                    data-cy="entityEditButton"
+                  >
                     <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
                     <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>

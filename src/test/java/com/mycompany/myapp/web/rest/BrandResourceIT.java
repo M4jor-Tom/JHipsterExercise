@@ -112,6 +112,23 @@ class BrandResourceIT {
 
     @Test
     @Transactional
+    void checkNameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = brandRepository.findAll().size();
+        // set the field null
+        brand.setName(null);
+
+        // Create the Brand, which fails.
+
+        restBrandMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(brand)))
+            .andExpect(status().isBadRequest());
+
+        List<Brand> brandList = brandRepository.findAll();
+        assertThat(brandList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllBrands() throws Exception {
         // Initialize the database
         brandRepository.saveAndFlush(brand);

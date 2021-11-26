@@ -39,7 +39,7 @@ export default class ClientDetails extends Vue {
   public previousState() {
     this.$router.go(-1);
   }
-  
+
   public get authenticated(): boolean {
     return this.$store.getters.authenticated;
   }
