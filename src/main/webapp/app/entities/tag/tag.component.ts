@@ -27,6 +27,9 @@ export default class Tag extends Vue {
 
   public isFetching = false;
 
+  public propOrder = 'id';
+  public reverse = false;
+
   public mounted(): void {
     this.retrieveAllTags();
   }
@@ -38,7 +41,9 @@ export default class Tag extends Vue {
   public retrieveAllTags(): void {
     this.isFetching = true;
     this.tagService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.tags = res.data;
@@ -98,5 +103,23 @@ export default class Tag extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllTags();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 }
