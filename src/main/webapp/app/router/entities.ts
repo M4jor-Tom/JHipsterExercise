@@ -159,13 +159,13 @@ export default [
     path: '/tag/new',
     name: 'TagCreate',
     component: TagUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/tag/:tagId/edit',
     name: 'TagEdit',
     component: TagUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/tag/:tagId/view',
@@ -231,13 +231,13 @@ export default [
     path: '/sub-family/new',
     name: 'SubFamilyCreate',
     component: SubFamilyUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/sub-family/:subFamilyId/edit',
     name: 'SubFamilyEdit',
     component: SubFamilyUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/sub-family/:subFamilyId/view',
