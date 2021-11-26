@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { IBrand } from '@/shared/model/brand.model';
+import buildPaginationQueryOpts from '@/shared/sort/sorts';
 
 const baseApiUrl = 'api/brands';
 
@@ -18,10 +19,10 @@ export default class BrandService {
     });
   }
 
-  public retrieve(): Promise<any> {
+  public retrieve(req?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(baseApiUrl)
+        .get(`api/families?${buildPaginationQueryOpts(req)}`)
         .then(res => {
           resolve(res);
         })
