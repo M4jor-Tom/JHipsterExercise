@@ -45,6 +45,14 @@ entity Tag {
 	name String required
 }
 
+entity Vendeur {
+	raisonSocial String required,
+    address String required,
+    numeroSiret String,
+    telephone Long,
+    email String required
+}
+
 enum Color {
 	PURPLE,
     BLUE,
@@ -69,22 +77,19 @@ entity SubFamily {
 
 relationship ManyToMany {
 	Product{tags} to Tag{products}
+    
+    
+    Order{products} to Product{order}
 }
 
 relationship ManyToOne {
 	Product{subFamily} to SubFamily
-}
-
-relationship ManyToOne {
-	SubFamily{family} to Family
-}
-
-relationship ManyToOne {
-	Product{brand} to Brand
-}
-
-relationship ManyToMany {
-    Order{products} to Product{order}
+    
+    SubFamily{family} to Family
+    
+    Product{brand} to Brand
+    
+	Product{vendeur} to Vendeur{product}
 }
 
 relationship OneToMany {
@@ -93,4 +98,8 @@ relationship OneToMany {
 
 relationship OneToOne {
 	Client{connection} to Connection
+    
+	Vendeur{connection} to Connection
 }
+
+

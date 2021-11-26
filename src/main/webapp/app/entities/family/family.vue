@@ -29,8 +29,14 @@
       <table class="table table-striped" aria-describedby="families">
         <thead>
           <tr>
-            <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.family.name')">Name</span></th>
+            <th scope="col" v-on:click="changeOrder('id')">
+              <span v-text="$t('global.field.id')">ID</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('name')">
+              <span v-text="$t('Name')">Name</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'name'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>

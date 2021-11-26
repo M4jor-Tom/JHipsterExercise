@@ -6,7 +6,6 @@ Ce document contient toutes les informations concernant le projet : installation
 
 Lisez-le attentivement, et n'hésitez pas à contacter le **groupe 4** si vous avez des questions ou des points à éclaircir.
 
-
 ## Groupes
 
 Cette section contient les informations concernant les différents groupes travaillant sur le projet et les tâches qui leur sont attribuées.
@@ -16,9 +15,9 @@ Cette section contient les informations concernant les différents groupes trava
 membres : Quentin Dethy, Yowan Kerdjou, Lucile Comba-Antonetti, Nicolas Heissler
 
 tâches : Intégrations d'API : Paiement Paypal, Adyen (paiement CB), Google Sign-up
-         Intégrations de fausse pubs
-         Sécurité avec eMails
-         Monitoring (connexions, requêtes)
+Intégrations de fausse pubs
+Sécurité avec eMails
+Monitoring (connexions, requêtes)
 
 **Groupe 2 :**
 
@@ -58,13 +57,14 @@ Vous pouvez vérifier votre version actuelle de Nodes.js via powershell :
 `node --version`
 
 ## Consignes Développement
+
 Pour contribuer au projet et travailler ensemble, il est important de suivre des règles bien précises.
 
-**1. Le repository principal héberge le projet complet et fonctionnel**,  il est géré par le groupe 4 qui s'occupe d'intégrer les fonctionnalités de chaque groupe au projet.
+**1. Le repository principal héberge le projet complet et fonctionnel**, il est géré par le groupe 4 qui s'occupe d'intégrer les fonctionnalités de chaque groupe au projet.
 
 Lien du repository principal : https://github.com/M4jor-Tom/JHipsterExercise
 
-**2. Chaque groupe de développement dispose de son propre repository**  (fork du repository principal  créé par le responsable git du groupe).
+**2. Chaque groupe de développement dispose de son propre repository** (fork du repository principal créé par le responsable git du groupe).
 
 Pour créer un fork du repository principal pour son groupe : https://docs.github.com/en/get-started/quickstart/fork-a-repo
 

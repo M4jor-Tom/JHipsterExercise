@@ -26,6 +26,8 @@ export default class Family extends Vue {
   public families: IFamily[] = [];
 
   public isFetching = false;
+  public propOrder = 'id';
+  public reverse = false;
 
   public mounted(): void {
     this.retrieveAllFamilys();
@@ -38,7 +40,9 @@ export default class Family extends Vue {
   public retrieveAllFamilys(): void {
     this.isFetching = true;
     this.familyService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.families = res.data;
@@ -85,6 +89,24 @@ export default class Family extends Vue {
 
   public closeDialog(): void {
     (<any>this.$refs.removeEntity).hide();
+  }
+
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllFamilys();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 
   public get authenticated(): boolean {
