@@ -1,0 +1,25 @@
+{
+  "jHipsterExerciseApp": {
+    "subFamily": {
+      "home": {
+        "title": "Sub Families",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Sub Family erstellen",
+        "createOrEditLabel": "Sub Family erstellen oder bearbeiten",
+        "notFound": "Keine Sub Families gefunden"
+      },
+      "created": "Sub Family erstellt mit ID {{ param }}",
+      "updated": "Sub Family aktualisiert mit ID {{ param }}",
+      "deleted": "Sub Family gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Sub Family {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Sub Family"
+      },
+      "id": "ID",
+      "name": "Name",
+      "family": "Family"
+    }
+  }
+}

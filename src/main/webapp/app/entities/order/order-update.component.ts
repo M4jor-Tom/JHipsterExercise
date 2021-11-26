@@ -1,5 +1,6 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
+import { required, numeric } from 'vuelidate/lib/validators';
 import dayjs from 'dayjs';
 import { DATE_TIME_LONG_FORMAT } from '@/shared/date/filters';
 
@@ -18,9 +19,19 @@ import { BillingMethod } from '@/shared/model/enumerations/billing-method.model'
 const validations: any = {
   order: {
     sum: {},
-    deliveyAdress: {},
-    deliveryDateTime: {},
-    billingMethod: {},
+    deliveyAdress: {
+      required,
+    },
+    deliveryDateTime: {
+      required,
+    },
+    quantity: {
+      required,
+      numeric,
+    },
+    billingMethod: {
+      required,
+    },
   },
 };
 

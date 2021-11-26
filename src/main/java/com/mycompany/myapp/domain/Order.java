@@ -7,6 +7,7 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,14 +29,21 @@ public class Order implements Serializable {
     @Column(name = "sum")
     private Double sum;
 
-    @Column(name = "delivey_adress")
+    @NotNull
+    @Column(name = "delivey_adress", nullable = false)
     private String deliveyAdress;
 
-    @Column(name = "delivery_date_time")
+    @NotNull
+    @Column(name = "delivery_date_time", nullable = false)
     private ZonedDateTime deliveryDateTime;
 
+    @NotNull
+    @Column(name = "quantity", nullable = false)
+    private Long quantity;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "billing_method")
+    @Column(name = "billing_method", nullable = false)
     private BillingMethod billingMethod;
 
     @ManyToMany
@@ -45,7 +53,7 @@ public class Order implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "products_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "model", "orders" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "subFamily", "brand", "tags", "orders" }, allowSetters = true)
     private Set<Product> products = new HashSet<>();
 
     @ManyToOne
@@ -104,6 +112,19 @@ public class Order implements Serializable {
 
     public void setDeliveryDateTime(ZonedDateTime deliveryDateTime) {
         this.deliveryDateTime = deliveryDateTime;
+    }
+
+    public Long getQuantity() {
+        return this.quantity;
+    }
+
+    public Order quantity(Long quantity) {
+        this.setQuantity(quantity);
+        return this;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 
     public BillingMethod getBillingMethod() {
@@ -184,6 +205,7 @@ public class Order implements Serializable {
             ", sum=" + getSum() +
             ", deliveyAdress='" + getDeliveyAdress() + "'" +
             ", deliveryDateTime='" + getDeliveryDateTime() + "'" +
+            ", quantity=" + getQuantity() +
             ", billingMethod='" + getBillingMethod() + "'" +
             "}";
     }

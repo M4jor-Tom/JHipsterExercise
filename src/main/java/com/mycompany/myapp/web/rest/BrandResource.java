@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +53,7 @@ public class BrandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/brands")
-    public ResponseEntity<Brand> createBrand(@RequestBody Brand brand) throws URISyntaxException {
+    public ResponseEntity<Brand> createBrand(@Valid @RequestBody Brand brand) throws URISyntaxException {
         log.debug("REST request to save Brand : {}", brand);
         if (brand.getId() != null) {
             throw new BadRequestAlertException("A new brand cannot already have an ID", ENTITY_NAME, "idexists");
@@ -74,7 +76,7 @@ public class BrandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/brands/{id}")
-    public ResponseEntity<Brand> updateBrand(@PathVariable(value = "id", required = false) final Long id, @RequestBody Brand brand)
+    public ResponseEntity<Brand> updateBrand(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Brand brand)
         throws URISyntaxException {
         log.debug("REST request to update Brand : {}, {}", id, brand);
         if (brand.getId() == null) {
@@ -107,8 +109,10 @@ public class BrandResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/brands/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Brand> partialUpdateBrand(@PathVariable(value = "id", required = false) final Long id, @RequestBody Brand brand)
-        throws URISyntaxException {
+    public ResponseEntity<Brand> partialUpdateBrand(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Brand brand
+    ) throws URISyntaxException {
         log.debug("REST request to partial update Brand partially : {}, {}", id, brand);
         if (brand.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

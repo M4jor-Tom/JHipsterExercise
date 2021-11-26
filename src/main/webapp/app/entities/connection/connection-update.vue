@@ -26,7 +26,13 @@
               data-cy="username"
               :class="{ valid: !$v.connection.username.$invalid, invalid: $v.connection.username.$invalid }"
               v-model="$v.connection.username.$model"
+              required
             />
+            <div v-if="$v.connection.username.$anyDirty && $v.connection.username.$invalid">
+              <small class="form-text text-danger" v-if="!$v.connection.username.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.connection.password')" for="connection-password"
@@ -40,7 +46,13 @@
               data-cy="password"
               :class="{ valid: !$v.connection.password.$invalid, invalid: $v.connection.password.$invalid }"
               v-model="$v.connection.password.$model"
+              required
             />
+            <div v-if="$v.connection.password.$anyDirty && $v.connection.password.$invalid">
+              <small class="form-text text-danger" v-if="!$v.connection.password.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
         </div>
         <div>

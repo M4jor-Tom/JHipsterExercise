@@ -7,16 +7,24 @@
     },
     {
       "fieldName": "deliveyAdress",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "deliveryDateTime",
-      "fieldType": "ZonedDateTime"
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "billingMethod",
       "fieldType": "BillingMethod",
-      "fieldValues": "PAYPAL,CREDIT_CARD"
+      "fieldValues": "PAYPAL,CREDIT_CARD",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
@@ -43,5 +51,5 @@
   "readOnly": false,
   "embedded": false,
   "applications": "*",
-  "changelogDate": "20211125131220"
+  "changelogDate": "20211125140127"
 }

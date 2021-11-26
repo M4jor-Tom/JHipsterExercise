@@ -15,18 +15,6 @@
             <input type="text" class="form-control" id="id" name="id" v-model="product.id" readonly />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.name')" for="product-name">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              name="name"
-              id="product-name"
-              data-cy="name"
-              :class="{ valid: !$v.product.name.$invalid, invalid: $v.product.name.$invalid }"
-              v-model="$v.product.name.$model"
-            />
-          </div>
-          <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.description')" for="product-description"
               >Description</label
             >
@@ -62,31 +50,57 @@
               data-cy="stock"
               :class="{ valid: !$v.product.stock.$invalid, invalid: $v.product.stock.$invalid }"
               v-model.number="$v.product.stock.$model"
+              required
             />
+            <div v-if="$v.product.stock.$anyDirty && $v.product.stock.$invalid">
+              <small class="form-text text-danger" v-if="!$v.product.stock.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+              <small class="form-text text-danger" v-if="!$v.product.stock.numeric" v-text="$t('entity.validation.number')">
+                This field should be a number.
+              </small>
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.tag')" for="product-tag">Tag</label>
-            <input
-              type="text"
-              class="form-control"
-              name="tag"
-              id="product-tag"
-              data-cy="tag"
-              :class="{ valid: !$v.product.tag.$invalid, invalid: $v.product.tag.$invalid }"
-              v-model="$v.product.tag.$model"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.tariff')" for="product-tariff">Tariff</label>
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.price')" for="product-price">Price</label>
             <input
               type="number"
               class="form-control"
-              name="tariff"
-              id="product-tariff"
-              data-cy="tariff"
-              :class="{ valid: !$v.product.tariff.$invalid, invalid: $v.product.tariff.$invalid }"
-              v-model.number="$v.product.tariff.$model"
+              name="price"
+              id="product-price"
+              data-cy="price"
+              :class="{ valid: !$v.product.price.$invalid, invalid: $v.product.price.$invalid }"
+              v-model.number="$v.product.price.$model"
+              required
             />
+            <div v-if="$v.product.price.$anyDirty && $v.product.price.$invalid">
+              <small class="form-text text-danger" v-if="!$v.product.price.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+              <small class="form-text text-danger" v-if="!$v.product.price.numeric" v-text="$t('entity.validation.number')">
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.modelName')" for="product-modelName"
+              >Model Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="modelName"
+              id="product-modelName"
+              data-cy="modelName"
+              :class="{ valid: !$v.product.modelName.$invalid, invalid: $v.product.modelName.$invalid }"
+              v-model="$v.product.modelName.$model"
+              required
+            />
+            <div v-if="$v.product.modelName.$anyDirty && $v.product.modelName.$invalid">
+              <small class="form-text text-danger" v-if="!$v.product.modelName.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.color')" for="product-color">Color</label>
@@ -109,15 +123,46 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.model')" for="product-model">Model</label>
-            <select class="form-control" id="product-model" data-cy="model" name="model" v-model="product.model">
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.subFamily')" for="product-subFamily"
+              >Sub Family</label
+            >
+            <select class="form-control" id="product-subFamily" data-cy="subFamily" name="subFamily" v-model="product.subFamily">
               <option v-bind:value="null"></option>
               <option
-                v-bind:value="product.model && modelOption.id === product.model.id ? product.model : modelOption"
-                v-for="modelOption in models"
-                :key="modelOption.id"
+                v-bind:value="product.subFamily && subFamilyOption.id === product.subFamily.id ? product.subFamily : subFamilyOption"
+                v-for="subFamilyOption in subFamilies"
+                :key="subFamilyOption.id"
               >
-                {{ modelOption.id }}
+                {{ subFamilyOption.id }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.brand')" for="product-brand">Brand</label>
+            <select class="form-control" id="product-brand" data-cy="brand" name="brand" v-model="product.brand">
+              <option v-bind:value="null"></option>
+              <option
+                v-bind:value="product.brand && brandOption.id === product.brand.id ? product.brand : brandOption"
+                v-for="brandOption in brands"
+                :key="brandOption.id"
+              >
+                {{ brandOption.id }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label v-text="$t('jHipsterExerciseApp.product.tags')" for="product-tags">Tags</label>
+            <select
+              class="form-control"
+              id="product-tags"
+              data-cy="tags"
+              multiple
+              name="tags"
+              v-if="product.tags !== undefined"
+              v-model="product.tags"
+            >
+              <option v-bind:value="getSelected(product.tags, tagOption)" v-for="tagOption in tags" :key="tagOption.id">
+                {{ tagOption.id }}
               </option>
             </select>
           </div>

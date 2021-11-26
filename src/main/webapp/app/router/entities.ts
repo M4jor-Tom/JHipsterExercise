@@ -27,11 +27,11 @@ const ProductUpdate = () => import('@/entities/product/product-update.vue');
 // prettier-ignore
 const ProductDetails = () => import('@/entities/product/product-details.vue');
 // prettier-ignore
-const Model = () => import('@/entities/model/model.vue');
+const Tag = () => import('@/entities/tag/tag.vue');
 // prettier-ignore
-const ModelUpdate = () => import('@/entities/model/model-update.vue');
+const TagUpdate = () => import('@/entities/tag/tag-update.vue');
 // prettier-ignore
-const ModelDetails = () => import('@/entities/model/model-details.vue');
+const TagDetails = () => import('@/entities/tag/tag-details.vue');
 // prettier-ignore
 const Brand = () => import('@/entities/brand/brand.vue');
 // prettier-ignore
@@ -44,6 +44,12 @@ const Family = () => import('@/entities/family/family.vue');
 const FamilyUpdate = () => import('@/entities/family/family-update.vue');
 // prettier-ignore
 const FamilyDetails = () => import('@/entities/family/family-details.vue');
+// prettier-ignore
+const SubFamily = () => import('@/entities/sub-family/sub-family.vue');
+// prettier-ignore
+const SubFamilyUpdate = () => import('@/entities/sub-family/sub-family-update.vue');
+// prettier-ignore
+const SubFamilyDetails = () => import('@/entities/sub-family/sub-family-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 export default [
@@ -57,13 +63,13 @@ export default [
     path: '/client/new',
     name: 'ClientCreate',
     component: ClientUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/client/:clientId/edit',
     name: 'ClientEdit',
     component: ClientUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/client/:clientId/view',
@@ -81,13 +87,13 @@ export default [
     path: '/order/new',
     name: 'OrderCreate',
     component: OrderUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/order/:orderId/edit',
     name: 'OrderEdit',
     component: OrderUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/order/:orderId/view',
@@ -105,13 +111,13 @@ export default [
     path: '/connection/new',
     name: 'ConnectionCreate',
     component: ConnectionUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/connection/:connectionId/edit',
     name: 'ConnectionEdit',
     component: ConnectionUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/connection/:connectionId/view',
@@ -129,13 +135,13 @@ export default [
     path: '/product/new',
     name: 'ProductCreate',
     component: ProductUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/product/:productId/edit',
     name: 'ProductEdit',
     component: ProductUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/product/:productId/view',
@@ -144,27 +150,27 @@ export default [
     meta: { authorities: [Authority.USER] },
   },
   {
-    path: '/model',
-    name: 'Model',
-    component: Model,
+    path: '/tag',
+    name: 'Tag',
+    component: Tag,
     meta: { authorities: [Authority.USER] },
   },
   {
-    path: '/model/new',
-    name: 'ModelCreate',
-    component: ModelUpdate,
-    meta: { authorities: [Authority.USER] },
+    path: '/tag/new',
+    name: 'TagCreate',
+    component: TagUpdate,
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
-    path: '/model/:modelId/edit',
-    name: 'ModelEdit',
-    component: ModelUpdate,
-    meta: { authorities: [Authority.USER] },
+    path: '/tag/:tagId/edit',
+    name: 'TagEdit',
+    component: TagUpdate,
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
-    path: '/model/:modelId/view',
-    name: 'ModelView',
-    component: ModelDetails,
+    path: '/tag/:tagId/view',
+    name: 'TagView',
+    component: TagDetails,
     meta: { authorities: [Authority.USER] },
   },
   {
@@ -177,13 +183,13 @@ export default [
     path: '/brand/new',
     name: 'BrandCreate',
     component: BrandUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/brand/:brandId/edit',
     name: 'BrandEdit',
     component: BrandUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/brand/:brandId/view',
@@ -201,18 +207,42 @@ export default [
     path: '/family/new',
     name: 'FamilyCreate',
     component: FamilyUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/family/:familyId/edit',
     name: 'FamilyEdit',
     component: FamilyUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/family/:familyId/view',
     name: 'FamilyView',
     component: FamilyDetails,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/sub-family',
+    name: 'SubFamily',
+    component: SubFamily,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/sub-family/new',
+    name: 'SubFamilyCreate',
+    component: SubFamilyUpdate,
+    meta: { authorities: [Authority.ADMIN] },
+  },
+  {
+    path: '/sub-family/:subFamilyId/edit',
+    name: 'SubFamilyEdit',
+    component: SubFamilyUpdate,
+    meta: { authorities: [Authority.ADMIN] },
+  },
+  {
+    path: '/sub-family/:subFamilyId/view',
+    name: 'SubFamilyView',
+    component: SubFamilyDetails,
     meta: { authorities: [Authority.USER] },
   },
   // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here

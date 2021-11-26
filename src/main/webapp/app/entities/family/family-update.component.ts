@@ -1,5 +1,7 @@
 import { Component, Vue, Inject } from 'vue-property-decorator';
 
+import { required } from 'vuelidate/lib/validators';
+
 import AlertService from '@/shared/alert/alert.service';
 
 import { IFamily, Family } from '@/shared/model/family.model';
@@ -7,7 +9,9 @@ import FamilyService from './family.service';
 
 const validations: any = {
   family: {
-    name: {},
+    name: {
+      required,
+    },
   },
 };
 

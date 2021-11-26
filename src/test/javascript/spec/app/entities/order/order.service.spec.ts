@@ -34,7 +34,7 @@ describe('Service Tests', () => {
     beforeEach(() => {
       service = new OrderService();
       currentDate = new Date();
-      elemDefault = new Order(123, 0, 'AAAAAAA', currentDate, BillingMethod.PAYPAL);
+      elemDefault = new Order(123, 0, 'AAAAAAA', currentDate, 0, BillingMethod.PAYPAL);
     });
 
     describe('Service methods', () => {
@@ -100,6 +100,7 @@ describe('Service Tests', () => {
             sum: 1,
             deliveyAdress: 'BBBBBB',
             deliveryDateTime: dayjs(currentDate).format(DATE_TIME_FORMAT),
+            quantity: 1,
             billingMethod: 'BBBBBB',
           },
           elemDefault
@@ -134,6 +135,7 @@ describe('Service Tests', () => {
           {
             sum: 1,
             deliveryDateTime: dayjs(currentDate).format(DATE_TIME_FORMAT),
+            billingMethod: 'BBBBBB',
           },
           new Order()
         );
@@ -169,6 +171,7 @@ describe('Service Tests', () => {
             sum: 1,
             deliveyAdress: 'BBBBBB',
             deliveryDateTime: dayjs(currentDate).format(DATE_TIME_FORMAT),
+            quantity: 1,
             billingMethod: 'BBBBBB',
           },
           elemDefault

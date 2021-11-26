@@ -11,9 +11,10 @@
         "order": "Order",
         "connection": "Connection",
         "product": "Product",
-        "model": "Model",
+        "tag": "Tag",
         "brand": "Brand",
         "family": "Family",
+        "subFamily": "Sub Family",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

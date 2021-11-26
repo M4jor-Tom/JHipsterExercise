@@ -116,6 +116,40 @@ class ConnectionResourceIT {
 
     @Test
     @Transactional
+    void checkUsernameIsRequired() throws Exception {
+        int databaseSizeBeforeTest = connectionRepository.findAll().size();
+        // set the field null
+        connection.setUsername(null);
+
+        // Create the Connection, which fails.
+
+        restConnectionMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(connection)))
+            .andExpect(status().isBadRequest());
+
+        List<Connection> connectionList = connectionRepository.findAll();
+        assertThat(connectionList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkPasswordIsRequired() throws Exception {
+        int databaseSizeBeforeTest = connectionRepository.findAll().size();
+        // set the field null
+        connection.setPassword(null);
+
+        // Create the Connection, which fails.
+
+        restConnectionMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(connection)))
+            .andExpect(status().isBadRequest());
+
+        List<Connection> connectionList = connectionRepository.findAll();
+        assertThat(connectionList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllConnections() throws Exception {
         // Initialize the database
         connectionRepository.saveAndFlush(connection);

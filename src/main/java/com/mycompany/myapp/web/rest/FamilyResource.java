@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +53,7 @@ public class FamilyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/families")
-    public ResponseEntity<Family> createFamily(@RequestBody Family family) throws URISyntaxException {
+    public ResponseEntity<Family> createFamily(@Valid @RequestBody Family family) throws URISyntaxException {
         log.debug("REST request to save Family : {}", family);
         if (family.getId() != null) {
             throw new BadRequestAlertException("A new family cannot already have an ID", ENTITY_NAME, "idexists");
@@ -74,8 +76,10 @@ public class FamilyResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/families/{id}")
-    public ResponseEntity<Family> updateFamily(@PathVariable(value = "id", required = false) final Long id, @RequestBody Family family)
-        throws URISyntaxException {
+    public ResponseEntity<Family> updateFamily(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Family family
+    ) throws URISyntaxException {
         log.debug("REST request to update Family : {}, {}", id, family);
         if (family.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -109,7 +113,7 @@ public class FamilyResource {
     @PatchMapping(value = "/families/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Family> partialUpdateFamily(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Family family
+        @NotNull @RequestBody Family family
     ) throws URISyntaxException {
         log.debug("REST request to partial update Family partially : {}, {}", id, family);
         if (family.getId() == null) {

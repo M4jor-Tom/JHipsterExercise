@@ -8,6 +8,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,7 +48,7 @@ public class ProductResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/products")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) throws URISyntaxException {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product) throws URISyntaxException {
         log.debug("REST request to save Product : {}", product);
         if (product.getId() != null) {
             throw new BadRequestAlertException("A new product cannot already have an ID", ENTITY_NAME, "idexists");
@@ -69,8 +71,10 @@ public class ProductResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/products/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id", required = false) final Long id, @RequestBody Product product)
-        throws URISyntaxException {
+    public ResponseEntity<Product> updateProduct(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody Product product
+    ) throws URISyntaxException {
         log.debug("REST request to update Product : {}, {}", id, product);
         if (product.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -104,7 +108,7 @@ public class ProductResource {
     @PatchMapping(value = "/products/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Product> partialUpdateProduct(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Product product
+        @NotNull @RequestBody Product product
     ) throws URISyntaxException {
         log.debug("REST request to partial update Product partially : {}, {}", id, product);
         if (product.getId() == null) {
@@ -121,9 +125,6 @@ public class ProductResource {
         Optional<Product> result = productRepository
             .findById(product.getId())
             .map(existingProduct -> {
-                if (product.getName() != null) {
-                    existingProduct.setName(product.getName());
-                }
                 if (product.getDescription() != null) {
                     existingProduct.setDescription(product.getDescription());
                 }
@@ -133,11 +134,11 @@ public class ProductResource {
                 if (product.getStock() != null) {
                     existingProduct.setStock(product.getStock());
                 }
-                if (product.getTag() != null) {
-                    existingProduct.setTag(product.getTag());
+                if (product.getPrice() != null) {
+                    existingProduct.setPrice(product.getPrice());
                 }
-                if (product.getTariff() != null) {
-                    existingProduct.setTariff(product.getTariff());
+                if (product.getModelName() != null) {
+                    existingProduct.setModelName(product.getModelName());
                 }
                 if (product.getColor() != null) {
                     existingProduct.setColor(product.getColor());
@@ -156,12 +157,13 @@ public class ProductResource {
     /**
      * {@code GET  /products} : get all the products.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of products in body.
      */
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Products");
-        return productRepository.findAll();
+        return productRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -173,7 +175,7 @@ public class ProductResource {
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         log.debug("REST request to get Product : {}", id);
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(product);
     }
 

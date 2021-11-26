@@ -8,7 +8,11 @@ import ProductUpdateComponent from '@/entities/product/product-update.vue';
 import ProductClass from '@/entities/product/product-update.component';
 import ProductService from '@/entities/product/product.service';
 
-import ModelService from '@/entities/model/model.service';
+import SubFamilyService from '@/entities/sub-family/sub-family.service';
+
+import BrandService from '@/entities/brand/brand.service';
+
+import TagService from '@/entities/tag/tag.service';
 
 import OrderService from '@/entities/order/order.service';
 import AlertService from '@/shared/alert/alert.service';
@@ -44,7 +48,11 @@ describe('Component Tests', () => {
           productService: () => productServiceStub,
           alertService: () => new AlertService(),
 
-          modelService: () => new ModelService(),
+          subFamilyService: () => new SubFamilyService(),
+
+          brandService: () => new BrandService(),
+
+          tagService: () => new TagService(),
 
           orderService: () => new OrderService(),
         },
