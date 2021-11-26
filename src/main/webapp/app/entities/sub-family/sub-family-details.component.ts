@@ -4,12 +4,19 @@ import { ISubFamily } from '@/shared/model/sub-family.model';
 import SubFamilyService from './sub-family.service';
 import AlertService from '@/shared/alert/alert.service';
 
+import AccountService from '@/account/account.service';
+import LoginService from '@/account/login.service';
+
 @Component
 export default class SubFamilyDetails extends Vue {
   @Inject('subFamilyService') private subFamilyService: () => SubFamilyService;
   @Inject('alertService') private alertService: () => AlertService;
 
   public subFamily: ISubFamily = {};
+  @Inject('accountService') private accountService: () => AccountService;
+  @Inject('loginService')
+  private loginService: () => LoginService;
+  private hasAnyAuthorityValue = false;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -32,5 +39,18 @@ export default class SubFamilyDetails extends Vue {
 
   public previousState() {
     this.$router.go(-1);
+  }
+  
+  public get authenticated(): boolean {
+    return this.$store.getters.authenticated;
+  }
+
+  public hasAnyAuthority(authorities: any): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authorities)
+      .then(value => {
+        this.hasAnyAuthorityValue = value;
+      });
+    return this.hasAnyAuthorityValue;
   }
 }

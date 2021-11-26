@@ -8,7 +8,7 @@
           <span v-text="$t('jHipsterExerciseApp.tag.home.refreshListLabel')">Refresh List</span>
         </button>
         <router-link :to="{ name: 'TagCreate' }" custom v-slot="{ navigate }">
-          <button @click="navigate" id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-tag">
+          <button v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated" @click="navigate" id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-primary jh-create-entity create-tag">
             <font-awesome-icon icon="plus"></font-awesome-icon>
             <span v-text="$t('jHipsterExerciseApp.tag.home.createLabel')"> Create a new Tag </span>
           </button>
@@ -43,12 +43,13 @@
                   </button>
                 </router-link>
                 <router-link :to="{ name: 'TagEdit', params: { tagId: tag.id } }" custom v-slot="{ navigate }">
-                  <button @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
+                  <button v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated" @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
                     <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
                     <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>
                 </router-link>
                 <b-button
+                  v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
                   v-on:click="prepareRemove(tag)"
                   variant="danger"
                   class="btn btn-sm"
