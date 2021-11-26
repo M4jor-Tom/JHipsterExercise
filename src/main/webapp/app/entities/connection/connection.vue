@@ -9,6 +9,7 @@
         </button>
         <router-link :to="{ name: 'ConnectionCreate' }" custom v-slot="{ navigate }">
           <button
+            v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
             @click="navigate"
             id="jh-create-entity"
             data-cy="entityCreateButton"
@@ -50,12 +51,13 @@
                   </button>
                 </router-link>
                 <router-link :to="{ name: 'ConnectionEdit', params: { connectionId: connection.id } }" custom v-slot="{ navigate }">
-                  <button @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
+                  <button v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated" @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
                     <font-awesome-icon icon="pencil-alt"></font-awesome-icon>
                     <span class="d-none d-md-inline" v-text="$t('entity.action.edit')">Edit</span>
                   </button>
                 </router-link>
                 <b-button
+                  v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
                   v-on:click="prepareRemove(connection)"
                   variant="danger"
                   class="btn btn-sm"

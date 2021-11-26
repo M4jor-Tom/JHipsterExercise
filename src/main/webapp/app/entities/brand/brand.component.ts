@@ -6,6 +6,9 @@ import { IBrand } from '@/shared/model/brand.model';
 
 import BrandService from './brand.service';
 import AlertService from '@/shared/alert/alert.service';
+import AccountService from '@/account/account.service';
+import LoginService from '@/account/login.service';
+
 
 @Component({
   mixins: [Vue2Filters.mixin],
@@ -15,6 +18,10 @@ export default class Brand extends Vue {
   @Inject('alertService') private alertService: () => AlertService;
 
   private removeId: number = null;
+  @Inject('accountService') private accountService: () => AccountService;
+  @Inject('loginService')
+  private loginService: () => LoginService;
+  private hasAnyAuthorityValue = false;
 
   public brands: IBrand[] = [];
 
@@ -79,4 +86,20 @@ export default class Brand extends Vue {
   public closeDialog(): void {
     (<any>this.$refs.removeEntity).hide();
   }
+  
+  public get authenticated(): boolean {
+    return this.$store.getters.authenticated;
+  }
+
+  public hasAnyAuthority(authorities: any): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authorities)
+      .then(value => {
+        this.hasAnyAuthorityValue = value;
+      });
+    return this.hasAnyAuthorityValue;
+  }
+
 }
+
+

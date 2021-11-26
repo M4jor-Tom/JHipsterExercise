@@ -4,10 +4,17 @@ import { IFamily } from '@/shared/model/family.model';
 import FamilyService from './family.service';
 import AlertService from '@/shared/alert/alert.service';
 
+import AccountService from '@/account/account.service';
+import LoginService from '@/account/login.service';
+
 @Component
 export default class FamilyDetails extends Vue {
   @Inject('familyService') private familyService: () => FamilyService;
   @Inject('alertService') private alertService: () => AlertService;
+  @Inject('accountService') private accountService: () => AccountService;
+  @Inject('loginService')
+  private loginService: () => LoginService;
+  private hasAnyAuthorityValue = false;
 
   public family: IFamily = {};
 
@@ -32,5 +39,18 @@ export default class FamilyDetails extends Vue {
 
   public previousState() {
     this.$router.go(-1);
+  }
+  
+  public get authenticated(): boolean {
+    return this.$store.getters.authenticated;
+  }
+
+  public hasAnyAuthority(authorities: any): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authorities)
+      .then(value => {
+        this.hasAnyAuthorityValue = value;
+      });
+    return this.hasAnyAuthorityValue;
   }
 }
