@@ -29,16 +29,46 @@
       <table class="table table-striped" aria-describedby="clients">
         <thead>
           <tr>
-            <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.addedDateTime')">Added Date Time</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.lastName')">Last Name</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.firstName')">First Name</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.email')">Email</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.phone')">Phone</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.adress')">Adress</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.country')">Country</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.postalCode')">Postal Code</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.client.connection')">Connection</span></th>
+            <th scope="col" v-on:click="changeOrder('id')">
+              <span v-text="$t('global.field.id')">ID</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('addedDateTime')">
+              <span v-text="$t('Added DateTime')">addedDateTime</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'addedDateTime'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('lastName')">
+              <span v-text="$t('lastName')">Last Name</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'lastName'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('firstName')">
+              <span v-text="$t('firstName')">first Name</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'firstName'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('email')">
+              <span v-text="$t('Email')">email</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'email'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('phone')">
+              <span v-text="$t('Phone')">phone</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'phone'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('adress')">
+              <span v-text="$t('Adress')">adress</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'adress'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('country')">
+              <span v-text="$t('Country')">country</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'country'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('postalCode')">
+              <span v-text="$t('PostalCode')">postalCode</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'postalCode'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('connection')">
+              <span v-text="$t('Connection')">connection</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'connection'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>

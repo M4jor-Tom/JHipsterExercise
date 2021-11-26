@@ -29,16 +29,46 @@
       <table class="table table-striped" aria-describedby="products">
         <thead>
           <tr>
-            <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.description')">Description</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.photoId')">Photo Id</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.stock')">Stock</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.price')">Price</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.modelName')">Model Name</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.color')">Color</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.subFamily')">Sub Family</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.brand')">Brand</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.product.tags')">Tags</span></th>
+            <th scope="col" v-on:click="changeOrder('id')">
+              <span v-text="$t('global.field.id')">ID</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('description')">
+              <span v-text="$t('description')">description</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'description'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('photoId')">
+              <span v-text="$t('photoId')">photoId</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'photoId'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('stock')">
+              <span v-text="$t('stock')">stock</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'stock'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('price')">
+              <span v-text="$t('price')">price</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'price'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('modelName')">
+              <span v-text="$t('modelName')">modelName</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'modelName'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('color')">
+              <span v-text="$t('color')">color</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'color'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('subFamily')">
+              <span v-text="$t('subFamily')">subFamily</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'subFamily'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('brand')">
+              <span v-text="$t('brand')">brand</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'brand'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('tags')">
+              <span v-text="$t('tags')">tags</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tags'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>
