@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { IClient } from '@/shared/model/client.model';
+import buildPaginationQueryOpts from '@/shared/sort/sorts';
 
 const baseApiUrl = 'api/clients';
 
@@ -18,10 +19,10 @@ export default class ClientService {
     });
   }
 
-  public retrieve(): Promise<any> {
+  public retrieve(req?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(baseApiUrl)
+        .get(`api/clients?${buildPaginationQueryOpts(req)}`)
         .then(res => {
           resolve(res);
         })

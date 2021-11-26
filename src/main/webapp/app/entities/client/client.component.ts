@@ -19,6 +19,8 @@ export default class Client extends Vue {
   public clients: IClient[] = [];
 
   public isFetching = false;
+  public propOrder = 'id';
+  public reverse = false;
 
   public mounted(): void {
     this.retrieveAllClients();
@@ -31,7 +33,9 @@ export default class Client extends Vue {
   public retrieveAllClients(): void {
     this.isFetching = true;
     this.clientService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.clients = res.data;
@@ -78,5 +82,23 @@ export default class Client extends Vue {
 
   public closeDialog(): void {
     (<any>this.$refs.removeEntity).hide();
+  }
+
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllClients();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 }
