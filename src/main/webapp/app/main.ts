@@ -38,6 +38,9 @@ import FamilyService from '@/entities/family/family.service';
 import SubFamilyService from '@/entities/sub-family/sub-family.service';
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
+
 /* tslint:enable */
 Vue.config.productionTip = false;
 config.initVueApp(Vue);
