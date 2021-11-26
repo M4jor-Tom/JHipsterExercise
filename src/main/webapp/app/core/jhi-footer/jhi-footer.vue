@@ -42,17 +42,24 @@
   padding: 0;
   box-sizing: border-box;
 }
+html {
+  height: 100%;
+}
 body {
   background: #fcfcfc;
   font-family: sans-serif;
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 260px;
 }
 footer {
+  position: absolute;
   bottom: 0;
+  width: 100%;
+  height: 260px;
   left: 0;
   right: 0;
   background: #111;
-  height: auto;
-
   padding-top: 40px;
   color: #fff;
 }
