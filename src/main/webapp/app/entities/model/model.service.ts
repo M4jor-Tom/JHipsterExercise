@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { IModel } from '@/shared/model/model.model';
-import buildPaginationQueryOpts from '@/shared/sort/sorts';
 
 const baseApiUrl = 'api/models';
 
@@ -19,10 +18,10 @@ export default class ModelService {
     });
   }
 
-  public retrieve(req?: any): Promise<any> {
+  public retrieve(): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(`api/families?${buildPaginationQueryOpts(req)}`)
+        .get(baseApiUrl)
         .then(res => {
           resolve(res);
         })
