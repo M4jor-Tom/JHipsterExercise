@@ -24,6 +24,14 @@
             <span v-text="$t('global.menu.home')">Home</span>
           </span>
         </b-nav-item>
+
+        <b-nav-item to="/" exact>
+          <span>
+            <font-awesome-icon icon="shopping-bag" />
+            <span v-text="$t('global.menu.cart')">Home</span>
+          </span>
+        </b-nav-item>
+
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="th-list" />
