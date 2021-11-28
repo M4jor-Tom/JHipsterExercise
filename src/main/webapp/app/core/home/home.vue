@@ -1,5 +1,6 @@
 <template>
   <div class="home row">
+  
     <div class="container">
       <div class="card">
         <p class="price">$10000.0 USD</p>

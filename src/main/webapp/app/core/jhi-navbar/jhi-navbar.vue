@@ -25,7 +25,7 @@
           </span>
         </b-nav-item>
 
-        <b-nav-item to="/" exact>
+        <b-nav-item to="/cart" exact>
           <span>
             <font-awesome-icon icon="shopping-bag" />
             <span v-text="$t('global.menu.cart')">Home</span>

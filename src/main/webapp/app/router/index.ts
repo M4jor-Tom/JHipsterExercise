@@ -13,6 +13,7 @@ import account from '@/router/account';
 import admin from '@/router/admin';
 import entities from '@/router/entities';
 import pages from '@/router/pages';
+import cart from './cart';
 
 Vue.use(Router);
 
@@ -39,6 +40,7 @@ export default new Router({
     },
     ...account,
     ...admin,
+    ...cart,
     ...entities,
     ...pages
   ]
