@@ -46,6 +46,12 @@
           </span>
         </b-nav-item>
 
+        <b-nav-item to="/paypal" exact>
+          <span>
+            <font-awesome-icon icon="paypal" />
+            <span v-text="$t('global.menu.home')">Paypal</span>
+          </span>
+        </b-nav-item>
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="th-list" />
