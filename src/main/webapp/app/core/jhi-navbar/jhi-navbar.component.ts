@@ -16,7 +16,7 @@ export default class JhiNavbar extends Vue {
   private hasAnyAuthorityValue = false;
   private hasAdminAuthorityValue = false;
   private hasUserAuthorityValue = false;
-  private hasVendorAuthorityValue = false;
+  private hasSellerAuthorityValue = false;
 
   created() {
     this.translationService().refreshTranslation(this.currentLanguage);
@@ -79,13 +79,13 @@ export default class JhiNavbar extends Vue {
     return this.hasUserAuthorityValue;
   }
 
-  public hasVendorAuthority(authority: string): boolean {
+  public hasSellerAuthority(authority: string): boolean {
     this.accountService()
       .hasAnyAuthorityAndCheckAuth(authority)
       .then(value => {
-        this.hasVendorAuthorityValue = value;
+        this.hasSellerAuthorityValue = value;
       });
-    return this.hasVendorAuthorityValue;
+    return this.hasSellerAuthorityValue;
   }
 
   public get openAPIEnabled(): boolean {
