@@ -2,7 +2,7 @@
   <b-navbar data-cy="navbar" toggleable="md" type="dark" class="jh-navbar">
     <b-navbar-brand class="logo" b-link to="/">
       <span class="logo-img"></span>
-      <span v-text="$t('global.title')" class="navbar-title">JHipsterExercise</span>
+      <span v-text="$t('global.title')" class="navbar-title">JHipsterExercise</span> <span class="navbar-version">{{ version }}</span>
     </b-navbar-brand>
     <b-navbar-toggle
       right
@@ -24,43 +24,17 @@
             <span v-text="$t('global.menu.home')">Home</span>
           </span>
         </b-nav-item>
+        <b-nav-item to="/paypal" exact>
+          <span>
+            <font-awesome-icon icon="paypal" />
+            <span v-text="$t('global.menu.home')">Paypal</span>
+          </span>
+        </b-nav-item>
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="th-list" />
             <span class="no-bold" v-text="$t('global.menu.entities.main')">Entities</span>
           </span>
-          <b-dropdown-item to="/client">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.client')">Client</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/order">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.order')">Order</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/connection">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.connection')">Connection</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/product">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.product')">Product</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/tag">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.tag')">Tag</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/brand">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.brand')">Brand</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/family">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.family')">Family</span>
-          </b-dropdown-item>
-          <b-dropdown-item to="/sub-family">
-            <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.subFamily')">Sub Family</span>
-          </b-dropdown-item>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </b-nav-item-dropdown>
         <b-nav-item-dropdown

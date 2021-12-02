@@ -1,15 +1,14 @@
 <template>
-  <div class="home row">
-    <div class="col-md-3">
-      <span class="hipster img-fluid rounded"></span>
-    </div>
+  <div class="paypal row">
     <div class="col-md-9">
-      <h1 class="display-4" v-text="$t('home.title')">Welcome, Java Hipster!</h1>
-      <p class="lead" v-text="$t('home.subtitle')">This is your homepage</p>
+      <h1 class="display-4" v-text="$t('paypal.title')">Welcome, Java Hipster!</h1>
+      <p class="lead" v-text="$t('paypal.subtitle')">This is your paypalpage</p>
 
       <div>
         <div class="alert alert-success" v-if="authenticated">
-          <span v-if="username" v-text="$t('home.logged.message', { username: username })">You are logged in as user "{{ username }}"</span>
+          <span v-if="username" v-text="$t('paypal.logged.message', { username: username })"
+            >You are logged in as user "{{ username }}"</span
+          >
         </div>
 
         <div class="alert alert-warning" v-if="!authenticated">
@@ -28,12 +27,12 @@
         </div>
       </div>
 
-      <p v-text="$t('home.question')">If you have any question on JHipster:</p>
+      <p v-text="$t('paypal.question')">If you have any question on JHipster:</p>
 
       <ul>
         <li>
-          <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" v-text="$t('home.link.homepage')"
-            >JHipster homepage</a
+          <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" v-text="$t('paypal.link.paypalpage')"
+            >JHipster paypalpage</a
           >
         </li>
         <li>
@@ -41,7 +40,7 @@
             href="http://stackoverflow.com/tags/jhipster/info"
             target="_blank"
             rel="noopener noreferrer"
-            v-text="$t('home.link.stackoverflow')"
+            v-text="$t('paypal.link.stackoverflow')"
             >JHipster on Stack Overflow</a
           >
         </li>
@@ -50,30 +49,33 @@
             href="https://github.com/jhipster/generator-jhipster/issues?state=open"
             target="_blank"
             rel="noopener noreferrer"
-            v-text="$t('home.link.bugtracker')"
+            v-text="$t('paypal.link.bugtracker')"
             >JHipster bug tracker</a
           >
         </li>
         <li>
-          <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('home.link.chat')"
+          <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('paypal.link.chat')"
             >JHipster public chat room</a
           >
         </li>
         <li>
-          <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('home.link.follow')"
+          <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('paypal.link.follow')"
             >follow @jhipster on Twitter</a
           >
         </li>
       </ul>
 
       <p>
-        <span v-text="$t('home.like')">If you like JHipster, don't forget to give us a star on</span>
-        <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('home.github')"
+        <span v-text="$t('paypal.like')">If you like JHipster, don't forget to give us a star on</span>
+        <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('paypal.github')"
           >GitHub</a
         >!
       </p>
+      <div id="paypal-button-container"></div>
     </div>
   </div>
 </template>
 
-<script lang="ts" src="./home.component.ts"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AZyVvavpkhKOdesqvT8jWNnYsgsZ81UiBvTND4swJEs9oT4AjXU-biqVsTC657gHpxWFcdzX43BFsem1"></script>
+<script src="./paypal.js"></script>
+<script lang="ts" src="./paypal.component.ts"></script>
