@@ -1,16 +1,14 @@
 <template>
   <div class="home row">
     <div class="container">
-      <div id ="fefe" class="card">
+      <div class="card">
         <p class="price">$10000.0 USD</p>
 
         <i class="info fas fa-info-circle"></i>
         <p class="text">Wonderful Ferrari 458.</p>
 
         <div class="imgBx">
-          <a href="http://localhost:9000/ItemDetails">
           <img src="/content/images/ferrari458.png" />
-          </a>
         </div>
         <div class="contentBx">
             <h2>Ferrari 458</h2>
@@ -28,145 +26,6 @@
             <span></span>
             <span></span>
           </div>
-          <button>Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <p class="price">$20000.00 USD</p>
-        <i class="info fas fa-info-circle"></i>
-        <p class="text">Wonderful Lamborghini Gallardo.</p>
-        <div class="imgBx">
-          <img src="/content/images/lamborghiniGallardo.png" />
-        </div>
-        <div class="contentBx">
-          <h2>Lamborghini Gallardo</h2>
-          <div class="size">
-            <h3>Size :</h3>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>
-          </div>
-          <div class="color">
-            <h3>Color:</h3>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <button>Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <p class="price">$30000.0 USD</p>
-        <i class="info fas fa-info-circle"></i>
-        <p class="text">Wonderful Mclaren P1.</p>
-        <div class="imgBx">
-          <img src="/content/images/mclarenP1.png" />
-        </div>
-        <div class="contentBx">
-          <h2>Mclaren P1</h2>
-          <div class="size">
-            <h3>Size :</h3>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>
-          </div>
-          <div class="color">
-            <h3>Color:</h3>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-
-          <button>Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <p class="price">$15000.0 USD</p>
-
-        <i class="info fas fa-info-circle"></i>
-        <p class="text">Wonderful Lotus Elise.</p>
-
-        <div class="imgBx">
-          <img src="/content/images/lotusElise.png" />
-        </div>
-        <div class="contentBx">
-          <h2>Lotus Elise</h2>
-          <div class="size">
-            <h3>Size :</h3>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>
-          </div>
-          <div class="color">
-            <h3>Color:</h3>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <button>Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <p class="price">$25000.0 USD</p>
-        <i class="info fas fa-info-circle"></i>
-        <p class="text">Wonderful Mercedes Class G.</p>
-        <div class="imgBx">
-          <img src="/content/images/mercedesClassG.png" />
-        </div>
-        <div class="contentBx">
-          <h2>Mercedes Class G</h2>
-          <div class="size">
-            <h3>Size :</h3>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>
-          </div>
-          <div class="color">
-            <h3>Color:</h3>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <button>Add to Cart</button>
-        </div>
-      </div>
-
-      <div class="card">
-        <p class="price">$35000.0 USD</p>
-        <i class="info fas fa-info-circle"></i>
-        <p class="text">Wonderful Bugatti Chiron.</p>
-        <div class="imgBx">
-          <img src="/content/images/bugattiChiron.png" />
-        </div>
-        <div class="contentBx">
-          <h2>Bugatti Chiron</h2>
-          <div class="size">
-            <h3>Size :</h3>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>
-          </div>
-          <div class="color">
-            <h3>Color:</h3>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-
           <button>Add to Cart</button>
         </div>
       </div>
@@ -408,3 +267,7 @@
   display: block;
 }
 </style>
+
+
+
+<script lang="ts" src="./detailsitem.component.ts"></script>
