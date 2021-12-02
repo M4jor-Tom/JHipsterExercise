@@ -5,6 +5,7 @@
     "menu": {
       "home": "Home",
       "cart": "cart",
+      "list_product": "Product",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entità",

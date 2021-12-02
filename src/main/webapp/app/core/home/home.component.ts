@@ -22,6 +22,9 @@ export default class Home extends Vue {
     return this.$store.getters.account?.login ?? '';
   }
 
+  public goProduct(param) : void{
+  this.$router.push(param);
+}
 
   
 

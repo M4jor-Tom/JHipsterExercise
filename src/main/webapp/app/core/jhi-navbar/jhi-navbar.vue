@@ -24,7 +24,12 @@
             <span v-text="$t('global.menu.home')">Home</span>
           </span>
         </b-nav-item>
-
+        <b-nav-item to="/list_produit" exact>
+          <span>
+            <font-awesome-icon icon="gifts" />
+            <span v-text="$t('global.menu.list_product')">Home</span>
+          </span>
+        </b-nav-item>
         <b-nav-item to="/cart" exact>
           <span>
             <font-awesome-icon icon="shopping-bag" />
