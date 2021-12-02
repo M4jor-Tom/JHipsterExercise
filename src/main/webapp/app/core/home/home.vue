@@ -10,16 +10,16 @@
 
     <div class="separate-3_nav"> 
 
-      <div class="category"  v-on:click="goProduct('/list_produit?param1=enfant')">
+      <div class="category"  v-on:click="goProduct('/list_produit?cat=enfant')">
           <img class="img_category" src="/content/images/home/Enfant.png"/>
           <p class="centered customfont text_category" > Enfant </p>
       </div>
-      <div class="category"  v-on:click="goProduct('/list_produit')">
+      <div class="category"  v-on:click="goProduct('/list_produit?cat=adulte')">
           <img class="img_category" src="/content/images/home/Adulte.png"/>
-          <p class="centered customfont text_category" > Adult </p>
+          <p class="centered customfont text_category" > Adulte </p>
       </div>
 
-      <div class="category"  v-on:click="goProduct('/list_produit')">
+      <div class="category"  v-on:click="goProduct('/list_produit?cat=alcool')">
           <img class="img_category" src="/content/images/home/BonVivant.png"/>          
           <p class="centered customfont text_category" > Bon vivant </p>
       </div>

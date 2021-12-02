@@ -1,4 +1,5 @@
 import { Component,Inject, Vue } from 'vue-property-decorator';
+import { ids } from 'webpack';
 import ListProduitService from './List_Produit.component.service';
 
 @Component
@@ -45,7 +46,6 @@ export default class JhiListProduitComponent extends Vue {
   public loadAll(): void {
     this.isLoading = true;
 
-    console.log(this.$route.query.param1);
 
     this.ListProduitService()
       .retrieve({
@@ -56,20 +56,32 @@ export default class JhiListProduitComponent extends Vue {
       .then(res => {
         this.isLoading = false;
         this.products = res.data;
+        if(this.$route.query.cat != null)
+        {
+          for(var i = 0;i < this.products.length;i++)
+          {
+            if(!(this.products[i].subFamily.name === this.$route.query.cat))
+            {
+              this.products.splice(i,1);
+              i -= 1;
+            }  
+          } 
+        }
+
         this.totalItems = Number(res.headers['x-total-count']);
         this.queryCount = this.totalItems;
       })
       .catch(() => {
         this.isLoading = false;
       });
+
   }
-
-
     public sort(): any {
     const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
     if (this.propOrder !== 'id') {
       result.push('id');
     }
     return result;
-  }
+  } 
+
 }
