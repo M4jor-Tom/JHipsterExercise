@@ -7,7 +7,7 @@ public final class AuthoritiesConstants {
 
     public static final String ADMIN = "ROLE_ADMIN";
 
-    public static final String VENDOR = "ROLE_VENDOR";
+    public static final String SELLER = "ROLE_SELLER";
 
     public static final String USER = "ROLE_USER";
 

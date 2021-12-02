@@ -19,7 +19,7 @@
     <div class="topnav">
       <div class="search-container">
         <form action="/action_page.php">
-          <input type="text" placeholder="Search.." name="search">
+          <input type="text" placeholder="Search.." name="search" />
           <button type="submit"><i class="fa fa-search"></i></button>
         </form>
       </div>
@@ -57,7 +57,7 @@
           </b-dropdown-item>
           <b-dropdown-item
             to="/order"
-            v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasVendorAuthority('ROLE_VENDOR')"
+            v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasSellerAuthority('ROLE_SELLER')"
           >
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.order')">Order</span>
@@ -68,28 +68,28 @@
           </b-dropdown-item>
           <b-dropdown-item
             to="/product"
-            v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasVendorAuthority('ROLE_VENDOR')"
+            v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasSellerAuthority('ROLE_SELLER')"
           >
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.product')">Product</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/tag" v-if="hasAdminAuthority('ROLE_ADMIN') || hasVendorAuthority('ROLE_VENDOR')">
+          <b-dropdown-item to="/tag" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.tag')">Tag</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/brand" v-if="hasAdminAuthority('ROLE_ADMIN') || hasVendorAuthority('ROLE_VENDOR')">
+          <b-dropdown-item to="/brand" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.brand')">Brand</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/family" v-if="hasAdminAuthority('ROLE_ADMIN') || hasVendorAuthority('ROLE_VENDOR')">
+          <b-dropdown-item to="/family" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.family')">Family</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/sub-family" v-if="hasAdminAuthority('ROLE_ADMIN') || hasVendorAuthority('ROLE_VENDOR')">
+          <b-dropdown-item to="/sub-family" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.subFamily')">Sub Family</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/seller">
+          <b-dropdown-item to="/seller" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.seller')">Seller</span>
           </b-dropdown-item>
@@ -294,7 +294,7 @@
   filter: drop-shadow(0 0 0.05rem white);
 }
 
-.topnav input[type=text] {
+.topnav input[type='text'] {
   padding: 6px;
   margin-top: 8px;
   font-size: 17px;
