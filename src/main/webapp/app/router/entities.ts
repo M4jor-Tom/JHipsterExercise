@@ -255,25 +255,25 @@ export default [
     path: '/seller',
     name: 'Seller',
     component: Seller,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/seller/new',
     name: 'SellerCreate',
     component: SellerUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/seller/:sellerId/edit',
     name: 'SellerEdit',
     component: SellerUpdate,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/seller/:sellerId/view',
     name: 'SellerView',
     component: SellerDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here
 ];
