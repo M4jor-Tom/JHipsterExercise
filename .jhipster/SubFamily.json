@@ -12,6 +12,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "family",
       "otherEntityRelationshipName": "subFamily",
+      "relationshipValidateRules": "required",
       "relationshipName": "family"
     }
   ],

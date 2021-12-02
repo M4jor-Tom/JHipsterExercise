@@ -26,6 +26,8 @@ export default class SubFamily extends Vue {
   public subFamilies: ISubFamily[] = [];
 
   public isFetching = false;
+  public propOrder = 'id';
+  public reverse = false;
 
   public mounted(): void {
     this.retrieveAllSubFamilys();
@@ -38,7 +40,9 @@ export default class SubFamily extends Vue {
   public retrieveAllSubFamilys(): void {
     this.isFetching = true;
     this.subFamilyService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.subFamilies = res.data;
@@ -98,5 +102,23 @@ export default class SubFamily extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllSubFamilys();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 }

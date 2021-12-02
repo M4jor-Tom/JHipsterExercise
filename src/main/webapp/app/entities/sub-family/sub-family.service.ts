@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { ISubFamily } from '@/shared/model/sub-family.model';
+import buildPaginationQueryOpts from '@/shared/sort/sorts';
 
 const baseApiUrl = 'api/sub-families';
 
@@ -18,10 +19,10 @@ export default class SubFamilyService {
     });
   }
 
-  public retrieve(): Promise<any> {
+  public retrieve(req?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(baseApiUrl)
+        .get(`api/sub-families?${buildPaginationQueryOpts(req)}`)
         .then(res => {
           resolve(res);
         })

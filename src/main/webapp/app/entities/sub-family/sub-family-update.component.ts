@@ -15,6 +15,9 @@ const validations: any = {
     name: {
       required,
     },
+    family: {
+      required,
+    },
   },
 };
 

@@ -22,7 +22,7 @@ export default class BrandService {
   public retrieve(req?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(`api/families?${buildPaginationQueryOpts(req)}`)
+        .get(`api/brands?${buildPaginationQueryOpts(req)}`)
         .then(res => {
           resolve(res);
         })
