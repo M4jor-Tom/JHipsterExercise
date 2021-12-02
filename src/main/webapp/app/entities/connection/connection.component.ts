@@ -27,6 +27,9 @@ export default class Connection extends Vue {
 
   public isFetching = false;
 
+  public propOrder = 'id';
+  public reverse = false;
+
   public mounted(): void {
     this.retrieveAllConnections();
   }
@@ -38,7 +41,9 @@ export default class Connection extends Vue {
   public retrieveAllConnections(): void {
     this.isFetching = true;
     this.connectionService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.connections = res.data;
@@ -98,5 +103,23 @@ export default class Connection extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllConnections();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 }

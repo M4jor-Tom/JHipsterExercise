@@ -17,6 +17,7 @@
         "brand": "Brand",
         "family": "Family",
         "subFamily": "Sub Family",
+        "seller": "Seller",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

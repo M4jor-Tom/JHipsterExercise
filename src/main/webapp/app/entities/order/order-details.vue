@@ -37,6 +37,12 @@
             <span v-text="$t('jHipsterExerciseApp.BillingMethod.' + order.billingMethod)">{{ order.billingMethod }}</span>
           </dd>
           <dt>
+            <span v-text="$t('jHipsterExerciseApp.order.orderState')">Order State</span>
+          </dt>
+          <dd>
+            <span v-text="$t('jHipsterExerciseApp.OrderState.' + order.orderState)">{{ order.orderState }}</span>
+          </dd>
+          <dt>
             <span v-text="$t('jHipsterExerciseApp.order.products')">Products</span>
           </dt>
           <dd>

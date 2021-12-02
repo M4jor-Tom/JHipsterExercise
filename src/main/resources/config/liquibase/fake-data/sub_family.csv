@@ -1,7 +1,7 @@
-id;name
-1;Smartphones
-2;Télévision
-3;T-Shirt
-4;Chaussures
-5;Voitures
-6;Motos
+id;name;family_id
+1;Smartphones;1
+2;Television;1
+3;T-Shirt;3
+4;Chaussures;3
+5;Voitures;2
+6;Motos;2

@@ -10,6 +10,9 @@ import { ISubFamily } from '@/shared/model/sub-family.model';
 import BrandService from '@/entities/brand/brand.service';
 import { IBrand } from '@/shared/model/brand.model';
 
+import SellerService from '@/entities/seller/seller.service';
+import { ISeller } from '@/shared/model/seller.model';
+
 import TagService from '@/entities/tag/tag.service';
 import { ITag } from '@/shared/model/tag.model';
 
@@ -36,6 +39,15 @@ const validations: any = {
       required,
     },
     color: {},
+    subFamily: {
+      required,
+    },
+    brand: {
+      required,
+    },
+    seller: {
+      required,
+    },
   },
 };
 
@@ -55,6 +67,10 @@ export default class ProductUpdate extends Vue {
   @Inject('brandService') private brandService: () => BrandService;
 
   public brands: IBrand[] = [];
+
+  @Inject('sellerService') private sellerService: () => SellerService;
+
+  public sellers: ISeller[] = [];
 
   @Inject('tagService') private tagService: () => TagService;
 
@@ -155,6 +171,11 @@ export default class ProductUpdate extends Vue {
       .retrieve()
       .then(res => {
         this.brands = res.data;
+      });
+    this.sellerService()
+      .retrieve()
+      .then(res => {
+        this.sellers = res.data;
       });
     this.tagService()
       .retrieve()

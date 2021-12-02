@@ -36,6 +36,7 @@ import TagService from '@/entities/tag/tag.service';
 import BrandService from '@/entities/brand/brand.service';
 import FamilyService from '@/entities/family/family.service';
 import SubFamilyService from '@/entities/sub-family/sub-family.service';
+import SellerService from '@/entities/seller/seller.service';
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
 
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -105,6 +106,7 @@ new Vue({
     brandService: () => new BrandService(),
     familyService: () => new FamilyService(),
     subFamilyService: () => new SubFamilyService(),
+    sellerService: () => new SellerService(),
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
     accountService: () => accountService,
     alertService: () => new AlertService(),

@@ -126,6 +126,32 @@
             </div>
           </div>
           <div class="form-group">
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.order.orderState')" for="order-orderState">Order State</label>
+            <select
+              class="form-control"
+              name="orderState"
+              :class="{ valid: !$v.order.orderState.$invalid, invalid: $v.order.orderState.$invalid }"
+              v-model="$v.order.orderState.$model"
+              id="order-orderState"
+              data-cy="orderState"
+              required
+            >
+              <option
+                v-for="orderState in orderStateValues"
+                :key="orderState"
+                v-bind:value="orderState"
+                v-bind:label="$t('jHipsterExerciseApp.OrderState.' + orderState)"
+              >
+                {{ orderState }}
+              </option>
+            </select>
+            <div v-if="$v.order.orderState.$anyDirty && $v.order.orderState.$invalid">
+              <small class="form-text text-danger" v-if="!$v.order.orderState.required" v-text="$t('entity.validation.required')">
+                This field is required.
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
             <label v-text="$t('jHipsterExerciseApp.order.products')" for="order-products">Products</label>
             <select
               class="form-control"
