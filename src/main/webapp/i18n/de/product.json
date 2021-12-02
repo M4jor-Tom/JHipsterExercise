@@ -26,6 +26,7 @@
       "color": "Color",
       "subFamily": "Sub Family",
       "brand": "Brand",
+      "seller": "Seller",
       "tags": "Tags",
       "order": "Order"
     }

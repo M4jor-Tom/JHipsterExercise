@@ -29,14 +29,38 @@
       <table class="table table-striped" aria-describedby="orders">
         <thead>
           <tr>
-            <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.order.sum')">Sum</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.order.deliveyAdress')">Delivey Adress</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.order.deliveryDateTime')">Delivery Date Time</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.order.quantity')">Quantity</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.order.billingMethod')">Billing Method</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.order.products')">Products</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.order.client')">Client</span></th>
+            <th scope="col" v-on:click="changeOrder('id')">
+              <span v-text="$t('global.field.id')">ID</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('sum')">
+              <span v-text="$t('global.field.sum')">Sum</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'sum'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('deliveyAdress')">
+              <span v-text="$t('jHipsterExerciseApp.order.deliveyAdress')">deliveyAdress</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'deliveyAdress'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('deliveryDateTime')">
+              <span v-text="$t('jHipsterExerciseApp.order.deliveryDateTime')">deliveryDateTime</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'deliveryDateTime'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('quantity')">
+              <span v-text="$t('jHipsterExerciseApp.order.quantity')">deliveryDateTime</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'deliveryDateTime'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('billingMethod')">
+              <span v-text="$t('jHipsterExerciseApp.order.billingMethod')">billingMethod</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'billingMethod'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('products')">
+              <span v-text="$t('jHipsterExerciseApp.order.products')">products</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'products'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('client')">
+              <span v-text="$t('jHipsterExerciseApp.order.client')">client</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'client'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>
@@ -50,6 +74,7 @@
             <td>{{ order.deliveryDateTime ? $d(Date.parse(order.deliveryDateTime), 'short') : '' }}</td>
             <td>{{ order.quantity }}</td>
             <td v-text="$t('jHipsterExerciseApp.BillingMethod.' + order.billingMethod)">{{ order.billingMethod }}</td>
+            <td v-text="$t('jHipsterExerciseApp.OrderState.' + order.orderState)">{{ order.orderState }}</td>
             <td>
               <span v-for="(products, i) in order.products" :key="products.id"
                 >{{ i > 0 ? ', ' : '' }}

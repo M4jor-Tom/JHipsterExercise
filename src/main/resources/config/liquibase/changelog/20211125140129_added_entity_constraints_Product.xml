@@ -20,6 +20,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="brand"/>
 
+        <addForeignKeyConstraint baseColumnNames="seller_id"
+                                 baseTableName="product"
+                                 constraintName="fk_product__seller_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="seller"/>
+
         <addForeignKeyConstraint baseColumnNames="product_id"
                                  baseTableName="rel_product__tags"
                                  constraintName="fk_rel_product__tags__product_id"

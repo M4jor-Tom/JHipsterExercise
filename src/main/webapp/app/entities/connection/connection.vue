@@ -29,9 +29,18 @@
       <table class="table table-striped" aria-describedby="connections">
         <thead>
           <tr>
-            <th scope="row"><span v-text="$t('global.field.id')">ID</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.connection.username')">Username</span></th>
-            <th scope="row"><span v-text="$t('jHipsterExerciseApp.connection.password')">Password</span></th>
+            <th scope="col" v-on:click="changeOrder('id')">
+              <span v-text="$t('global.field.id')">ID</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'id'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('username')">
+              <span v-text="$t('jHipsterExerciseApp.connection.username')">Name</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'username'"></jhi-sort-indicator>
+            </th>
+            <th scope="col" v-on:click="changeOrder('password')">
+              <span v-text="$t('jHipsterExerciseApp.connection.password')">Password</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'password'"></jhi-sort-indicator>
+            </th>
             <th scope="row"></th>
           </tr>
         </thead>

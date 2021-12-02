@@ -50,6 +50,12 @@ const SubFamily = () => import('@/entities/sub-family/sub-family.vue');
 const SubFamilyUpdate = () => import('@/entities/sub-family/sub-family-update.vue');
 // prettier-ignore
 const SubFamilyDetails = () => import('@/entities/sub-family/sub-family-details.vue');
+// prettier-ignore
+const Seller = () => import('@/entities/seller/seller.vue');
+// prettier-ignore
+const SellerUpdate = () => import('@/entities/seller/seller-update.vue');
+// prettier-ignore
+const SellerDetails = () => import('@/entities/seller/seller-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 export default [
@@ -244,6 +250,30 @@ export default [
     name: 'SubFamilyView',
     component: SubFamilyDetails,
     meta: { authorities: [Authority.ADMIN, Authority.VENDOR] },
+  },
+  {
+    path: '/seller',
+    name: 'Seller',
+    component: Seller,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/seller/new',
+    name: 'SellerCreate',
+    component: SellerUpdate,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/seller/:sellerId/edit',
+    name: 'SellerEdit',
+    component: SellerUpdate,
+    meta: { authorities: [Authority.USER] },
+  },
+  {
+    path: '/seller/:sellerId/view',
+    name: 'SellerView',
+    component: SellerDetails,
+    meta: { authorities: [Authority.USER] },
   },
   // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here
 ];

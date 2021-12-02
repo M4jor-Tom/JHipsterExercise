@@ -12,6 +12,8 @@ import SubFamilyService from '@/entities/sub-family/sub-family.service';
 
 import BrandService from '@/entities/brand/brand.service';
 
+import SellerService from '@/entities/seller/seller.service';
+
 import TagService from '@/entities/tag/tag.service';
 
 import OrderService from '@/entities/order/order.service';
@@ -51,6 +53,8 @@ describe('Component Tests', () => {
           subFamilyService: () => new SubFamilyService(),
 
           brandService: () => new BrandService(),
+
+          sellerService: () => new SellerService(),
 
           tagService: () => new TagService(),
 

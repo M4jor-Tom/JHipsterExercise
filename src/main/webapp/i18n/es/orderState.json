@@ -1,0 +1,9 @@
+{
+  "jHipsterExerciseApp": {
+    "OrderState": {
+      "null": "",
+      "PROCESSING": "PROCESSING",
+      "PAID": "PAID"
+    }
+  }
+}

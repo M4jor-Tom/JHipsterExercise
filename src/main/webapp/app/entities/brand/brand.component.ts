@@ -26,6 +26,9 @@ export default class Brand extends Vue {
 
   public isFetching = false;
 
+  public propOrder = 'id';
+  public reverse = false;
+
   public mounted(): void {
     this.retrieveAllBrands();
   }
@@ -37,7 +40,9 @@ export default class Brand extends Vue {
   public retrieveAllBrands(): void {
     this.isFetching = true;
     this.brandService()
-      .retrieve()
+      .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.brands = res.data;
@@ -48,6 +53,12 @@ export default class Brand extends Vue {
           this.alertService().showHttpError(this, err.response);
         }
       );
+  }
+
+  private newMethod(): any {
+    return {
+      sort: this.sort(),
+    };
   }
 
   public handleSyncList(): void {
@@ -84,6 +95,23 @@ export default class Brand extends Vue {
 
   public closeDialog(): void {
     (<any>this.$refs.removeEntity).hide();
+  }
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllBrands();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
   }
 
   public get authenticated(): boolean {

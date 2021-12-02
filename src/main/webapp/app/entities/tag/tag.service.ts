@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { ITag } from '@/shared/model/tag.model';
+import buildPaginationQueryOpts from '@/shared/sort/sorts';
 
 const baseApiUrl = 'api/tags';
 
@@ -18,10 +19,10 @@ export default class TagService {
     });
   }
 
-  public retrieve(): Promise<any> {
+  public retrieve(req?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       axios
-        .get(baseApiUrl)
+        .get(`api/tags?${buildPaginationQueryOpts(req)}`)
         .then(res => {
           resolve(res);
         })
