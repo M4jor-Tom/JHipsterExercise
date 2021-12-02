@@ -16,6 +16,15 @@
       <font-awesome-icon icon="bars" />
     </b-navbar-toggle>
 
+    <div class="topnav">
+      <div class="search-container">
+        <form action="/action_page.php">
+          <input type="text" placeholder="Search.." name="search">
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </div>
+
     <b-collapse is-nav id="header-tabs">
       <b-navbar-nav class="ml-auto">
         <b-nav-item to="/" exact>
@@ -270,5 +279,23 @@
   background-size: contain;
   width: 100%;
   filter: drop-shadow(0 0 0.05rem white);
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.topnav .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
 }
 </style>
