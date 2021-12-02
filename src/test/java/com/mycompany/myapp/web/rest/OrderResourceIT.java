@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Order;
 import com.mycompany.myapp.domain.enumeration.BillingMethod;
+import com.mycompany.myapp.domain.enumeration.OrderState;
 import com.mycompany.myapp.repository.OrderRepository;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -58,6 +59,9 @@ class OrderResourceIT {
     private static final BillingMethod DEFAULT_BILLING_METHOD = BillingMethod.PAYPAL;
     private static final BillingMethod UPDATED_BILLING_METHOD = BillingMethod.CREDIT_CARD;
 
+    private static final OrderState DEFAULT_ORDER_STATE = OrderState.PROCESSING;
+    private static final OrderState UPDATED_ORDER_STATE = OrderState.PAID;
+
     private static final String ENTITY_API_URL = "/api/orders";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -90,7 +94,8 @@ class OrderResourceIT {
             .deliveyAdress(DEFAULT_DELIVEY_ADRESS)
             .deliveryDateTime(DEFAULT_DELIVERY_DATE_TIME)
             .quantity(DEFAULT_QUANTITY)
-            .billingMethod(DEFAULT_BILLING_METHOD);
+            .billingMethod(DEFAULT_BILLING_METHOD)
+            .orderState(DEFAULT_ORDER_STATE);
         return order;
     }
 
@@ -106,7 +111,8 @@ class OrderResourceIT {
             .deliveyAdress(UPDATED_DELIVEY_ADRESS)
             .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
             .quantity(UPDATED_QUANTITY)
-            .billingMethod(UPDATED_BILLING_METHOD);
+            .billingMethod(UPDATED_BILLING_METHOD)
+            .orderState(UPDATED_ORDER_STATE);
         return order;
     }
 
@@ -133,6 +139,7 @@ class OrderResourceIT {
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(DEFAULT_DELIVERY_DATE_TIME);
         assertThat(testOrder.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(DEFAULT_BILLING_METHOD);
+        assertThat(testOrder.getOrderState()).isEqualTo(DEFAULT_ORDER_STATE);
     }
 
     @Test
@@ -223,6 +230,23 @@ class OrderResourceIT {
 
     @Test
     @Transactional
+    void checkOrderStateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = orderRepository.findAll().size();
+        // set the field null
+        order.setOrderState(null);
+
+        // Create the Order, which fails.
+
+        restOrderMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
+            .andExpect(status().isBadRequest());
+
+        List<Order> orderList = orderRepository.findAll();
+        assertThat(orderList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllOrders() throws Exception {
         // Initialize the database
         orderRepository.saveAndFlush(order);
@@ -237,7 +261,8 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.[*].deliveyAdress").value(hasItem(DEFAULT_DELIVEY_ADRESS)))
             .andExpect(jsonPath("$.[*].deliveryDateTime").value(hasItem(sameInstant(DEFAULT_DELIVERY_DATE_TIME))))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.intValue())))
-            .andExpect(jsonPath("$.[*].billingMethod").value(hasItem(DEFAULT_BILLING_METHOD.toString())));
+            .andExpect(jsonPath("$.[*].billingMethod").value(hasItem(DEFAULT_BILLING_METHOD.toString())))
+            .andExpect(jsonPath("$.[*].orderState").value(hasItem(DEFAULT_ORDER_STATE.toString())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -274,7 +299,8 @@ class OrderResourceIT {
             .andExpect(jsonPath("$.deliveyAdress").value(DEFAULT_DELIVEY_ADRESS))
             .andExpect(jsonPath("$.deliveryDateTime").value(sameInstant(DEFAULT_DELIVERY_DATE_TIME)))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY.intValue()))
-            .andExpect(jsonPath("$.billingMethod").value(DEFAULT_BILLING_METHOD.toString()));
+            .andExpect(jsonPath("$.billingMethod").value(DEFAULT_BILLING_METHOD.toString()))
+            .andExpect(jsonPath("$.orderState").value(DEFAULT_ORDER_STATE.toString()));
     }
 
     @Test
@@ -301,7 +327,8 @@ class OrderResourceIT {
             .deliveyAdress(UPDATED_DELIVEY_ADRESS)
             .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
             .quantity(UPDATED_QUANTITY)
-            .billingMethod(UPDATED_BILLING_METHOD);
+            .billingMethod(UPDATED_BILLING_METHOD)
+            .orderState(UPDATED_ORDER_STATE);
 
         restOrderMockMvc
             .perform(
@@ -320,6 +347,7 @@ class OrderResourceIT {
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(UPDATED_DELIVERY_DATE_TIME);
         assertThat(testOrder.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(UPDATED_BILLING_METHOD);
+        assertThat(testOrder.getOrderState()).isEqualTo(UPDATED_ORDER_STATE);
     }
 
     @Test
@@ -394,7 +422,8 @@ class OrderResourceIT {
             .sum(UPDATED_SUM)
             .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
             .quantity(UPDATED_QUANTITY)
-            .billingMethod(UPDATED_BILLING_METHOD);
+            .billingMethod(UPDATED_BILLING_METHOD)
+            .orderState(UPDATED_ORDER_STATE);
 
         restOrderMockMvc
             .perform(
@@ -413,6 +442,7 @@ class OrderResourceIT {
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(UPDATED_DELIVERY_DATE_TIME);
         assertThat(testOrder.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(UPDATED_BILLING_METHOD);
+        assertThat(testOrder.getOrderState()).isEqualTo(UPDATED_ORDER_STATE);
     }
 
     @Test
@@ -432,7 +462,8 @@ class OrderResourceIT {
             .deliveyAdress(UPDATED_DELIVEY_ADRESS)
             .deliveryDateTime(UPDATED_DELIVERY_DATE_TIME)
             .quantity(UPDATED_QUANTITY)
-            .billingMethod(UPDATED_BILLING_METHOD);
+            .billingMethod(UPDATED_BILLING_METHOD)
+            .orderState(UPDATED_ORDER_STATE);
 
         restOrderMockMvc
             .perform(
@@ -451,6 +482,7 @@ class OrderResourceIT {
         assertThat(testOrder.getDeliveryDateTime()).isEqualTo(UPDATED_DELIVERY_DATE_TIME);
         assertThat(testOrder.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testOrder.getBillingMethod()).isEqualTo(UPDATED_BILLING_METHOD);
+        assertThat(testOrder.getOrderState()).isEqualTo(UPDATED_ORDER_STATE);
     }
 
     @Test

@@ -1,7 +1,11 @@
-id;name
-1;Smartphones
-2;Télévision
-3;T-Shirt
-4;Chaussures
-5;Voitures
-6;Motos
+id;name;family_id
+1;Sleek;1
+2;Forward connecting Belarussian;2
+3;Buckinghamshire Taiwan;3
+4;Factors human-resource Minnesota;1
+5;bandwidth-monitored Division;2
+6;Gorgeous;3
+7;synergistic digital;1
+8;Investment Account;2
+9;Berkshire;3
+10;24;1

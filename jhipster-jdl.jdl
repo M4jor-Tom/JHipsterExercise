@@ -18,11 +18,17 @@ entity Order {
     deliveryDateTime ZonedDateTime required,
     quantity Long required,
     billingMethod BillingMethod required
+    orderState OrderState required
 }
 
 enum BillingMethod {
 	PAYPAL,
     CREDIT_CARD
+}
+
+enum OrderState {
+	PROCESSING,
+    PAID
 }
 
 // Table contenant les informations de connexions
@@ -45,11 +51,11 @@ entity Tag {
 	name String required
 }
 
-entity Vendeur {
-	raisonSocial String required,
+entity Seller {
+	socialReason String required,
     address String required,
-    numeroSiret String,
-    telephone Long,
+    siretNumber String,
+    phone Long,
     email String required
 }
 
@@ -83,13 +89,13 @@ relationship ManyToMany {
 }
 
 relationship ManyToOne {
-	Product{subFamily} to SubFamily
+	Product{subFamily required} to SubFamily
     
-    SubFamily{family} to Family
+    SubFamily{family required} to Family
     
-    Product{brand} to Brand
+    Product{brand required} to Brand
     
-	Product{vendeur} to Vendeur{product}
+	Product{Seller required} to Seller{product}
 }
 
 relationship OneToMany {
@@ -99,7 +105,7 @@ relationship OneToMany {
 relationship OneToOne {
 	Client{connection} to Connection
     
-	Vendeur{connection} to Connection
+	Seller{connection} to Connection
 }
 
 

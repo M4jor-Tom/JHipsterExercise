@@ -2,6 +2,7 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mycompany.myapp.domain.enumeration.BillingMethod;
+import com.mycompany.myapp.domain.enumeration.OrderState;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -46,6 +47,11 @@ public class Order implements Serializable {
     @Column(name = "billing_method", nullable = false)
     private BillingMethod billingMethod;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_state", nullable = false)
+    private OrderState orderState;
+
     @ManyToMany
     @JoinTable(
         name = "rel_jhi_order__products",
@@ -53,7 +59,7 @@ public class Order implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "products_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "subFamily", "brand", "tags", "orders" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "subFamily", "brand", "seller", "tags", "orders" }, allowSetters = true)
     private Set<Product> products = new HashSet<>();
 
     @ManyToOne
@@ -140,6 +146,19 @@ public class Order implements Serializable {
         this.billingMethod = billingMethod;
     }
 
+    public OrderState getOrderState() {
+        return this.orderState;
+    }
+
+    public Order orderState(OrderState orderState) {
+        this.setOrderState(orderState);
+        return this;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
+    }
+
     public Set<Product> getProducts() {
         return this.products;
     }
@@ -207,6 +226,7 @@ public class Order implements Serializable {
             ", deliveryDateTime='" + getDeliveryDateTime() + "'" +
             ", quantity=" + getQuantity() +
             ", billingMethod='" + getBillingMethod() + "'" +
+            ", orderState='" + getOrderState() + "'" +
             "}";
     }
 }

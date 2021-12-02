@@ -35,13 +35,22 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "subFamily",
       "otherEntityRelationshipName": "product",
+      "relationshipValidateRules": "required",
       "relationshipName": "subFamily"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "brand",
       "otherEntityRelationshipName": "product",
+      "relationshipValidateRules": "required",
       "relationshipName": "brand"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "seller",
+      "otherEntityRelationshipName": "product",
+      "relationshipValidateRules": "required",
+      "relationshipName": "seller"
     },
     {
       "relationshipType": "many-to-many",

@@ -61,6 +61,14 @@
             </div>
           </dd>
           <dt>
+            <span v-text="$t('jHipsterExerciseApp.product.seller')">Seller</span>
+          </dt>
+          <dd>
+            <div v-if="product.seller">
+              <router-link :to="{ name: 'SellerView', params: { sellerId: product.seller.id } }">{{ product.seller.id }}</router-link>
+            </div>
+          </dd>
+          <dt>
             <span v-text="$t('jHipsterExerciseApp.product.tags')">Tags</span>
           </dt>
           <dd>
