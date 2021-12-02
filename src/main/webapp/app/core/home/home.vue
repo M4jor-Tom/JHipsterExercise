@@ -5,7 +5,7 @@
         <img src="/content/images/home/Noel_banniere.png" />
     </div>
     <div> 
-      <p class="customfont" style="text-align: center; font-size:100px;"> Un Noel pour tous Zarma</p>      
+      <p class="customfont" style="text-align: center; font-size:100px;"> Un Noel pour tous</p>      
     </div>
 
     <div class="separate-3_nav"> 
