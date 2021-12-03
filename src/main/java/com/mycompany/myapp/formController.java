@@ -24,8 +24,6 @@ public class formController {
     @RequestMapping (value = "/paiement", method = RequestMethod.POST)
     void paiement(@RequestBody String JSON) throws ApiException, IOException {
         
-        //JSONParser jsonparser = new JSONParser();
-
        System.out.println(JSON);
         
         /*// Set your X-API-KEY with the API key from the Customer Area.
