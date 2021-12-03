@@ -183,6 +183,7 @@ label {
   user-select: none;
 }
 
+.form-item
 input,
 textarea {
   width: 100%;
