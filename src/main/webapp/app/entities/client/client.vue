@@ -73,7 +73,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="client in clients" :key="client.id" data-cy="entityTable">
+          <tr v-for="client in orderBy(filterBy(clients, filtered), propOrder, reverse === true ? 1 : -1)" :key="client.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'ClientView', params: { clientId: client.id } }">{{ client.id }}</router-link>
             </td>
