@@ -42,10 +42,10 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "connection",
+      "otherEntityName": "user",
       "otherEntityRelationshipName": "client",
-      "relationshipName": "connection",
-      "otherEntityField": "username",
+      "relationshipName": "user",
+      "otherEntityField": "login",
       "ownerSide": true
     },
     {

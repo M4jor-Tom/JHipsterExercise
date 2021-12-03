@@ -8,7 +8,7 @@ import SellerUpdateComponent from '@/entities/seller/seller-update.vue';
 import SellerClass from '@/entities/seller/seller-update.component';
 import SellerService from '@/entities/seller/seller.service';
 
-import ConnectionService from '@/entities/connection/connection.service';
+import UserService from '@/admin/user-management/user-management.service';
 
 import ProductService from '@/entities/product/product.service';
 import AlertService from '@/shared/alert/alert.service';
@@ -44,7 +44,7 @@ describe('Component Tests', () => {
           sellerService: () => sellerServiceStub,
           alertService: () => new AlertService(),
 
-          connectionService: () => new ConnectionService(),
+          userService: () => new UserService(),
 
           productService: () => new ProductService(),
         },

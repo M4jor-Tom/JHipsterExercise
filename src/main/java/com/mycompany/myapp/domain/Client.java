@@ -56,7 +56,7 @@ public class Client implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private Connection connection;
+    private User user;
 
     @OneToMany(mappedBy = "client")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -182,16 +182,16 @@ public class Client implements Serializable {
         this.postalCode = postalCode;
     }
 
-    public Connection getConnection() {
-        return this.connection;
+    public User getUser() {
+        return this.user;
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Client connection(Connection connection) {
-        this.setConnection(connection);
+    public Client user(User user) {
+        this.setUser(user);
         return this;
     }
 

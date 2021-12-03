@@ -100,13 +100,10 @@ public class SellerQueryService extends QueryService<Seller> {
             if (criteria.getEmail() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getEmail(), Seller_.email));
             }
-            if (criteria.getConnectionId() != null) {
+            if (criteria.getUserId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(
-                            criteria.getConnectionId(),
-                            root -> root.join(Seller_.connection, JoinType.LEFT).get(Connection_.id)
-                        )
+                        buildSpecification(criteria.getUserId(), root -> root.join(Seller_.user, JoinType.LEFT).get(User_.id))
                     );
             }
             if (criteria.getProductId() != null) {

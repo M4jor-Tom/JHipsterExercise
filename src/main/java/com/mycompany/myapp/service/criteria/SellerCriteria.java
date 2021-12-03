@@ -36,7 +36,7 @@ public class SellerCriteria implements Serializable, Criteria {
 
     private StringFilter email;
 
-    private LongFilter connectionId;
+    private LongFilter userId;
 
     private LongFilter productId;
 
@@ -51,7 +51,7 @@ public class SellerCriteria implements Serializable, Criteria {
         this.siretNumber = other.siretNumber == null ? null : other.siretNumber.copy();
         this.phone = other.phone == null ? null : other.phone.copy();
         this.email = other.email == null ? null : other.email.copy();
-        this.connectionId = other.connectionId == null ? null : other.connectionId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.productId = other.productId == null ? null : other.productId.copy();
         this.distinct = other.distinct;
     }
@@ -151,19 +151,19 @@ public class SellerCriteria implements Serializable, Criteria {
         this.email = email;
     }
 
-    public LongFilter getConnectionId() {
-        return connectionId;
+    public LongFilter getUserId() {
+        return userId;
     }
 
-    public LongFilter connectionId() {
-        if (connectionId == null) {
-            connectionId = new LongFilter();
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
         }
-        return connectionId;
+        return userId;
     }
 
-    public void setConnectionId(LongFilter connectionId) {
-        this.connectionId = connectionId;
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
     }
 
     public LongFilter getProductId() {
@@ -205,7 +205,7 @@ public class SellerCriteria implements Serializable, Criteria {
             Objects.equals(siretNumber, that.siretNumber) &&
             Objects.equals(phone, that.phone) &&
             Objects.equals(email, that.email) &&
-            Objects.equals(connectionId, that.connectionId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(productId, that.productId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -213,7 +213,7 @@ public class SellerCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, socialReason, address, siretNumber, phone, email, connectionId, productId, distinct);
+        return Objects.hash(id, socialReason, address, siretNumber, phone, email, userId, productId, distinct);
     }
 
     // prettier-ignore
@@ -226,7 +226,7 @@ public class SellerCriteria implements Serializable, Criteria {
             (siretNumber != null ? "siretNumber=" + siretNumber + ", " : "") +
             (phone != null ? "phone=" + phone + ", " : "") +
             (email != null ? "email=" + email + ", " : "") +
-            (connectionId != null ? "connectionId=" + connectionId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (productId != null ? "productId=" + productId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

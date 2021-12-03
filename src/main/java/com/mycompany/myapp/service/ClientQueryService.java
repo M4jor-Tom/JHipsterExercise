@@ -109,13 +109,10 @@ public class ClientQueryService extends QueryService<Client> {
             if (criteria.getPostalCode() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getPostalCode(), Client_.postalCode));
             }
-            if (criteria.getConnectionId() != null) {
+            if (criteria.getUserId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(
-                            criteria.getConnectionId(),
-                            root -> root.join(Client_.connection, JoinType.LEFT).get(Connection_.id)
-                        )
+                        buildSpecification(criteria.getUserId(), root -> root.join(Client_.user, JoinType.LEFT).get(User_.id))
                     );
             }
             if (criteria.getOrderId() != null) {

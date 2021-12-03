@@ -33,12 +33,6 @@ enum OrderState {
     PAID
 }
 
-// Table contenant les informations de connexions
-entity Connection {
-    username String required,
-    password String required
-}
-
 // Table contenant les infos générales d'un Produit
 entity Product {
     description String,
@@ -105,7 +99,7 @@ relationship OneToMany {
 }
 
 relationship OneToOne {
-	Client{connection(username)} to Connection
+	Client{user(login)} to User
     
-	Seller{connection(username)} to Connection
+	Seller{user(login)} to User
 }

@@ -11,7 +11,7 @@ import ClientUpdateComponent from '@/entities/client/client-update.vue';
 import ClientClass from '@/entities/client/client-update.component';
 import ClientService from '@/entities/client/client.service';
 
-import ConnectionService from '@/entities/connection/connection.service';
+import UserService from '@/admin/user-management/user-management.service';
 
 import OrderService from '@/entities/order/order.service';
 import AlertService from '@/shared/alert/alert.service';
@@ -47,7 +47,7 @@ describe('Component Tests', () => {
           clientService: () => clientServiceStub,
           alertService: () => new AlertService(),
 
-          connectionService: () => new ConnectionService(),
+          userService: () => new UserService(),
 
           orderService: () => new OrderService(),
         },

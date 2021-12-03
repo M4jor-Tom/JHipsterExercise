@@ -37,14 +37,10 @@
             <span>{{ seller.email }}</span>
           </dd>
           <dt>
-            <span v-text="$t('jHipsterExerciseApp.seller.connection')">Connection</span>
+            <span v-text="$t('jHipsterExerciseApp.seller.user')">User</span>
           </dt>
           <dd>
-            <div v-if="seller.connection">
-              <router-link :to="{ name: 'ConnectionView', params: { connectionId: seller.connection.id } }">{{
-                seller.connection.username
-              }}</router-link>
-            </div>
+            {{ seller.user ? seller.user.login : '' }}
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

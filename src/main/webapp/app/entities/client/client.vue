@@ -88,11 +88,7 @@
             <td>{{ client.country }}</td>
             <td>{{ client.postalCode }}</td>
             <td>
-              <div v-if="client.connection">
-                <router-link :to="{ name: 'ConnectionView', params: { connectionId: client.connection.id } }">{{
-                  client.connection.username
-                }}</router-link>
-              </div>
+              {{ client.user ? client.user.login : '' }}
             </td>
             <td class="text-right">
               <div class="btn-group">

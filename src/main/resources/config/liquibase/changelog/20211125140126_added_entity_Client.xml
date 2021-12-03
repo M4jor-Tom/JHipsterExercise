@@ -38,8 +38,8 @@
             <column name="postal_code" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="connection_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_client__connection_id" />
+            <column name="user_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_client__user_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

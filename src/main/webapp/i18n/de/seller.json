@@ -23,7 +23,7 @@
       "siretNumber": "Siret Number",
       "phone": "Phone",
       "email": "Email",
-      "connection": "Connection",
+      "user": "User",
       "product": "Product"
     }
   }

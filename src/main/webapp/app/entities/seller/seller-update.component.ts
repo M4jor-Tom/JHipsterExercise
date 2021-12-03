@@ -4,8 +4,7 @@ import { required } from 'vuelidate/lib/validators';
 
 import AlertService from '@/shared/alert/alert.service';
 
-import ConnectionService from '@/entities/connection/connection.service';
-import { IConnection } from '@/shared/model/connection.model';
+import UserService from '@/admin/user-management/user-management.service';
 
 import ProductService from '@/entities/product/product.service';
 import { IProduct } from '@/shared/model/product.model';
@@ -38,9 +37,9 @@ export default class SellerUpdate extends Vue {
 
   public seller: ISeller = new Seller();
 
-  @Inject('connectionService') private connectionService: () => ConnectionService;
+  @Inject('userService') private userService: () => UserService;
 
-  public connections: IConnection[] = [];
+  public users: Array<any> = [];
 
   @Inject('productService') private productService: () => ProductService;
 
@@ -126,10 +125,10 @@ export default class SellerUpdate extends Vue {
   }
 
   public initRelationships(): void {
-    this.connectionService()
+    this.userService()
       .retrieve()
       .then(res => {
-        this.connections = res.data;
+        this.users = res.data;
       });
     this.productService()
       .retrieve()

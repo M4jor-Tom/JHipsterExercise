@@ -44,7 +44,7 @@ public class Seller implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private Connection connection;
+    private User user;
 
     @OneToMany(mappedBy = "seller")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -131,16 +131,16 @@ public class Seller implements Serializable {
         this.email = email;
     }
 
-    public Connection getConnection() {
-        return this.connection;
+    public User getUser() {
+        return this.user;
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Seller connection(Connection connection) {
-        this.setConnection(connection);
+    public Seller user(User user) {
+        this.setUser(user);
         return this;
     }
 

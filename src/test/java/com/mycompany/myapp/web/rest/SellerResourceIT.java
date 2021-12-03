@@ -6,9 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
-import com.mycompany.myapp.domain.Connection;
 import com.mycompany.myapp.domain.Product;
 import com.mycompany.myapp.domain.Seller;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.SellerRepository;
 import com.mycompany.myapp.service.criteria.SellerCriteria;
 import java.util.List;
@@ -665,28 +665,28 @@ class SellerResourceIT {
 
     @Test
     @Transactional
-    void getAllSellersByConnectionIsEqualToSomething() throws Exception {
+    void getAllSellersByUserIsEqualToSomething() throws Exception {
         // Initialize the database
         sellerRepository.saveAndFlush(seller);
-        Connection connection;
-        if (TestUtil.findAll(em, Connection.class).isEmpty()) {
-            connection = ConnectionResourceIT.createEntity(em);
-            em.persist(connection);
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            user = UserResourceIT.createEntity(em);
+            em.persist(user);
             em.flush();
         } else {
-            connection = TestUtil.findAll(em, Connection.class).get(0);
+            user = TestUtil.findAll(em, User.class).get(0);
         }
-        em.persist(connection);
+        em.persist(user);
         em.flush();
-        seller.setConnection(connection);
+        seller.setUser(user);
         sellerRepository.saveAndFlush(seller);
-        Long connectionId = connection.getId();
+        Long userId = user.getId();
 
-        // Get all the sellerList where connection equals to connectionId
-        defaultSellerShouldBeFound("connectionId.equals=" + connectionId);
+        // Get all the sellerList where user equals to userId
+        defaultSellerShouldBeFound("userId.equals=" + userId);
 
-        // Get all the sellerList where connection equals to (connectionId + 1)
-        defaultSellerShouldNotBeFound("connectionId.equals=" + (connectionId + 1));
+        // Get all the sellerList where user equals to (userId + 1)
+        defaultSellerShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

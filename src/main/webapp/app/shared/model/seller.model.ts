@@ -1,4 +1,4 @@
-import { IConnection } from '@/shared/model/connection.model';
+import { IUser } from '@/shared/model/user.model';
 import { IProduct } from '@/shared/model/product.model';
 
 export interface ISeller {
@@ -8,7 +8,7 @@ export interface ISeller {
   siretNumber?: string | null;
   phone?: number | null;
   email?: string;
-  connection?: IConnection | null;
+  user?: IUser | null;
   products?: IProduct[] | null;
 }
 
@@ -20,7 +20,7 @@ export class Seller implements ISeller {
     public siretNumber?: string | null,
     public phone?: number | null,
     public email?: string,
-    public connection?: IConnection | null,
+    public user?: IUser | null,
     public products?: IProduct[] | null
   ) {}
 }

@@ -72,11 +72,7 @@
             <td>{{ seller.phone }}</td>
             <td>{{ seller.email }}</td>
             <td>
-              <div v-if="seller.connection">
-                <router-link :to="{ name: 'ConnectionView', params: { connectionId: seller.connection.id } }">{{
-                  seller.connection.username
-                }}</router-link>
-              </div>
+              {{ seller.user ? seller.user.login : '' }}
             </td>
             <td class="text-right">
               <div class="btn-group">

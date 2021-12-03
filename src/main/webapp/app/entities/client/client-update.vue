@@ -155,17 +155,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.client.connection')" for="client-connection"
-              >Connection</label
-            >
-            <select class="form-control" id="client-connection" data-cy="connection" name="connection" v-model="client.connection">
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.client.user')" for="client-user">User</label>
+            <select class="form-control" id="client-user" data-cy="user" name="user" v-model="client.user">
               <option v-bind:value="null"></option>
               <option
-                v-bind:value="client.connection && connectionOption.id === client.connection.id ? client.connection : connectionOption"
-                v-for="connectionOption in connections"
-                :key="connectionOption.id"
+                v-bind:value="client.user && userOption.id === client.user.id ? client.user : userOption"
+                v-for="userOption in users"
+                :key="userOption.id"
               >
-                {{ connectionOption.username }}
+                {{ userOption.login }}
               </option>
             </select>
           </div>

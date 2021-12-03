@@ -6,8 +6,7 @@ import { DATE_TIME_LONG_FORMAT } from '@/shared/date/filters';
 
 import AlertService from '@/shared/alert/alert.service';
 
-import ConnectionService from '@/entities/connection/connection.service';
-import { IConnection } from '@/shared/model/connection.model';
+import UserService from '@/admin/user-management/user-management.service';
 
 import OrderService from '@/entities/order/order.service';
 import { IOrder } from '@/shared/model/order.model';
@@ -47,9 +46,9 @@ export default class ClientUpdate extends Vue {
 
   public client: IClient = new Client();
 
-  @Inject('connectionService') private connectionService: () => ConnectionService;
+  @Inject('userService') private userService: () => UserService;
 
-  public connections: IConnection[] = [];
+  public users: Array<any> = [];
 
   @Inject('orderService') private orderService: () => OrderService;
 
@@ -159,10 +158,10 @@ export default class ClientUpdate extends Vue {
   }
 
   public initRelationships(): void {
-    this.connectionService()
+    this.userService()
       .retrieve()
       .then(res => {
-        this.connections = res.data;
+        this.users = res.data;
       });
     this.orderService()
       .retrieve()

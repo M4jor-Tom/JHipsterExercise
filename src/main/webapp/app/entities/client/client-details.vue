@@ -55,21 +55,17 @@
             <span>{{ client.postalCode }}</span>
           </dd>
           <dt>
-            <span v-text="$t('jHipsterExerciseApp.client.connection')">Connection</span>
+            <span v-text="$t('jHipsterExerciseApp.client.user')">User</span>
           </dt>
           <dd>
-            <div v-if="client.connection">
-              <router-link :to="{ name: 'ConnectionView', params: { connectionId: client.connection.id } }">{{
-                client.connection.username
-              }}</router-link>
-            </div>
+            {{ client.user ? client.user.login : '' }}
           </dd>
         </dl>
         <button type="submit" v-on:click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>
         </button>
         <router-link v-if="client.id" :to="{ name: 'ClientEdit', params: { clientId: client.id } }" custom v-slot="{ navigate }">
-          <button v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated" @click="navigate" class="btn btn-primary">
+          <button @click="navigate" class="btn btn-primary">
             <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.edit')"> Edit</span>
           </button>
         </router-link>

@@ -28,10 +28,10 @@
   "relationships": [
     {
       "relationshipType": "one-to-one",
-      "otherEntityName": "connection",
+      "otherEntityName": "user",
       "otherEntityRelationshipName": "seller",
-      "relationshipName": "connection",
-      "otherEntityField": "username",
+      "relationshipName": "user",
+      "otherEntityField": "login",
       "ownerSide": true
     },
     {

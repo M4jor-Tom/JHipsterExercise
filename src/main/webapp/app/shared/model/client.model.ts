@@ -1,4 +1,4 @@
-import { IConnection } from '@/shared/model/connection.model';
+import { IUser } from '@/shared/model/user.model';
 import { IOrder } from '@/shared/model/order.model';
 
 export interface IClient {
@@ -11,7 +11,7 @@ export interface IClient {
   adress?: string | null;
   country?: string;
   postalCode?: string;
-  connection?: IConnection | null;
+  user?: IUser | null;
   orders?: IOrder[] | null;
 }
 
@@ -26,7 +26,7 @@ export class Client implements IClient {
     public adress?: string | null,
     public country?: string,
     public postalCode?: string,
-    public connection?: IConnection | null,
+    public user?: IUser | null,
     public orders?: IOrder[] | null
   ) {}
 }

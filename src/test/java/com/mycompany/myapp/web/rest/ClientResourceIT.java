@@ -8,8 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Client;
-import com.mycompany.myapp.domain.Connection;
 import com.mycompany.myapp.domain.Order;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.ClientRepository;
 import com.mycompany.myapp.service.criteria.ClientCriteria;
 import java.time.Instant;
@@ -962,28 +962,28 @@ class ClientResourceIT {
 
     @Test
     @Transactional
-    void getAllClientsByConnectionIsEqualToSomething() throws Exception {
+    void getAllClientsByUserIsEqualToSomething() throws Exception {
         // Initialize the database
         clientRepository.saveAndFlush(client);
-        Connection connection;
-        if (TestUtil.findAll(em, Connection.class).isEmpty()) {
-            connection = ConnectionResourceIT.createEntity(em);
-            em.persist(connection);
+        User user;
+        if (TestUtil.findAll(em, User.class).isEmpty()) {
+            user = UserResourceIT.createEntity(em);
+            em.persist(user);
             em.flush();
         } else {
-            connection = TestUtil.findAll(em, Connection.class).get(0);
+            user = TestUtil.findAll(em, User.class).get(0);
         }
-        em.persist(connection);
+        em.persist(user);
         em.flush();
-        client.setConnection(connection);
+        client.setUser(user);
         clientRepository.saveAndFlush(client);
-        Long connectionId = connection.getId();
+        Long userId = user.getId();
 
-        // Get all the clientList where connection equals to connectionId
-        defaultClientShouldBeFound("connectionId.equals=" + connectionId);
+        // Get all the clientList where user equals to userId
+        defaultClientShouldBeFound("userId.equals=" + userId);
 
-        // Get all the clientList where connection equals to (connectionId + 1)
-        defaultClientShouldNotBeFound("connectionId.equals=" + (connectionId + 1));
+        // Get all the clientList where user equals to (userId + 1)
+        defaultClientShouldNotBeFound("userId.equals=" + (userId + 1));
     }
 
     @Test

@@ -43,7 +43,7 @@ public class ClientCriteria implements Serializable, Criteria {
 
     private StringFilter postalCode;
 
-    private LongFilter connectionId;
+    private LongFilter userId;
 
     private LongFilter orderId;
 
@@ -61,7 +61,7 @@ public class ClientCriteria implements Serializable, Criteria {
         this.adress = other.adress == null ? null : other.adress.copy();
         this.country = other.country == null ? null : other.country.copy();
         this.postalCode = other.postalCode == null ? null : other.postalCode.copy();
-        this.connectionId = other.connectionId == null ? null : other.connectionId.copy();
+        this.userId = other.userId == null ? null : other.userId.copy();
         this.orderId = other.orderId == null ? null : other.orderId.copy();
         this.distinct = other.distinct;
     }
@@ -206,19 +206,19 @@ public class ClientCriteria implements Serializable, Criteria {
         this.postalCode = postalCode;
     }
 
-    public LongFilter getConnectionId() {
-        return connectionId;
+    public LongFilter getUserId() {
+        return userId;
     }
 
-    public LongFilter connectionId() {
-        if (connectionId == null) {
-            connectionId = new LongFilter();
+    public LongFilter userId() {
+        if (userId == null) {
+            userId = new LongFilter();
         }
-        return connectionId;
+        return userId;
     }
 
-    public void setConnectionId(LongFilter connectionId) {
-        this.connectionId = connectionId;
+    public void setUserId(LongFilter userId) {
+        this.userId = userId;
     }
 
     public LongFilter getOrderId() {
@@ -263,7 +263,7 @@ public class ClientCriteria implements Serializable, Criteria {
             Objects.equals(adress, that.adress) &&
             Objects.equals(country, that.country) &&
             Objects.equals(postalCode, that.postalCode) &&
-            Objects.equals(connectionId, that.connectionId) &&
+            Objects.equals(userId, that.userId) &&
             Objects.equals(orderId, that.orderId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -271,20 +271,7 @@ public class ClientCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            addedDateTime,
-            lastName,
-            firstName,
-            email,
-            phone,
-            adress,
-            country,
-            postalCode,
-            connectionId,
-            orderId,
-            distinct
-        );
+        return Objects.hash(id, addedDateTime, lastName, firstName, email, phone, adress, country, postalCode, userId, orderId, distinct);
     }
 
     // prettier-ignore
@@ -300,7 +287,7 @@ public class ClientCriteria implements Serializable, Criteria {
             (adress != null ? "adress=" + adress + ", " : "") +
             (country != null ? "country=" + country + ", " : "") +
             (postalCode != null ? "postalCode=" + postalCode + ", " : "") +
-            (connectionId != null ? "connectionId=" + connectionId + ", " : "") +
+            (userId != null ? "userId=" + userId + ", " : "") +
             (orderId != null ? "orderId=" + orderId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
