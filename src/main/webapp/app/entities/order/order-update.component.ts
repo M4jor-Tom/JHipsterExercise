@@ -20,19 +20,13 @@ import { OrderState } from '@/shared/model/enumerations/order-state.model';
 const validations: any = {
   order: {
     sum: {},
-    deliveryAdress: {
-      required,
-    },
-    deliveryDateTime: {
-      required,
-    },
+    deliveryAdress: {},
+    deliveryDateTime: {},
     quantity: {
       required,
       numeric,
     },
-    billingMethod: {
-      required,
-    },
+    billingMethod: {},
     orderState: {
       required,
     },

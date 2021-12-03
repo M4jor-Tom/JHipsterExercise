@@ -7,13 +7,11 @@
     },
     {
       "fieldName": "deliveryAdress",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     },
     {
       "fieldName": "deliveryDateTime",
-      "fieldType": "ZonedDateTime",
-      "fieldValidateRules": ["required"]
+      "fieldType": "ZonedDateTime"
     },
     {
       "fieldName": "quantity",
@@ -23,8 +21,7 @@
     {
       "fieldName": "billingMethod",
       "fieldType": "BillingMethod",
-      "fieldValues": "PAYPAL,CREDIT_CARD",
-      "fieldValidateRules": ["required"]
+      "fieldValues": "PAYPAL,CREDIT_CARD"
     },
     {
       "fieldName": "orderState",

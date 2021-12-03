@@ -6,10 +6,10 @@ import { OrderState } from '@/shared/model/enumerations/order-state.model';
 export interface IOrder {
   id?: number;
   sum?: number | null;
-  deliveryAdress?: string;
-  deliveryDateTime?: Date;
+  deliveryAdress?: string | null;
+  deliveryDateTime?: Date | null;
   quantity?: number;
-  billingMethod?: BillingMethod;
+  billingMethod?: BillingMethod | null;
   orderState?: OrderState;
   products?: IProduct[] | null;
   client?: IClient | null;
@@ -19,10 +19,10 @@ export class Order implements IOrder {
   constructor(
     public id?: number,
     public sum?: number | null,
-    public deliveryAdress?: string,
-    public deliveryDateTime?: Date,
+    public deliveryAdress?: string | null,
+    public deliveryDateTime?: Date | null,
     public quantity?: number,
-    public billingMethod?: BillingMethod,
+    public billingMethod?: BillingMethod | null,
     public orderState?: OrderState,
     public products?: IProduct[] | null,
     public client?: IClient | null
