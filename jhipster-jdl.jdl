@@ -11,6 +11,8 @@ entity Client {
     country String required,
     postalCode String required
 }
+service * with serviceClass
+filter *
 // Table contenant le détail de la commande
 entity Order {
 	sum Double,
