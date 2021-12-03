@@ -126,8 +126,8 @@
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.subFamily')" for="product-subFamily"
               >Sub Family</label
             >
-            <select class="form-control" id="product-subFamily" data-cy="subFamily" name="subFamily" v-model="product.subFamily">
-              <option v-bind:value="null"></option>
+            <select class="form-control" id="product-subFamily" data-cy="subFamily" name="subFamily" v-model="product.subFamily" required>
+              <option v-if="!product.subFamily" v-bind:value="null" selected></option>
               <option
                 v-bind:value="product.subFamily && subFamilyOption.id === product.subFamily.id ? product.subFamily : subFamilyOption"
                 v-for="subFamilyOption in subFamilies"
@@ -137,10 +137,15 @@
               </option>
             </select>
           </div>
+          <div v-if="$v.product.subFamily.$anyDirty && $v.product.subFamily.$invalid">
+            <small class="form-text text-danger" v-if="!$v.product.subFamily.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.brand')" for="product-brand">Brand</label>
-            <select class="form-control" id="product-brand" data-cy="brand" name="brand" v-model="product.brand">
-              <option v-bind:value="null"></option>
+            <select class="form-control" id="product-brand" data-cy="brand" name="brand" v-model="product.brand" required>
+              <option v-if="!product.brand" v-bind:value="null" selected></option>
               <option
                 v-bind:value="product.brand && brandOption.id === product.brand.id ? product.brand : brandOption"
                 v-for="brandOption in brands"
@@ -149,6 +154,29 @@
                 {{ brandOption.id }}
               </option>
             </select>
+          </div>
+          <div v-if="$v.product.brand.$anyDirty && $v.product.brand.$invalid">
+            <small class="form-text text-danger" v-if="!$v.product.brand.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.product.seller')" for="product-seller">Seller</label>
+            <select class="form-control" id="product-seller" data-cy="seller" name="seller" v-model="product.seller" required>
+              <option v-if="!product.seller" v-bind:value="null" selected></option>
+              <option
+                v-bind:value="product.seller && sellerOption.id === product.seller.id ? product.seller : sellerOption"
+                v-for="sellerOption in sellers"
+                :key="sellerOption.id"
+              >
+                {{ sellerOption.id }}
+              </option>
+            </select>
+          </div>
+          <div v-if="$v.product.seller.$anyDirty && $v.product.seller.$invalid">
+            <small class="form-text text-danger" v-if="!$v.product.seller.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
           </div>
           <div class="form-group">
             <label v-text="$t('jHipsterExerciseApp.product.tags')" for="product-tags">Tags</label>

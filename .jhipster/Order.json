@@ -25,6 +25,12 @@
       "fieldType": "BillingMethod",
       "fieldValues": "PAYPAL,CREDIT_CARD",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "orderState",
+      "fieldType": "OrderState",
+      "fieldValues": "PROCESSING,PAID",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [

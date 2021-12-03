@@ -25,7 +25,8 @@ public class SubFamily implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Family family;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -1,79 +1,92 @@
 <template>
-  <div class="home row">
-    <div class="col-md-3">
-      <span class="hipster img-fluid rounded"></span>
+  <div >
+
+    <div class="img_banniere">
+        <img src="/content/images/home/Noel_banniere.png" />
     </div>
-    <div class="col-md-9">
-      <h1 class="display-4" v-text="$t('home.title')">Welcome, Java Hipster!</h1>
-      <p class="lead" v-text="$t('home.subtitle')">This is your homepage</p>
+    <div> 
+      <p class="customfont" style="text-align: center; font-size:100px;"> Un Noel pour tous</p>      
+    </div>
 
-      <div>
-        <div class="alert alert-success" v-if="authenticated">
-          <span v-if="username" v-text="$t('home.logged.message', { username: username })">You are logged in as user "{{ username }}"</span>
-        </div>
+    <div class="separate-3_nav"> 
 
-        <div class="alert alert-warning" v-if="!authenticated">
-          <span v-text="$t('global.messages.info.authenticated.prefix')">If you want to </span>
-          <a class="alert-link" v-on:click="openLogin()" v-text="$t('global.messages.info.authenticated.link')">sign in</a
-          ><span v-html="$t('global.messages.info.authenticated.suffix')"
-            >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
-            password="user").</span
-          >
-        </div>
-        <div class="alert alert-warning" v-if="!authenticated">
-          <span v-text="$t('global.messages.info.register.noaccount')">You don't have an account yet?</span>&nbsp;
-          <router-link class="alert-link" to="/register" v-text="$t('global.messages.info.register.link')"
-            >Register a new account</router-link
-          >
-        </div>
+      <div class="category"  v-on:click="goProduct('/list_produit?cat=enfant')">
+          <img class="img_category" src="/content/images/home/Enfant.png"/>
+          <p class="centered customfont text_category" > Enfant </p>
+      </div>
+      <div class="category"  v-on:click="goProduct('/list_produit?cat=adulte')">
+          <img class="img_category" src="/content/images/home/Adulte.png"/>
+          <p class="centered customfont text_category" > Adulte </p>
       </div>
 
-      <p v-text="$t('home.question')">If you have any question on JHipster:</p>
-
-      <ul>
-        <li>
-          <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" v-text="$t('home.link.homepage')"
-            >JHipster homepage</a
-          >
-        </li>
-        <li>
-          <a
-            href="http://stackoverflow.com/tags/jhipster/info"
-            target="_blank"
-            rel="noopener noreferrer"
-            v-text="$t('home.link.stackoverflow')"
-            >JHipster on Stack Overflow</a
-          >
-        </li>
-        <li>
-          <a
-            href="https://github.com/jhipster/generator-jhipster/issues?state=open"
-            target="_blank"
-            rel="noopener noreferrer"
-            v-text="$t('home.link.bugtracker')"
-            >JHipster bug tracker</a
-          >
-        </li>
-        <li>
-          <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('home.link.chat')"
-            >JHipster public chat room</a
-          >
-        </li>
-        <li>
-          <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('home.link.follow')"
-            >follow @jhipster on Twitter</a
-          >
-        </li>
-      </ul>
-
-      <p>
-        <span v-text="$t('home.like')">If you like JHipster, don't forget to give us a star on</span>
-        <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" v-text="$t('home.github')"
-          >GitHub</a
-        >!
-      </p>
+      <div class="category"  v-on:click="goProduct('/list_produit?cat=alcool')">
+          <img class="img_category" src="/content/images/home/BonVivant.png"/>          
+          <p class="centered customfont text_category" > Bon vivant </p>
+      </div>
+         
     </div>
+     
+
+
   </div>
-</template>
+</template> 
 
 <script lang="ts" src="./home.component.ts"></script>
+
+<style>
+
+.category{
+  background:black;
+  position: relative;
+  text-align: center;
+  border-radius:40px;
+}
+
+.text_category {
+font-size:50px;
+color:white;
+}
+
+.img_category{
+  width:100%;
+  height:100%;
+  filter: brightness(50%);
+  border-radius:40px;
+
+}
+
+.img_banniere{
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display:block;
+
+}
+
+.separate-3_nav{
+
+  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap : 10px;
+
+  
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+@font-face {
+    font-family: "My Custom Font";
+    src: url(./AlexBrush.ttf) format("truetype");
+}
+p.customfont { 
+    font-family: "My Custom Font", Verdana, Tahoma;
+}
+
+</style>

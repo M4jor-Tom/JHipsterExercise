@@ -7,7 +7,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
+import com.mycompany.myapp.domain.Brand;
 import com.mycompany.myapp.domain.Product;
+import com.mycompany.myapp.domain.Seller;
+import com.mycompany.myapp.domain.SubFamily;
 import com.mycompany.myapp.domain.enumeration.Color;
 import com.mycompany.myapp.repository.ProductRepository;
 import java.util.ArrayList;
@@ -90,6 +93,36 @@ class ProductResourceIT {
             .price(DEFAULT_PRICE)
             .modelName(DEFAULT_MODEL_NAME)
             .color(DEFAULT_COLOR);
+        // Add required entity
+        SubFamily subFamily;
+        if (TestUtil.findAll(em, SubFamily.class).isEmpty()) {
+            subFamily = SubFamilyResourceIT.createEntity(em);
+            em.persist(subFamily);
+            em.flush();
+        } else {
+            subFamily = TestUtil.findAll(em, SubFamily.class).get(0);
+        }
+        product.setSubFamily(subFamily);
+        // Add required entity
+        Brand brand;
+        if (TestUtil.findAll(em, Brand.class).isEmpty()) {
+            brand = BrandResourceIT.createEntity(em);
+            em.persist(brand);
+            em.flush();
+        } else {
+            brand = TestUtil.findAll(em, Brand.class).get(0);
+        }
+        product.setBrand(brand);
+        // Add required entity
+        Seller seller;
+        if (TestUtil.findAll(em, Seller.class).isEmpty()) {
+            seller = SellerResourceIT.createEntity(em);
+            em.persist(seller);
+            em.flush();
+        } else {
+            seller = TestUtil.findAll(em, Seller.class).get(0);
+        }
+        product.setSeller(seller);
         return product;
     }
 
@@ -107,6 +140,36 @@ class ProductResourceIT {
             .price(UPDATED_PRICE)
             .modelName(UPDATED_MODEL_NAME)
             .color(UPDATED_COLOR);
+        // Add required entity
+        SubFamily subFamily;
+        if (TestUtil.findAll(em, SubFamily.class).isEmpty()) {
+            subFamily = SubFamilyResourceIT.createUpdatedEntity(em);
+            em.persist(subFamily);
+            em.flush();
+        } else {
+            subFamily = TestUtil.findAll(em, SubFamily.class).get(0);
+        }
+        product.setSubFamily(subFamily);
+        // Add required entity
+        Brand brand;
+        if (TestUtil.findAll(em, Brand.class).isEmpty()) {
+            brand = BrandResourceIT.createUpdatedEntity(em);
+            em.persist(brand);
+            em.flush();
+        } else {
+            brand = TestUtil.findAll(em, Brand.class).get(0);
+        }
+        product.setBrand(brand);
+        // Add required entity
+        Seller seller;
+        if (TestUtil.findAll(em, Seller.class).isEmpty()) {
+            seller = SellerResourceIT.createUpdatedEntity(em);
+            em.persist(seller);
+            em.flush();
+        } else {
+            seller = TestUtil.findAll(em, Seller.class).get(0);
+        }
+        product.setSeller(seller);
         return product;
     }
 

@@ -96,6 +96,11 @@
               </div>
             </td>
             <td>
+              <div v-if="product.seller">
+                <router-link :to="{ name: 'SellerView', params: { sellerId: product.seller.id } }">{{ product.seller.id }}</router-link>
+              </div>
+            </td>
+            <td>
               <span v-for="(tags, i) in product.tags" :key="tags.id"
                 >{{ i > 0 ? ', ' : '' }}
                 <router-link class="form-control-static" :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.id }}</router-link>

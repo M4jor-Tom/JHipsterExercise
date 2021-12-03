@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
+import com.mycompany.myapp.domain.Family;
 import com.mycompany.myapp.domain.SubFamily;
 import com.mycompany.myapp.repository.SubFamilyRepository;
 import java.util.List;
@@ -57,6 +58,16 @@ class SubFamilyResourceIT {
      */
     public static SubFamily createEntity(EntityManager em) {
         SubFamily subFamily = new SubFamily().name(DEFAULT_NAME);
+        // Add required entity
+        Family family;
+        if (TestUtil.findAll(em, Family.class).isEmpty()) {
+            family = FamilyResourceIT.createEntity(em);
+            em.persist(family);
+            em.flush();
+        } else {
+            family = TestUtil.findAll(em, Family.class).get(0);
+        }
+        subFamily.setFamily(family);
         return subFamily;
     }
 
@@ -68,6 +79,16 @@ class SubFamilyResourceIT {
      */
     public static SubFamily createUpdatedEntity(EntityManager em) {
         SubFamily subFamily = new SubFamily().name(UPDATED_NAME);
+        // Add required entity
+        Family family;
+        if (TestUtil.findAll(em, Family.class).isEmpty()) {
+            family = FamilyResourceIT.createUpdatedEntity(em);
+            em.persist(family);
+            em.flush();
+        } else {
+            family = TestUtil.findAll(em, Family.class).get(0);
+        }
+        subFamily.setFamily(family);
         return subFamily;
     }
 

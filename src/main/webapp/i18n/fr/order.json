@@ -23,6 +23,7 @@
       "deliveryDateTime": "Delivery Date Time",
       "quantity": "Quantity",
       "billingMethod": "Billing Method",
+      "orderState": "Order State",
       "products": "Products",
       "client": "Client"
     }

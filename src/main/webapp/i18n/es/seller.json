@@ -1,0 +1,30 @@
+{
+  "jHipsterExerciseApp": {
+    "seller": {
+      "home": {
+        "title": "Sellers",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Seller",
+        "createOrEditLabel": "Crear o editar Seller",
+        "notFound": "Ningún Sellers encontrado"
+      },
+      "created": "Un nuevo Seller ha sido creado con el identificador {{ param }}",
+      "updated": "Un Seller ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Seller ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Seller {{ id }}?"
+      },
+      "detail": {
+        "title": "Seller"
+      },
+      "id": "ID",
+      "socialReason": "Social Reason",
+      "address": "Address",
+      "siretNumber": "Siret Number",
+      "phone": "Phone",
+      "email": "Email",
+      "connection": "Connection",
+      "product": "Product"
+    }
+  }
+}

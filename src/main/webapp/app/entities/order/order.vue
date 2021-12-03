@@ -74,6 +74,7 @@
             <td>{{ order.deliveryDateTime ? $d(Date.parse(order.deliveryDateTime), 'short') : '' }}</td>
             <td>{{ order.quantity }}</td>
             <td v-text="$t('jHipsterExerciseApp.BillingMethod.' + order.billingMethod)">{{ order.billingMethod }}</td>
+            <td v-text="$t('jHipsterExerciseApp.OrderState.' + order.orderState)">{{ order.orderState }}</td>
             <td>
               <span v-for="(products, i) in order.products" :key="products.id"
                 >{{ i > 0 ? ', ' : '' }}

@@ -135,7 +135,7 @@ server:
 # Properties to be exposed on the /info management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show
-  display-ribbon-on-profiles: 'dev'
+  display-ribbon-on-profiles:
 
 # ===================================================================
 # JHipster specific properties
@@ -169,13 +169,7 @@ jhipster:
     license: unlicensed
     license-url:
   security:
-    content-security-policy: "default-src 'self'; frame-src https://* 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*; style-src 'self' 'unsafe-inline'; img-src https://* 'self' data:; font-src 'self' data:; connect-src 'self' https://*"
-#  Content-Security-Policy: "default-src 'self'; img-src *; media-src *; script-src 'self' 'unsafe-inline' 'unsafe-inline' *; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src 'self' data:"
-
-# content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.paypal.com/; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
-# https://www.paypal.com/sdk/js?client-id=AZyVvavpkhKOdesqvT8jWNnYsgsZ81UiBvTND4swJEs9oT4AjXU-biqVsTC657gHpxWFcdzX43BFsem1
-# https://storage.googleapis.com
-# https://www.paypal.com/ celui la fonctionne pour paypal
+    content-security-policy: "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:"
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

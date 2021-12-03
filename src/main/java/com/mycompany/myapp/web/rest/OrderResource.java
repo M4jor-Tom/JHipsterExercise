@@ -143,6 +143,9 @@ public class OrderResource {
                 if (order.getBillingMethod() != null) {
                     existingOrder.setBillingMethod(order.getBillingMethod());
                 }
+                if (order.getOrderState() != null) {
+                    existingOrder.setOrderState(order.getOrderState());
+                }
 
                 return existingOrder;
             })
