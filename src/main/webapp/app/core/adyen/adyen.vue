@@ -1,5 +1,6 @@
 <template>
-      <form name="loginForm" method="PUT" action="loginServlet">
+    <div id=app>
+      <form>
         <fieldset>
           <legend>Informations CB</legend>
           <ol>
@@ -20,11 +21,11 @@
             </li>
             <li>
               <label for=numero_de_carte>N° de carte</label>
-              <input type=number name=numero_de_carte id=number required>
+              <input type=number name=cardnumber id=cardnumber required>
             </li>
             <li>
                 <label for="expiration">Date d'expiration :</label>
-                <input type="month" name=date_expiration id=expiration required>
+                <input type="month" name=expirationdate id=expirationdate required>
               </li>
             <li>
               <label for=securite>Code de sécurité</label>
@@ -32,17 +33,15 @@
             </li>
             <li>
               <label for=nom_porteur>Nom du porteur</label>
-              <input type=text name=name id=name placeholder="Nom indiqué sur la carte" required>
+              <input type=text name=name id=cardname placeholder="Nom indiqué sur la carte" required>
             </li>
           </ol>
         </fieldset>
         <fieldset>
-          <button id=button>Payer</button>
+          <button type="submit">Payer</button>
         </fieldset>
-      </form> 
+      </form>
+      </div>
 </template>
 
-    
-<script lang="ts" src="./adyen.component.ts">
- 
-</script>
+<script lang="js" src="./adyen.js"></script>
