@@ -8,11 +8,14 @@ Component.registerHooks([
 import Router from 'vue-router';
 
 const Home = () => import('@/core/home/home.vue');
+const Paypal = () => import('@/core/paypal/paypal.vue');
 const Error = () => import('@/core/error/error.vue');
 import account from '@/router/account';
 import admin from '@/router/admin';
 import entities from '@/router/entities';
 import pages from '@/router/pages';
+import cart from './cart';
+import list_produit from './list_produit';
 
 Vue.use(Router);
 
@@ -24,6 +27,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/paypal',
+      name: 'Paypal',
+      component: Paypal
     },
     {
       path: '/forbidden',
@@ -39,6 +47,8 @@ export default new Router({
     },
     ...account,
     ...admin,
+    ...cart,
+    ...list_produit,
     ...entities,
     ...pages
   ]
