@@ -18,16 +18,16 @@
                 <constraints nullable="true" />
             </column>
             <column name="delivery_adress" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="delivery_date_time" type="${datetimeType}">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="quantity" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="billing_method" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="order_state" type="varchar(255)">
                 <constraints nullable="false" />

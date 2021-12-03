@@ -30,21 +30,18 @@ public class Order implements Serializable {
     @Column(name = "sum")
     private Double sum;
 
-    @NotNull
-    @Column(name = "delivery_adress", nullable = false)
+    @Column(name = "delivery_adress")
     private String deliveryAdress;
 
-    @NotNull
-    @Column(name = "delivery_date_time", nullable = false)
+    @Column(name = "delivery_date_time")
     private ZonedDateTime deliveryDateTime;
 
     @NotNull
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "billing_method", nullable = false)
+    @Column(name = "billing_method")
     private BillingMethod billingMethod;
 
     @NotNull

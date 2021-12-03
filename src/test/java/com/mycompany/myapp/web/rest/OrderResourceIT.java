@@ -172,61 +172,10 @@ class OrderResourceIT {
 
     @Test
     @Transactional
-    void checkDeliveryAdressIsRequired() throws Exception {
-        int databaseSizeBeforeTest = orderRepository.findAll().size();
-        // set the field null
-        order.setDeliveryAdress(null);
-
-        // Create the Order, which fails.
-
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkDeliveryDateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = orderRepository.findAll().size();
-        // set the field null
-        order.setDeliveryDateTime(null);
-
-        // Create the Order, which fails.
-
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void checkQuantityIsRequired() throws Exception {
         int databaseSizeBeforeTest = orderRepository.findAll().size();
         // set the field null
         order.setQuantity(null);
-
-        // Create the Order, which fails.
-
-        restOrderMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(order)))
-            .andExpect(status().isBadRequest());
-
-        List<Order> orderList = orderRepository.findAll();
-        assertThat(orderList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkBillingMethodIsRequired() throws Exception {
-        int databaseSizeBeforeTest = orderRepository.findAll().size();
-        // set the field null
-        order.setBillingMethod(null);
 
         // Create the Order, which fails.
 

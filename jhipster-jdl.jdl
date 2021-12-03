@@ -16,10 +16,10 @@ filter *
 // Table contenant le détail de la commande
 entity Order {
 	sum Double,
-    deliveryAdress String required,
-    deliveryDateTime ZonedDateTime required,
+    deliveryAdress String,
+    deliveryDateTime ZonedDateTime,
     quantity Long required,
-    billingMethod BillingMethod required
+    billingMethod BillingMethod,
     orderState OrderState required
 }
 
