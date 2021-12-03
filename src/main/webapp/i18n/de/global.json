@@ -156,5 +156,20 @@
   "search": "Suche...",
   "search2": "Suche",
   "cate": "Kategorie :",
-  "addCart": "Zum Warenkorb hinzufügen"
+  "addCart": "Zum Warenkorb hinzufügen",
+  "welcomeMessage": "Ein Weihnachtsfest für alle",
+  "highTech": "High-Tech",
+  "vetement": "Kleidung",
+  "transport": "Transporte",
+  "product": "Produkt",
+  "quantity":"Menge",
+  "price":"Preis",
+  "enterpromocode": "Den promotionscode eingeben",
+  "promocode":"Gutscheincode",
+  "apply":"Bewerben",
+  "totalprice":"Gesamtpreis",
+  "discount":"Reduktion",
+  "total": "Insgesamt",
+  "makepurch": "Die Zahlung vornehmen",
+  "continuepurch": "Weiter einkaufen"
 }

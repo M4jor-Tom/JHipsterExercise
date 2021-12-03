@@ -9,9 +9,9 @@
                       <table class="table table-borderless table-shopping-cart">
                           <thead class="text-muted">
                               <tr class="small text-uppercase">
-                                  <th scope="col">Product</th>
-                                  <th scope="col" width="120">Quantity</th>
-                                  <th scope="col" width="120">Price</th>
+                                  <th scope="col" v-text="$t('product')">Product</th>
+                                  <th scope="col" width="120" v-text="$t('quantity')">Quantity</th>
+                                  <th scope="col" width="120" v-text="$t('price')">Price</th>
                                   <th scope="col" class="text-right d-none d-md-block" width="200"></th>
                               </tr>
                           </thead>
@@ -46,8 +46,8 @@
               <div class="card mb-3">
                   <div class="card-body">
                       <form>
-                          <div class="form-group"> <label>Have coupon?</label>
-                              <div class="input-group"> <input type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+                          <div class="form-group"> <label v-text="$t('enterpromocode')">Have coupon?</label>
+                              <div class="input-group"> <input type="text" class="form-control coupon" name="" v-bind:placeholder="$t('promocode')"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon" v-text="$t('apply')">Apply</button> </span> </div>
                           </div>
                       </form>
                   </div>
@@ -55,18 +55,18 @@
               <div class="card">
                   <div class="card-body">
                       <dl class="dlist-align">
-                          <dt>Total price:</dt>
+                          <dt v-text="$t('totalprice')">Total price:</dt>
                           <dd class="text-right ml-3">$69.97</dd>
                       </dl>
                       <dl class="dlist-align">
-                          <dt>Discount:</dt>
+                          <dt v-text="$t('discount')">Discount:</dt>
                           <dd class="text-right text-danger ml-3">- $10.00</dd>
                       </dl>
                       <dl class="dlist-align">
-                          <dt>Total:</dt>
+                          <dt v-text="$t('total')">Total:</dt>
                           <dd class="text-right text-dark b ml-3"><strong>$59.97</strong></dd>
                       </dl>
-                      <hr> <a href="paypal" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Make Purchase </a> <a href="#" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
+                      <hr> <a href="paypal" class="btn btn-out btn-primary btn-square btn-main" data-abc="true" v-text="$t('makepurch')"> Make Purchase </a> <a href="#" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true" v-text="$t('continuepurch')">Continue Shopping</a>
                   </div>
               </div>
           </aside>
@@ -97,8 +97,8 @@ body {
 }
 
 .img-sm {
-    width: 80px;
-    height: 80px
+    width: 130px;
+    height: 90px
 }
 
 .itemside .info {
