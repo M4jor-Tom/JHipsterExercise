@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Family;
 import com.mycompany.myapp.repository.FamilyRepository;
+import com.mycompany.myapp.service.criteria.FamilyCriteria;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -155,6 +156,140 @@ class FamilyResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(family.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getFamiliesByIdFiltering() throws Exception {
+        // Initialize the database
+        familyRepository.saveAndFlush(family);
+
+        Long id = family.getId();
+
+        defaultFamilyShouldBeFound("id.equals=" + id);
+        defaultFamilyShouldNotBeFound("id.notEquals=" + id);
+
+        defaultFamilyShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultFamilyShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultFamilyShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultFamilyShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllFamiliesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        familyRepository.saveAndFlush(family);
+
+        // Get all the familyList where name equals to DEFAULT_NAME
+        defaultFamilyShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the familyList where name equals to UPDATED_NAME
+        defaultFamilyShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllFamiliesByNameIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        familyRepository.saveAndFlush(family);
+
+        // Get all the familyList where name not equals to DEFAULT_NAME
+        defaultFamilyShouldNotBeFound("name.notEquals=" + DEFAULT_NAME);
+
+        // Get all the familyList where name not equals to UPDATED_NAME
+        defaultFamilyShouldBeFound("name.notEquals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllFamiliesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        familyRepository.saveAndFlush(family);
+
+        // Get all the familyList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultFamilyShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the familyList where name equals to UPDATED_NAME
+        defaultFamilyShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllFamiliesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        familyRepository.saveAndFlush(family);
+
+        // Get all the familyList where name is not null
+        defaultFamilyShouldBeFound("name.specified=true");
+
+        // Get all the familyList where name is null
+        defaultFamilyShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllFamiliesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        familyRepository.saveAndFlush(family);
+
+        // Get all the familyList where name contains DEFAULT_NAME
+        defaultFamilyShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the familyList where name contains UPDATED_NAME
+        defaultFamilyShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllFamiliesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        familyRepository.saveAndFlush(family);
+
+        // Get all the familyList where name does not contain DEFAULT_NAME
+        defaultFamilyShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the familyList where name does not contain UPDATED_NAME
+        defaultFamilyShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultFamilyShouldBeFound(String filter) throws Exception {
+        restFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(family.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultFamilyShouldNotBeFound(String filter) throws Exception {
+        restFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

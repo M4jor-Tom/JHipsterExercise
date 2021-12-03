@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Brand;
 import com.mycompany.myapp.repository.BrandRepository;
+import com.mycompany.myapp.service.criteria.BrandCriteria;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -155,6 +156,140 @@ class BrandResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(brand.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getBrandsByIdFiltering() throws Exception {
+        // Initialize the database
+        brandRepository.saveAndFlush(brand);
+
+        Long id = brand.getId();
+
+        defaultBrandShouldBeFound("id.equals=" + id);
+        defaultBrandShouldNotBeFound("id.notEquals=" + id);
+
+        defaultBrandShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultBrandShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultBrandShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultBrandShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllBrandsByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        brandRepository.saveAndFlush(brand);
+
+        // Get all the brandList where name equals to DEFAULT_NAME
+        defaultBrandShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the brandList where name equals to UPDATED_NAME
+        defaultBrandShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllBrandsByNameIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        brandRepository.saveAndFlush(brand);
+
+        // Get all the brandList where name not equals to DEFAULT_NAME
+        defaultBrandShouldNotBeFound("name.notEquals=" + DEFAULT_NAME);
+
+        // Get all the brandList where name not equals to UPDATED_NAME
+        defaultBrandShouldBeFound("name.notEquals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllBrandsByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        brandRepository.saveAndFlush(brand);
+
+        // Get all the brandList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultBrandShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the brandList where name equals to UPDATED_NAME
+        defaultBrandShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllBrandsByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        brandRepository.saveAndFlush(brand);
+
+        // Get all the brandList where name is not null
+        defaultBrandShouldBeFound("name.specified=true");
+
+        // Get all the brandList where name is null
+        defaultBrandShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllBrandsByNameContainsSomething() throws Exception {
+        // Initialize the database
+        brandRepository.saveAndFlush(brand);
+
+        // Get all the brandList where name contains DEFAULT_NAME
+        defaultBrandShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the brandList where name contains UPDATED_NAME
+        defaultBrandShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllBrandsByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        brandRepository.saveAndFlush(brand);
+
+        // Get all the brandList where name does not contain DEFAULT_NAME
+        defaultBrandShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the brandList where name does not contain UPDATED_NAME
+        defaultBrandShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultBrandShouldBeFound(String filter) throws Exception {
+        restBrandMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(brand.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restBrandMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultBrandShouldNotBeFound(String filter) throws Exception {
+        restBrandMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restBrandMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

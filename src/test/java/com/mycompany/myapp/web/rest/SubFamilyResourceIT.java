@@ -9,6 +9,7 @@ import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Family;
 import com.mycompany.myapp.domain.SubFamily;
 import com.mycompany.myapp.repository.SubFamilyRepository;
+import com.mycompany.myapp.service.criteria.SubFamilyCriteria;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -176,6 +177,166 @@ class SubFamilyResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(subFamily.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+    }
+
+    @Test
+    @Transactional
+    void getSubFamiliesByIdFiltering() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+
+        Long id = subFamily.getId();
+
+        defaultSubFamilyShouldBeFound("id.equals=" + id);
+        defaultSubFamilyShouldNotBeFound("id.notEquals=" + id);
+
+        defaultSubFamilyShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultSubFamilyShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultSubFamilyShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultSubFamilyShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllSubFamiliesByNameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+
+        // Get all the subFamilyList where name equals to DEFAULT_NAME
+        defaultSubFamilyShouldBeFound("name.equals=" + DEFAULT_NAME);
+
+        // Get all the subFamilyList where name equals to UPDATED_NAME
+        defaultSubFamilyShouldNotBeFound("name.equals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllSubFamiliesByNameIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+
+        // Get all the subFamilyList where name not equals to DEFAULT_NAME
+        defaultSubFamilyShouldNotBeFound("name.notEquals=" + DEFAULT_NAME);
+
+        // Get all the subFamilyList where name not equals to UPDATED_NAME
+        defaultSubFamilyShouldBeFound("name.notEquals=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllSubFamiliesByNameIsInShouldWork() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+
+        // Get all the subFamilyList where name in DEFAULT_NAME or UPDATED_NAME
+        defaultSubFamilyShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
+
+        // Get all the subFamilyList where name equals to UPDATED_NAME
+        defaultSubFamilyShouldNotBeFound("name.in=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllSubFamiliesByNameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+
+        // Get all the subFamilyList where name is not null
+        defaultSubFamilyShouldBeFound("name.specified=true");
+
+        // Get all the subFamilyList where name is null
+        defaultSubFamilyShouldNotBeFound("name.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllSubFamiliesByNameContainsSomething() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+
+        // Get all the subFamilyList where name contains DEFAULT_NAME
+        defaultSubFamilyShouldBeFound("name.contains=" + DEFAULT_NAME);
+
+        // Get all the subFamilyList where name contains UPDATED_NAME
+        defaultSubFamilyShouldNotBeFound("name.contains=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllSubFamiliesByNameNotContainsSomething() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+
+        // Get all the subFamilyList where name does not contain DEFAULT_NAME
+        defaultSubFamilyShouldNotBeFound("name.doesNotContain=" + DEFAULT_NAME);
+
+        // Get all the subFamilyList where name does not contain UPDATED_NAME
+        defaultSubFamilyShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllSubFamiliesByFamilyIsEqualToSomething() throws Exception {
+        // Initialize the database
+        subFamilyRepository.saveAndFlush(subFamily);
+        Family family;
+        if (TestUtil.findAll(em, Family.class).isEmpty()) {
+            family = FamilyResourceIT.createEntity(em);
+            em.persist(family);
+            em.flush();
+        } else {
+            family = TestUtil.findAll(em, Family.class).get(0);
+        }
+        em.persist(family);
+        em.flush();
+        subFamily.setFamily(family);
+        subFamilyRepository.saveAndFlush(subFamily);
+        Long familyId = family.getId();
+
+        // Get all the subFamilyList where family equals to familyId
+        defaultSubFamilyShouldBeFound("familyId.equals=" + familyId);
+
+        // Get all the subFamilyList where family equals to (familyId + 1)
+        defaultSubFamilyShouldNotBeFound("familyId.equals=" + (familyId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultSubFamilyShouldBeFound(String filter) throws Exception {
+        restSubFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(subFamily.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+
+        // Check, that the count call also returns 1
+        restSubFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultSubFamilyShouldNotBeFound(String filter) throws Exception {
+        restSubFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restSubFamilyMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

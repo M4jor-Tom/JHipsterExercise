@@ -147,5 +147,10 @@
       "not.image": "Es wird erwartet, dass die Datei ein Bild ist. Die Datei ist jedoch vom Typ \"{{ fileType }}\""
     }
   },
-  "footer": "Dies ist Ihre Fußzeile"
+  "footer": "Wir verkaufen alles, was Sie brauchen: Autos, Kleidung, Telefone...",
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Nachricht"
+  }
 }

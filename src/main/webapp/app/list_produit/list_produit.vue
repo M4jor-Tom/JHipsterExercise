@@ -13,7 +13,7 @@
         <input type="text" id="myInput"  placeholder="Search.." onkeyup="myFunction">
         <br>
         <br>
-        <div class="dropdown">
+        <div class="dropdown categ">
           <button class="dropbtn" style="font-size:20px"> Categorie :</button>
           <div class="dropdown-content">
             <a href="http://localhost:8080/list_produit?cat=enfant"> Enfant </a>
@@ -114,7 +114,7 @@ export default {
     padding: 5px;
     font-size: 12px;
 }
-.dropdown {
+.dropdown .categ{
     display: inline-block;
     position: relative;
     width: 150px;

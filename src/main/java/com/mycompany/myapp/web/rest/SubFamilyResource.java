@@ -2,6 +2,9 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.SubFamily;
 import com.mycompany.myapp.repository.SubFamilyRepository;
+import com.mycompany.myapp.service.SubFamilyQueryService;
+import com.mycompany.myapp.service.SubFamilyService;
+import com.mycompany.myapp.service.criteria.SubFamilyCriteria;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,15 +16,9 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -29,7 +26,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class SubFamilyResource {
 
     private final Logger log = LoggerFactory.getLogger(SubFamilyResource.class);
@@ -39,10 +35,20 @@ public class SubFamilyResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final SubFamilyService subFamilyService;
+
     private final SubFamilyRepository subFamilyRepository;
 
-    public SubFamilyResource(SubFamilyRepository subFamilyRepository) {
+    private final SubFamilyQueryService subFamilyQueryService;
+
+    public SubFamilyResource(
+        SubFamilyService subFamilyService,
+        SubFamilyRepository subFamilyRepository,
+        SubFamilyQueryService subFamilyQueryService
+    ) {
+        this.subFamilyService = subFamilyService;
         this.subFamilyRepository = subFamilyRepository;
+        this.subFamilyQueryService = subFamilyQueryService;
     }
 
     /**
@@ -58,7 +64,7 @@ public class SubFamilyResource {
         if (subFamily.getId() != null) {
             throw new BadRequestAlertException("A new subFamily cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SubFamily result = subFamilyRepository.save(subFamily);
+        SubFamily result = subFamilyService.save(subFamily);
         return ResponseEntity
             .created(new URI("/api/sub-families/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -92,7 +98,7 @@ public class SubFamilyResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        SubFamily result = subFamilyRepository.save(subFamily);
+        SubFamily result = subFamilyService.save(subFamily);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, subFamily.getId().toString()))
@@ -127,16 +133,7 @@ public class SubFamilyResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<SubFamily> result = subFamilyRepository
-            .findById(subFamily.getId())
-            .map(existingSubFamily -> {
-                if (subFamily.getName() != null) {
-                    existingSubFamily.setName(subFamily.getName());
-                }
-
-                return existingSubFamily;
-            })
-            .map(subFamilyRepository::save);
+        Optional<SubFamily> result = subFamilyService.partialUpdate(subFamily);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -147,14 +144,26 @@ public class SubFamilyResource {
     /**
      * {@code GET  /sub-families} : get all the subFamilies.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of subFamilies in body.
      */
     @GetMapping("/sub-families")
-    public ResponseEntity<List<SubFamily>> getAllSubFamilies(Pageable pageable) {
-        log.debug("REST request to get all SubFamilies");
-        Page<SubFamily> page = subFamilyRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<SubFamily>> getAllSubFamilies(SubFamilyCriteria criteria) {
+        log.debug("REST request to get SubFamilies by criteria: {}", criteria);
+        List<SubFamily> entityList = subFamilyQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /sub-families/count} : count all the subFamilies.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/sub-families/count")
+    public ResponseEntity<Long> countSubFamilies(SubFamilyCriteria criteria) {
+        log.debug("REST request to count SubFamilies by criteria: {}", criteria);
+        return ResponseEntity.ok().body(subFamilyQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -166,7 +175,7 @@ public class SubFamilyResource {
     @GetMapping("/sub-families/{id}")
     public ResponseEntity<SubFamily> getSubFamily(@PathVariable Long id) {
         log.debug("REST request to get SubFamily : {}", id);
-        Optional<SubFamily> subFamily = subFamilyRepository.findById(id);
+        Optional<SubFamily> subFamily = subFamilyService.findOne(id);
         return ResponseUtil.wrapOrNotFound(subFamily);
     }
 
@@ -179,7 +188,7 @@ public class SubFamilyResource {
     @DeleteMapping("/sub-families/{id}")
     public ResponseEntity<Void> deleteSubFamily(@PathVariable Long id) {
         log.debug("REST request to delete SubFamily : {}", id);
-        subFamilyRepository.deleteById(id);
+        subFamilyService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

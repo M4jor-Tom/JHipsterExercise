@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Spring Data SQL repository for the Order entity.
  */
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecificationExecutor<Order> {
     @Query(
         value = "select distinct jhiOrder from Order jhiOrder left join fetch jhiOrder.products",
         countQuery = "select count(distinct jhiOrder) from Order jhiOrder"
