@@ -152,5 +152,9 @@
     "name": "Name",
     "email": "Email",
     "message": "Nachricht"
-  }
+  },
+  "search": "Suche...",
+  "search2": "Suche",
+  "cate": "Kategorie :",
+  "addCart": "Zum Warenkorb hinzufügen"
 }

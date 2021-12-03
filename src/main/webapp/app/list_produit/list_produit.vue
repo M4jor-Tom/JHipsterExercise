@@ -8,13 +8,13 @@
          <!-- Filtre -->
         <br>
         <br>
-        <a> Search :</a>
+        <a v-text="$t('search2')"> Search :</a>
         <br>
-        <input type="text" id="myInput"  placeholder="Search.." onkeyup="myFunction">
+        <input type="text" id="myInput"   v-bind:placeholder="$t('search')" onkeyup="myFunction">
         <br>
         <br>
         <div class="dropdown categ">
-          <button class="dropbtn" style="font-size:20px"> Categorie :</button>
+          <button class="dropbtn" v-text="$t('cate')" style="font-size:20px"> Categorie :</button>
           <div class="dropdown-content">
             <a href="http://localhost:8080/list_produit?cat=enfant"> Enfant </a>
             <a href="http://localhost:8080/list_produit?cat=adulte"> Adulte </a>
@@ -31,28 +31,14 @@
           <p class="price">${{product.price}} USD</p>
 
           <i class="info fas fa-info-circle"></i>
-          <p class="text">{{product.modelName}}.</p>
+          <p class="text">{{product.description}}.</p>
 
           <div class="imgBx">
             <img :src="'/content/images/product/' + product.id + '.png'" />
           </div>
           <div class="contentBx">
             <h2>{{product.modelName}}</h2>
-            <div class="size">
-                <h3>Size :</h3>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-                <span>10</span>
-            </div>
-            <div class="color">
-                <h3>Color:</h3>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <button>Add to Cart</button>
+            <button v-text="$t('addCart')">Add to Cart</button>
           </div>
 
         </div>
