@@ -9,6 +9,8 @@ import Router from 'vue-router';
 
 const Home = () => import('@/core/home/home.vue');
 const Paypal = () => import('@/core/paypal/paypal.vue');
+const LoginServlet = () => import('@/core/loginServlet/loginServlet.vue')
+const Adyen = () => import('@/core/adyen/adyen.vue')
 const Error = () => import('@/core/error/error.vue');
 import account from '@/router/account';
 import admin from '@/router/admin';
@@ -34,6 +36,17 @@ export default new Router({
       name: 'Paypal',
       component: Paypal
     },
+    {
+      path: '/adyen',
+      name: 'adyen',
+      component: Adyen
+    },
+    {
+      path: '/loginServlet',
+      name: 'loginServlet',
+      component: LoginServlet
+    },
+
     {
       path: '/forbidden',
       name: 'Forbidden',
