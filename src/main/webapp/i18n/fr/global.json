@@ -157,5 +157,20 @@
   "search": "Recherche...",
   "search2": "Recherche",
   "cate": "Categorie :",
-  "addCart" :"Ajouter au panier"
+  "addCart" :"Ajouter au panier",
+  "welcomeMessage": "Un Noel pour tous",
+  "highTech": "High-Tech",
+  "vetement": "Vêtements",
+  "transport": "Transports",
+  "product": "Produit",
+  "quantity":"Quantité",
+  "price":"Prix",
+  "enterpromocode": "Entrer le code promo",
+  "promocode":"Code promo",
+  "apply":"Appliquer",
+  "totalprice":"Prix total",
+  "discount":"Réduction",
+  "total": "Total",
+  "makepurch": "Procéder au paiement",
+  "continuepurch": "Continuer les achats"
 }

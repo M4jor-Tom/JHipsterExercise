@@ -156,5 +156,20 @@
   "search": "Cerca...",
   "search2": "Cerca",
   "cate": "Categoria :",
-  "addCart" :"Aggiungi al carrello"
+  "addCart" :"Aggiungi al carrello",
+  "welcomeMessage": "Un Natale per tutti",
+  "highTech": "High-Tech",
+  "vetement": "Abbigliamento",
+  "transport": "Trasporto",
+  "product": "Prodotto",
+  "quantity":"Quantità",
+  "price":"Prezzo",
+  "enterpromocode": "Inserisci il codice promozionale",
+  "promocode":"Codice promozionale",
+  "apply":"Applicare",
+  "totalprice":"Prezzo totale",
+  "discount":"Riduzione",
+  "total": "Totale",
+  "makepurch": "Procedere al pagamento",
+  "continuepurch": "Continua lo shopping"
 }

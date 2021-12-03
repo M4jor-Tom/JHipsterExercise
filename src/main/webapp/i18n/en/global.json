@@ -157,5 +157,20 @@
   "search": "Search...",
   "search2": "Search",
   "cate": "Category :",
-  "addCart": "Add to cart"
+  "addCart": "Add to cart",
+  "welcomeMessage": "A Christmas for all",
+  "highTech": "High-Tech",
+  "vetement": "Clothing",
+  "transport": "Transportation",
+  "product": "product",
+  "quantity":"quantity",
+  "price":"price",
+  "enterpromocode": "Enter promotional code",
+  "promocode":"Promotional Code",
+  "apply":"Apply",
+  "totalprice":"Total price",
+  "discount":"Discount",
+  "total": "Total",
+  "makepurch": "Process to payment",
+  "continuepurch": "Continue Shopping"
 }
