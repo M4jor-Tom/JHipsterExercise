@@ -11,24 +11,31 @@ import com.adyen.model.checkout.PaymentsResponse;
 import com.adyen.service.Checkout;
 import com.adyen.service.exception.ApiException;
 
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+ 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class formController {
 
-    @RequestMapping (value = "/paiement", method = RequestMethod.POST)
-    void paiement(@RequestBody String JSON) throws ApiException, IOException {
+    @PostMapping (value = "/paiement", consumes = "application/json", produces = "application/json")
+    void paiement(@RequestBody Paiement data) throws ApiException, IOException {
         
-       System.out.println(JSON);
-        
-        /*// Set your X-API-KEY with the API key from the Customer Area.
-        System.out.println("username");
-        
+       //System.out.println(JSON);
+       System.out.println(data.cardnumber);
+       System.out.println(data.expirationdate);
+       System.out.println(data.securite);
+       System.out.println(data.cardname);
+  
+
         String xApiKey = "AQEmhmfuXNWTK0Qc+iSZoUEWhueYR55DGdCTbzzxbLZc1XoVatyQFrkQwV1bDb7kfNy1WIxIIkxgBw==-5bRrb1YHyfeFZ12efxwNavj07PSVHOMij9M8CFJApb8=-nuI3tr$_6H8T%xNz";          
         Client client = new Client(xApiKey,Environment.TEST);
         Checkout checkout = new Checkout(client);
@@ -45,7 +52,7 @@ public class formController {
         paymentsRequest.setAmount(amount);
         paymentsRequest.setReference("Your order number");
         paymentsRequest.setReturnUrl("https://your-company.com/checkout?shopperOrder=12xy..");
-        PaymentsResponse paymentsResponse = checkout.payments(paymentsRequest);*/
+        PaymentsResponse paymentsResponse = checkout.payments(paymentsRequest);
     }
 }
 
