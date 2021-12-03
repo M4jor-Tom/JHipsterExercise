@@ -147,5 +147,10 @@
       "not.image": "Se esperaba que el fichero fuera una imagen pero se encontro \"{{ fileType }}\""
     }
   },
-  "footer": "Pie de página"
+  "footer": "Vendemos todo lo que necesitas: coches, ropa, teléfonos...",
+  "contact": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "message": "Mensaje"
+  }
 }
