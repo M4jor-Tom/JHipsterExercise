@@ -21,6 +21,8 @@ export default class Brand extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
   private hasAnyAuthorityValue = false;
+  private hasSellerAuthorityValue = false;
+  private hasAdminAuthorityValue = false;
 
   public brands: IBrand[] = [];
 
@@ -125,5 +127,23 @@ export default class Brand extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+  
+  public hasSellerAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasSellerAuthorityValue = value;
+      });
+    return this.hasSellerAuthorityValue;
+  }
+  
+  public hasAdminAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasAdminAuthorityValue = value;
+      });
+    return this.hasAdminAuthorityValue;
   }
 }
