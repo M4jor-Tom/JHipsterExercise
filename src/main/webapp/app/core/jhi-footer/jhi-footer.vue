@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="footer-content">
+    <div class="footer-content" onload=changeImg()>
       <h3>JHipster Exercise</h3>
       <p v-text="$t('footer')">We sell everything you need: cars, clothes, phones...</p>
       <ul class="socials">
@@ -21,8 +21,10 @@
         </li>
       </ul>
     </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom" onload=changeImg()>
       <p>copyright &copy; <a href="#">JHipster Exercise</a></p>
+      <img id="FooterImage1" src="/content/images/pub/bg5.png" width="150" height="120" left />
+      <img id="FooterImage2" src="/content/images/pub/bg4.png" width="150" height="120" right />
       <div class="footer-menu">
         <ul class="f-menu">
           <li><a href="/">Home</a></li>
@@ -34,7 +36,7 @@
   </footer>
 </template>
 
-<script lang="ts" src="./jhi-footer.component.ts"></script>
+<script lang="ts" src="./jhi-footer.component.ts" onload="changeImg()"></script>
 
 <style media="screen">
 * {
