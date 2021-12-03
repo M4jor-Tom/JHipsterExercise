@@ -29,6 +29,7 @@ export default class Connection extends Vue {
 
   public propOrder = 'id';
   public reverse = false;
+  public filtered = '';
 
   public mounted(): void {
     this.retrieveAllConnections();

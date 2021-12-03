@@ -41,7 +41,7 @@
             <img :src="'/content/images/product/' + product.id + '.png'" />
           </div>
           <div class="contentBx">
-            <h2>{{product.modelName}}</h2>
+            <h2>{{product.brandNameWithModelName}}</h2>
             <div id="example">
               <button v-text="$t('addCart')">Add to Cart</button>
             </div>

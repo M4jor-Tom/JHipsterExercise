@@ -20,6 +20,8 @@
           </button>
         </router-link>
       </div>
+      <span v-text="$t('Filter')">Filter</span> <input type="text" v-model="filtered" class="form-control" />
+      
     </h2>
     <br />
     <div class="alert alert-warning" v-if="!isFetching && families && families.length === 0">
@@ -41,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="family in families" :key="family.id" data-cy="entityTable">
+          <tr v-for="family in orderBy(filterBy(families, filtered), propOrder, reverse === true ? 1 : -1)" :key="family.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'FamilyView', params: { familyId: family.id } }">{{ family.id }}</router-link>
             </td>
