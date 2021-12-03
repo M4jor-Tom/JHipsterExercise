@@ -22,6 +22,8 @@ export default class Tag extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
   private hasAnyAuthorityValue = false;
+  private hasSellerAuthorityValue = false;
+  private hasAdminAuthorityValue = false;
 
   public tags: ITag[] = [];
 
@@ -29,6 +31,7 @@ export default class Tag extends Vue {
 
   public propOrder = 'id';
   public reverse = false;
+  public filtered = '';
 
   public mounted(): void {
     this.retrieveAllTags();
@@ -104,11 +107,29 @@ export default class Tag extends Vue {
       });
     return this.hasAnyAuthorityValue;
   }
+  
+  public hasSellerAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasSellerAuthorityValue = value;
+      });
+    return this.hasSellerAuthorityValue;
+  }
 
   public changeOrder(propOrder: string): void {
     this.propOrder = propOrder;
     this.reverse = !this.reverse;
     this.transition();
+  }
+  
+  public hasAdminAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasAdminAuthorityValue = value;
+      });
+    return this.hasAdminAuthorityValue;
   }
 
   public transition(): void {

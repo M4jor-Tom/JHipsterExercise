@@ -50,6 +50,12 @@ const SubFamily = () => import('@/entities/sub-family/sub-family.vue');
 const SubFamilyUpdate = () => import('@/entities/sub-family/sub-family-update.vue');
 // prettier-ignore
 const SubFamilyDetails = () => import('@/entities/sub-family/sub-family-details.vue');
+// prettier-ignore
+const Seller = () => import('@/entities/seller/seller.vue');
+// prettier-ignore
+const SellerUpdate = () => import('@/entities/seller/seller-update.vue');
+// prettier-ignore
+const SellerDetails = () => import('@/entities/seller/seller-details.vue');
 // jhipster-needle-add-entity-to-router-import - JHipster will import entities to the router here
 
 export default [
@@ -57,7 +63,7 @@ export default [
     path: '/client',
     name: 'Client',
     component: Client,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/client/new',
@@ -75,37 +81,37 @@ export default [
     path: '/client/:clientId/view',
     name: 'ClientView',
     component: ClientDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/order',
     name: 'Order',
     component: Order,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER, Authority.USER] },
   },
   {
     path: '/order/new',
     name: 'OrderCreate',
     component: OrderUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/order/:orderId/edit',
     name: 'OrderEdit',
     component: OrderUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/order/:orderId/view',
     name: 'OrderView',
     component: OrderDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER, Authority.USER] },
   },
   {
     path: '/connection',
     name: 'Connection',
     component: Connection,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/connection/new',
@@ -123,127 +129,151 @@ export default [
     path: '/connection/:connectionId/view',
     name: 'ConnectionView',
     component: ConnectionDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN] },
   },
   {
     path: '/product',
     name: 'Product',
     component: Product,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER, Authority.USER] },
   },
   {
     path: '/product/new',
     name: 'ProductCreate',
     component: ProductUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/product/:productId/edit',
     name: 'ProductEdit',
     component: ProductUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/product/:productId/view',
     name: 'ProductView',
     component: ProductDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER, Authority.USER] },
   },
   {
     path: '/tag',
     name: 'Tag',
     component: Tag,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/tag/new',
     name: 'TagCreate',
     component: TagUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/tag/:tagId/edit',
     name: 'TagEdit',
     component: TagUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/tag/:tagId/view',
     name: 'TagView',
     component: TagDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/brand',
     name: 'Brand',
     component: Brand,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/brand/new',
     name: 'BrandCreate',
     component: BrandUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/brand/:brandId/edit',
     name: 'BrandEdit',
     component: BrandUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/brand/:brandId/view',
     name: 'BrandView',
     component: BrandDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/family',
     name: 'Family',
     component: Family,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/family/new',
     name: 'FamilyCreate',
     component: FamilyUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/family/:familyId/edit',
     name: 'FamilyEdit',
     component: FamilyUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/family/:familyId/view',
     name: 'FamilyView',
     component: FamilyDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/sub-family',
     name: 'SubFamily',
     component: SubFamily,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/sub-family/new',
     name: 'SubFamilyCreate',
     component: SubFamilyUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/sub-family/:subFamilyId/edit',
     name: 'SubFamilyEdit',
     component: SubFamilyUpdate,
-    meta: { authorities: [Authority.ADMIN] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
   },
   {
     path: '/sub-family/:subFamilyId/view',
     name: 'SubFamilyView',
     component: SubFamilyDetails,
-    meta: { authorities: [Authority.USER] },
+    meta: { authorities: [Authority.ADMIN, Authority.SELLER] },
+  },
+  {
+    path: '/seller',
+    name: 'Seller',
+    component: Seller,
+    meta: { authorities: [Authority.ADMIN] },
+  },
+  {
+    path: '/seller/new',
+    name: 'SellerCreate',
+    component: SellerUpdate,
+    meta: { authorities: [Authority.ADMIN] },
+  },
+  {
+    path: '/seller/:sellerId/edit',
+    name: 'SellerEdit',
+    component: SellerUpdate,
+    meta: { authorities: [Authority.ADMIN] },
+  },
+  {
+    path: '/seller/:sellerId/view',
+    name: 'SellerView',
+    component: SellerDetails,
+    meta: { authorities: [Authority.ADMIN] },
   },
   // jhipster-needle-add-entity-to-router - JHipster will add entities to the router here
 ];

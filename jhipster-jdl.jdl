@@ -11,18 +11,26 @@ entity Client {
     country String required,
     postalCode String required
 }
+service * with serviceClass
+filter *
 // Table contenant le détail de la commande
 entity Order {
 	sum Double,
-    deliveyAdress String required,
-    deliveryDateTime ZonedDateTime required,
+    deliveryAdress String,
+    deliveryDateTime ZonedDateTime,
     quantity Long required,
-    billingMethod BillingMethod required
+    billingMethod BillingMethod,
+    orderState OrderState required
 }
 
 enum BillingMethod {
 	PAYPAL,
     CREDIT_CARD
+}
+
+enum OrderState {
+	PROCESSING,
+    PAID
 }
 
 // Table contenant les informations de connexions
@@ -45,11 +53,11 @@ entity Tag {
 	name String required
 }
 
-entity Vendeur {
-	raisonSocial String required,
+entity Seller {
+	socialReason String required,
     address String required,
-    numeroSiret String,
-    telephone Long,
+    siretNumber String,
+    phone Long,
     email String required
 }
 
@@ -76,30 +84,28 @@ entity SubFamily {
 }
 
 relationship ManyToMany {
-	Product{tags} to Tag{products}
+	Product{tags(name)} to Tag{products(modelName)}
     
     
-    Order{products} to Product{order}
+    Order{products(modelName)} to Product{order(deliveryDateTime)}
 }
 
 relationship ManyToOne {
-	Product{subFamily} to SubFamily
+	Product{subFamily(name) required} to SubFamily
     
-    SubFamily{family} to Family
+    SubFamily{family(name) required} to Family
     
-    Product{brand} to Brand
+    Product{brand(name) required} to Brand
     
-	Product{vendeur} to Vendeur{product}
+	Product{Seller(email) required} to Seller{product(modelName)}
 }
 
 relationship OneToMany {
-	Client{order} to Order
+	Client{order(deliveryDateTime)} to Order
 }
 
 relationship OneToOne {
-	Client{connection} to Connection
+	Client{connection(username)} to Connection
     
-	Vendeur{connection} to Connection
+	Seller{connection(username)} to Connection
 }
-
-

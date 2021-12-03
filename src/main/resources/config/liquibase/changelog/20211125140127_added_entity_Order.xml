@@ -17,16 +17,19 @@
             <column name="sum" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="delivey_adress" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="delivery_adress" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             <column name="delivery_date_time" type="${datetimeType}">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="quantity" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="billing_method" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="order_state" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="client_id" type="bigint">
@@ -69,10 +72,11 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="sum" type="numeric"/>
-            <column name="delivey_adress" type="string"/>
+            <column name="delivery_adress" type="string"/>
             <column name="delivery_date_time" type="date"/>
             <column name="quantity" type="numeric"/>
             <column name="billing_method" type="string"/>
+            <column name="order_state" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

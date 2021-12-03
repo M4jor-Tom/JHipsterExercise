@@ -1,5 +1,6 @@
 import { ISubFamily } from '@/shared/model/sub-family.model';
 import { IBrand } from '@/shared/model/brand.model';
+import { ISeller } from '@/shared/model/seller.model';
 import { ITag } from '@/shared/model/tag.model';
 import { IOrder } from '@/shared/model/order.model';
 
@@ -12,10 +13,12 @@ export interface IProduct {
   price?: number;
   modelName?: string;
   color?: Color | null;
-  subFamily?: ISubFamily | null;
-  brand?: IBrand | null;
+  subFamily?: ISubFamily;
+  brand?: IBrand;
+  seller?: ISeller;
   tags?: ITag[] | null;
   orders?: IOrder[] | null;
+  brandNameWithModelName?: string;
 }
 
 export class Product implements IProduct {
@@ -27,8 +30,9 @@ export class Product implements IProduct {
     public price?: number,
     public modelName?: string,
     public color?: Color | null,
-    public subFamily?: ISubFamily | null,
-    public brand?: IBrand | null,
+    public subFamily?: ISubFamily,
+    public brand?: IBrand,
+    public seller?: ISeller,
     public tags?: ITag[] | null,
     public orders?: IOrder[] | null
   ) {}

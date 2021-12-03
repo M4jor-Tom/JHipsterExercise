@@ -48,7 +48,7 @@
           <dd>
             <div v-if="product.subFamily">
               <router-link :to="{ name: 'SubFamilyView', params: { subFamilyId: product.subFamily.id } }">{{
-                product.subFamily.id
+                product.subFamily.name
               }}</router-link>
             </div>
           </dd>
@@ -57,7 +57,15 @@
           </dt>
           <dd>
             <div v-if="product.brand">
-              <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.id }}</router-link>
+              <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.name }}</router-link>
+            </div>
+          </dd>
+          <dt>
+            <span v-text="$t('jHipsterExerciseApp.product.seller')">Seller</span>
+          </dt>
+          <dd>
+            <div v-if="product.seller">
+              <router-link :to="{ name: 'SellerView', params: { sellerId: product.seller.id } }">{{ product.seller.email }}</router-link>
             </div>
           </dd>
           <dt>
@@ -66,7 +74,7 @@
           <dd>
             <span v-for="(tags, i) in product.tags" :key="tags.id"
               >{{ i > 0 ? ', ' : '' }}
-              <router-link :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.id }}</router-link>
+              <router-link :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.name }}</router-link>
             </span>
           </dd>
         </dl>
@@ -74,7 +82,7 @@
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.back')"> Back</span>
         </button>
         <router-link v-if="product.id" :to="{ name: 'ProductEdit', params: { productId: product.id } }" custom v-slot="{ navigate }">
-          <button v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated" @click="navigate" class="btn btn-primary">
+          <button v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated" @click="navigate" class="btn btn-primary">
             <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span v-text="$t('entity.action.edit')"> Edit</span>
           </button>
         </router-link>

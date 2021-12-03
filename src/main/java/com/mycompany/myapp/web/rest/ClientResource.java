@@ -2,6 +2,9 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Client;
 import com.mycompany.myapp.repository.ClientRepository;
+import com.mycompany.myapp.service.ClientQueryService;
+import com.mycompany.myapp.service.ClientService;
+import com.mycompany.myapp.service.criteria.ClientCriteria;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,15 +16,9 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -29,7 +26,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ClientResource {
 
     private final Logger log = LoggerFactory.getLogger(ClientResource.class);
@@ -39,10 +35,16 @@ public class ClientResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ClientService clientService;
+
     private final ClientRepository clientRepository;
 
-    public ClientResource(ClientRepository clientRepository) {
+    private final ClientQueryService clientQueryService;
+
+    public ClientResource(ClientService clientService, ClientRepository clientRepository, ClientQueryService clientQueryService) {
+        this.clientService = clientService;
         this.clientRepository = clientRepository;
+        this.clientQueryService = clientQueryService;
     }
 
     /**
@@ -58,7 +60,7 @@ public class ClientResource {
         if (client.getId() != null) {
             throw new BadRequestAlertException("A new client cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Client result = clientRepository.save(client);
+        Client result = clientService.save(client);
         return ResponseEntity
             .created(new URI("/api/clients/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -92,7 +94,7 @@ public class ClientResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Client result = clientRepository.save(client);
+        Client result = clientService.save(client);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, client.getId().toString()))
@@ -127,37 +129,7 @@ public class ClientResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Client> result = clientRepository
-            .findById(client.getId())
-            .map(existingClient -> {
-                if (client.getAddedDateTime() != null) {
-                    existingClient.setAddedDateTime(client.getAddedDateTime());
-                }
-                if (client.getLastName() != null) {
-                    existingClient.setLastName(client.getLastName());
-                }
-                if (client.getFirstName() != null) {
-                    existingClient.setFirstName(client.getFirstName());
-                }
-                if (client.getEmail() != null) {
-                    existingClient.setEmail(client.getEmail());
-                }
-                if (client.getPhone() != null) {
-                    existingClient.setPhone(client.getPhone());
-                }
-                if (client.getAdress() != null) {
-                    existingClient.setAdress(client.getAdress());
-                }
-                if (client.getCountry() != null) {
-                    existingClient.setCountry(client.getCountry());
-                }
-                if (client.getPostalCode() != null) {
-                    existingClient.setPostalCode(client.getPostalCode());
-                }
-
-                return existingClient;
-            })
-            .map(clientRepository::save);
+        Optional<Client> result = clientService.partialUpdate(client);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -168,14 +140,26 @@ public class ClientResource {
     /**
      * {@code GET  /clients} : get all the clients.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clients in body.
      */
     @GetMapping("/clients")
-    public ResponseEntity<List<Client>> getAllFamilies(Pageable pageable) {
-        log.debug("REST request to get all Clients");
-        Page<Client> page = clientRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<Client>> getAllClients(ClientCriteria criteria) {
+        log.debug("REST request to get Clients by criteria: {}", criteria);
+        List<Client> entityList = clientQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /clients/count} : count all the clients.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/clients/count")
+    public ResponseEntity<Long> countClients(ClientCriteria criteria) {
+        log.debug("REST request to count Clients by criteria: {}", criteria);
+        return ResponseEntity.ok().body(clientQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -187,7 +171,7 @@ public class ClientResource {
     @GetMapping("/clients/{id}")
     public ResponseEntity<Client> getClient(@PathVariable Long id) {
         log.debug("REST request to get Client : {}", id);
-        Optional<Client> client = clientRepository.findById(id);
+        Optional<Client> client = clientService.findOne(id);
         return ResponseUtil.wrapOrNotFound(client);
     }
 
@@ -200,7 +184,7 @@ public class ClientResource {
     @DeleteMapping("/clients/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         log.debug("REST request to delete Client : {}", id);
-        clientRepository.deleteById(id);
+        clientService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

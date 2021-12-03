@@ -14,6 +14,9 @@ export default class JhiNavbar extends Vue {
   private currentLanguage = this.$store.getters.currentLanguage;
   private languages: any = this.$store.getters.languages;
   private hasAnyAuthorityValue = false;
+  private hasAdminAuthorityValue = false;
+  private hasUserAuthorityValue = false;
+  private hasSellerAuthorityValue = false;
 
   created() {
     this.translationService().refreshTranslation(this.currentLanguage);
@@ -56,6 +59,33 @@ export default class JhiNavbar extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+
+  public hasAdminAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasAdminAuthorityValue = value;
+      });
+    return this.hasAdminAuthorityValue;
+  }
+
+  public hasUserAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasUserAuthorityValue = value;
+      });
+    return this.hasUserAuthorityValue;
+  }
+
+  public hasSellerAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasSellerAuthorityValue = value;
+      });
+    return this.hasSellerAuthorityValue;
   }
 
   public get openAPIEnabled(): boolean {

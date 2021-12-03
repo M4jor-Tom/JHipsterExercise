@@ -2,7 +2,7 @@
   <footer>
     <div class="footer-content">
       <h3>JHipster Exercise</h3>
-      <p>We sell cars.</p>
+      <p v-text="$t('footer')">We sell everything you need: cars, clothes, phones...</p>
       <ul class="socials">
         <li>
           <a href="#"><i class="fab fa-facebook-f fa-fw"></i></a>
@@ -25,9 +25,9 @@
       <p>copyright &copy; <a href="#">JHipster Exercise</a></p>
       <div class="footer-menu">
         <ul class="f-menu">
-          <li><a href="">Home</a></li>
-          <li><a href="">Cart</a></li>
-          <li><a href="">Contact</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/cart">Cart</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
       </div>
     </div>

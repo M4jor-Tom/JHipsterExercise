@@ -2,6 +2,9 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Product;
 import com.mycompany.myapp.repository.ProductRepository;
+import com.mycompany.myapp.service.ProductQueryService;
+import com.mycompany.myapp.service.ProductService;
+import com.mycompany.myapp.service.criteria.ProductCriteria;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,15 +16,9 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -29,7 +26,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ProductResource {
 
     private final Logger log = LoggerFactory.getLogger(ProductResource.class);
@@ -39,10 +35,16 @@ public class ProductResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ProductService productService;
+
     private final ProductRepository productRepository;
 
-    public ProductResource(ProductRepository productRepository) {
+    private final ProductQueryService productQueryService;
+
+    public ProductResource(ProductService productService, ProductRepository productRepository, ProductQueryService productQueryService) {
+        this.productService = productService;
         this.productRepository = productRepository;
+        this.productQueryService = productQueryService;
     }
 
     /**
@@ -58,7 +60,7 @@ public class ProductResource {
         if (product.getId() != null) {
             throw new BadRequestAlertException("A new product cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Product result = productRepository.save(product);
+        Product result = productService.save(product);
         return ResponseEntity
             .created(new URI("/api/products/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -92,7 +94,7 @@ public class ProductResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Product result = productRepository.save(product);
+        Product result = productService.save(product);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, product.getId().toString()))
@@ -127,31 +129,7 @@ public class ProductResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Product> result = productRepository
-            .findById(product.getId())
-            .map(existingProduct -> {
-                if (product.getDescription() != null) {
-                    existingProduct.setDescription(product.getDescription());
-                }
-                if (product.getPhotoId() != null) {
-                    existingProduct.setPhotoId(product.getPhotoId());
-                }
-                if (product.getStock() != null) {
-                    existingProduct.setStock(product.getStock());
-                }
-                if (product.getPrice() != null) {
-                    existingProduct.setPrice(product.getPrice());
-                }
-                if (product.getModelName() != null) {
-                    existingProduct.setModelName(product.getModelName());
-                }
-                if (product.getColor() != null) {
-                    existingProduct.setColor(product.getColor());
-                }
-
-                return existingProduct;
-            })
-            .map(productRepository::save);
+        Optional<Product> result = productService.partialUpdate(product);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -162,18 +140,26 @@ public class ProductResource {
     /**
      * {@code GET  /products} : get all the products.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of products in body.
      */
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getAllProducts(
-        Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
-    ) {
-        log.debug("REST request to get all Products");
-        Page<Product> page = productRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<Product>> getAllProducts(ProductCriteria criteria) {
+        log.debug("REST request to get Products by criteria: {}", criteria);
+        List<Product> entityList = productQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /products/count} : count all the products.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/products/count")
+    public ResponseEntity<Long> countProducts(ProductCriteria criteria) {
+        log.debug("REST request to count Products by criteria: {}", criteria);
+        return ResponseEntity.ok().body(productQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -185,7 +171,7 @@ public class ProductResource {
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         log.debug("REST request to get Product : {}", id);
-        Optional<Product> product = productRepository.findOneWithEagerRelationships(id);
+        Optional<Product> product = productService.findOne(id);
         return ResponseUtil.wrapOrNotFound(product);
     }
 
@@ -198,7 +184,7 @@ public class ProductResource {
     @DeleteMapping("/products/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         log.debug("REST request to delete Product : {}", id);
-        productRepository.deleteById(id);
+        productService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

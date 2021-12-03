@@ -47,12 +47,19 @@ public class Product implements Serializable {
     @Column(name = "color")
     private Color color;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "family" }, allowSetters = true)
     private SubFamily subFamily;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     private Brand brand;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "connection", "products" }, allowSetters = true)
+    private Seller seller;
 
     @ManyToMany
     @JoinTable(
@@ -68,6 +75,10 @@ public class Product implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "products", "client" }, allowSetters = true)
     private Set<Order> orders = new HashSet<>();
+
+    public String getBrandNameWithModelName() {
+        return getBrand().getName() + " " + getModelName();
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -185,6 +196,19 @@ public class Product implements Serializable {
 
     public Product brand(Brand brand) {
         this.setBrand(brand);
+        return this;
+    }
+
+    public Seller getSeller() {
+        return this.seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public Product seller(Seller seller) {
+        this.setSeller(seller);
         return this;
     }
 

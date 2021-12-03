@@ -2,6 +2,7 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mycompany.myapp.domain.enumeration.BillingMethod;
+import com.mycompany.myapp.domain.enumeration.OrderState;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -29,22 +30,24 @@ public class Order implements Serializable {
     @Column(name = "sum")
     private Double sum;
 
-    @NotNull
-    @Column(name = "delivey_adress", nullable = false)
-    private String deliveyAdress;
+    @Column(name = "delivery_adress")
+    private String deliveryAdress;
 
-    @NotNull
-    @Column(name = "delivery_date_time", nullable = false)
+    @Column(name = "delivery_date_time")
     private ZonedDateTime deliveryDateTime;
 
     @NotNull
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "billing_method")
+    private BillingMethod billingMethod;
+
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "billing_method", nullable = false)
-    private BillingMethod billingMethod;
+    @Column(name = "order_state", nullable = false)
+    private OrderState orderState;
 
     @ManyToMany
     @JoinTable(
@@ -53,7 +56,7 @@ public class Order implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "products_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "subFamily", "brand", "tags", "orders" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "subFamily", "brand", "seller", "tags", "orders" }, allowSetters = true)
     private Set<Product> products = new HashSet<>();
 
     @ManyToOne
@@ -88,17 +91,17 @@ public class Order implements Serializable {
         this.sum = sum;
     }
 
-    public String getDeliveyAdress() {
-        return this.deliveyAdress;
+    public String getDeliveryAdress() {
+        return this.deliveryAdress;
     }
 
-    public Order deliveyAdress(String deliveyAdress) {
-        this.setDeliveyAdress(deliveyAdress);
+    public Order deliveryAdress(String deliveryAdress) {
+        this.setDeliveryAdress(deliveryAdress);
         return this;
     }
 
-    public void setDeliveyAdress(String deliveyAdress) {
-        this.deliveyAdress = deliveyAdress;
+    public void setDeliveryAdress(String deliveryAdress) {
+        this.deliveryAdress = deliveryAdress;
     }
 
     public ZonedDateTime getDeliveryDateTime() {
@@ -138,6 +141,19 @@ public class Order implements Serializable {
 
     public void setBillingMethod(BillingMethod billingMethod) {
         this.billingMethod = billingMethod;
+    }
+
+    public OrderState getOrderState() {
+        return this.orderState;
+    }
+
+    public Order orderState(OrderState orderState) {
+        this.setOrderState(orderState);
+        return this;
+    }
+
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
 
     public Set<Product> getProducts() {
@@ -203,10 +219,11 @@ public class Order implements Serializable {
         return "Order{" +
             "id=" + getId() +
             ", sum=" + getSum() +
-            ", deliveyAdress='" + getDeliveyAdress() + "'" +
+            ", deliveryAdress='" + getDeliveryAdress() + "'" +
             ", deliveryDateTime='" + getDeliveryDateTime() + "'" +
             ", quantity=" + getQuantity() +
             ", billingMethod='" + getBillingMethod() + "'" +
+            ", orderState='" + getOrderState() + "'" +
             "}";
     }
 }

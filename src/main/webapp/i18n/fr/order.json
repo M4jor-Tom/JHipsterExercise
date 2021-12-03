@@ -19,10 +19,11 @@
       },
       "id": "ID",
       "sum": "Sum",
-      "deliveyAdress": "Delivey Adress",
+      "deliveryAdress": "Delivery Adress",
       "deliveryDateTime": "Delivery Date Time",
       "quantity": "Quantity",
       "billingMethod": "Billing Method",
+      "orderState": "Order State",
       "products": "Products",
       "client": "Client"
     }

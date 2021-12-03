@@ -16,50 +16,78 @@
       <font-awesome-icon icon="bars" />
     </b-navbar-toggle>
 
+    <div class="topnav">
+      <div class="search-container">
+        <form action="/action_page.php">
+          <input type="text" v-bind:placeholder="$t('search')" name="search" />
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
+    </div>
+
     <b-collapse is-nav id="header-tabs">
       <b-navbar-nav class="ml-auto">
         <b-nav-item to="/" exact>
           <span>
             <font-awesome-icon icon="home" />
-            <span v-text="$t('global.menu.home')">Home</span>
           </span>
         </b-nav-item>
+        <b-nav-item to="/list_produit" exact>
+          <span>
+            <font-awesome-icon icon="gifts" />
+          </span>
+        </b-nav-item>
+        <b-nav-item to="/cart" exact>
+          <span>
+            <font-awesome-icon icon="shopping-bag" />
+          </span>
+        </b-nav-item>
+        
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="th-list" />
-            <span class="no-bold" v-text="$t('global.menu.entities.main')">Entities</span>
           </span>
-          <b-dropdown-item to="/client">
+          <b-dropdown-item to="/client" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.client')">Client</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/order">
+          <b-dropdown-item
+            to="/order"
+            v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasSellerAuthority('ROLE_SELLER')"
+          >
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.order')">Order</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/connection">
+          <b-dropdown-item to="/connection" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.connection')">Connection</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/product">
+          <b-dropdown-item
+            to="/product"
+            v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasSellerAuthority('ROLE_SELLER')"
+          >
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.product')">Product</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/tag">
+          <b-dropdown-item to="/tag" v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.tag')">Tag</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/brand">
+          <b-dropdown-item to="/brand" v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.brand')">Brand</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/family">
+          <b-dropdown-item to="/family" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.family')">Family</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/sub-family">
+          <b-dropdown-item to="/sub-family" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.subFamily')">Sub Family</span>
+          </b-dropdown-item>
+          <b-dropdown-item to="/seller" v-if="hasAdminAuthority('ROLE_ADMIN')">
+            <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.seller')">Seller</span>
           </b-dropdown-item>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </b-nav-item-dropdown>
@@ -74,7 +102,6 @@
         >
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="users-cog" />
-            <span class="no-bold" v-text="$t('global.menu.admin.main')">Administration</span>
           </span>
           <b-dropdown-item to="/admin/user-management" active-class="active">
             <font-awesome-icon icon="users" />
@@ -108,7 +135,6 @@
         <b-nav-item-dropdown id="languagesnavBarDropdown" right v-if="languages && Object.keys(languages).length > 1">
           <span slot="button-content">
             <font-awesome-icon icon="flag" />
-            <span class="no-bold" v-text="$t('global.menu.language')">Language</span>
           </span>
           <b-dropdown-item
             v-for="(value, key) in languages"
@@ -130,7 +156,6 @@
         >
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="user" />
-            <span class="no-bold" v-text="$t('global.menu.account.main')"> Account </span>
           </span>
           <b-dropdown-item data-cy="settings" to="/account/settings" tag="b-dropdown-item" v-if="authenticated" active-class="active">
             <font-awesome-icon icon="wrench" />
@@ -260,5 +285,23 @@
   background-size: contain;
   width: 100%;
   filter: drop-shadow(0 0 0.05rem white);
+}
+
+.topnav input[type='text'] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.topnav .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
 }
 </style>

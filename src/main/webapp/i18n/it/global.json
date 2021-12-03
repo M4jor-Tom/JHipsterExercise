@@ -4,6 +4,8 @@
     "browsehappy": "Stai utilizzando un browser <strong> non aggiornato </ strong> <a href=\"http://browsehappy.com/?locale=it\"> Aggiorna il tuo browser per </a> migliorare la tua esperienza.",
     "menu": {
       "home": "Home",
+      "cart": "cart",
+      "list_product": "Product",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entità",
@@ -15,6 +17,7 @@
         "brand": "Brand",
         "family": "Family",
         "subFamily": "Sub Family",
+        "seller": "Seller",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -144,5 +147,14 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Piè di pagina"
+  "footer": "Vendiamo tutto quello che ti serve: auto, vestiti, telefoni...",
+  "contact": {
+    "name": "Nome",
+    "email": "Email",
+    "message": "Messaggio"
+  },
+  "search": "Cerca...",
+  "search2": "Cerca",
+  "cate": "Categoria :",
+  "addCart" :"Aggiungi al carrello"
 }

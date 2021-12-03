@@ -27,24 +27,18 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.order.deliveyAdress')" for="order-deliveyAdress"
-              >Delivey Adress</label
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.order.deliveryAdress')" for="order-deliveryAdress"
+              >Delivery Adress</label
             >
             <input
               type="text"
               class="form-control"
-              name="deliveyAdress"
-              id="order-deliveyAdress"
-              data-cy="deliveyAdress"
-              :class="{ valid: !$v.order.deliveyAdress.$invalid, invalid: $v.order.deliveyAdress.$invalid }"
-              v-model="$v.order.deliveyAdress.$model"
-              required
+              name="deliveryAdress"
+              id="order-deliveryAdress"
+              data-cy="deliveryAdress"
+              :class="{ valid: !$v.order.deliveryAdress.$invalid, invalid: $v.order.deliveryAdress.$invalid }"
+              v-model="$v.order.deliveryAdress.$model"
             />
-            <div v-if="$v.order.deliveyAdress.$anyDirty && $v.order.deliveyAdress.$invalid">
-              <small class="form-text text-danger" v-if="!$v.order.deliveyAdress.required" v-text="$t('entity.validation.required')">
-                This field is required.
-              </small>
-            </div>
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.order.deliveryDateTime')" for="order-deliveryDateTime"
@@ -58,22 +52,9 @@
                 class="form-control"
                 name="deliveryDateTime"
                 :class="{ valid: !$v.order.deliveryDateTime.$invalid, invalid: $v.order.deliveryDateTime.$invalid }"
-                required
                 :value="convertDateTimeFromServer($v.order.deliveryDateTime.$model)"
                 @change="updateZonedDateTimeField('deliveryDateTime', $event)"
               />
-            </div>
-            <div v-if="$v.order.deliveryDateTime.$anyDirty && $v.order.deliveryDateTime.$invalid">
-              <small class="form-text text-danger" v-if="!$v.order.deliveryDateTime.required" v-text="$t('entity.validation.required')">
-                This field is required.
-              </small>
-              <small
-                class="form-text text-danger"
-                v-if="!$v.order.deliveryDateTime.ZonedDateTimelocal"
-                v-text="$t('entity.validation.ZonedDateTimelocal')"
-              >
-                This field should be a date and time.
-              </small>
             </div>
           </div>
           <div class="form-group">
@@ -108,7 +89,6 @@
               v-model="$v.order.billingMethod.$model"
               id="order-billingMethod"
               data-cy="billingMethod"
-              required
             >
               <option
                 v-for="billingMethod in billingMethodValues"
@@ -119,8 +99,29 @@
                 {{ billingMethod }}
               </option>
             </select>
-            <div v-if="$v.order.billingMethod.$anyDirty && $v.order.billingMethod.$invalid">
-              <small class="form-text text-danger" v-if="!$v.order.billingMethod.required" v-text="$t('entity.validation.required')">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.order.orderState')" for="order-orderState">Order State</label>
+            <select
+              class="form-control"
+              name="orderState"
+              :class="{ valid: !$v.order.orderState.$invalid, invalid: $v.order.orderState.$invalid }"
+              v-model="$v.order.orderState.$model"
+              id="order-orderState"
+              data-cy="orderState"
+              required
+            >
+              <option
+                v-for="orderState in orderStateValues"
+                :key="orderState"
+                v-bind:value="orderState"
+                v-bind:label="$t('jHipsterExerciseApp.OrderState.' + orderState)"
+              >
+                {{ orderState }}
+              </option>
+            </select>
+            <div v-if="$v.order.orderState.$anyDirty && $v.order.orderState.$invalid">
+              <small class="form-text text-danger" v-if="!$v.order.orderState.required" v-text="$t('entity.validation.required')">
                 This field is required.
               </small>
             </div>
@@ -137,7 +138,7 @@
               v-model="order.products"
             >
               <option v-bind:value="getSelected(order.products, productOption)" v-for="productOption in products" :key="productOption.id">
-                {{ productOption.id }}
+                {{ productOption.modelName }}
               </option>
             </select>
           </div>

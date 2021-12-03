@@ -7,6 +7,7 @@ import { DATE_TIME_FORMAT } from '@/shared/date/filters';
 import OrderService from '@/entities/order/order.service';
 import { Order } from '@/shared/model/order.model';
 import { BillingMethod } from '@/shared/model/enumerations/billing-method.model';
+import { OrderState } from '@/shared/model/enumerations/order-state.model';
 
 const error = {
   response: {
@@ -34,7 +35,7 @@ describe('Service Tests', () => {
     beforeEach(() => {
       service = new OrderService();
       currentDate = new Date();
-      elemDefault = new Order(123, 0, 'AAAAAAA', currentDate, 0, BillingMethod.PAYPAL);
+      elemDefault = new Order(123, 0, 'AAAAAAA', currentDate, 0, BillingMethod.PAYPAL, OrderState.PROCESSING);
     });
 
     describe('Service methods', () => {
@@ -98,10 +99,11 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             sum: 1,
-            deliveyAdress: 'BBBBBB',
+            deliveryAdress: 'BBBBBB',
             deliveryDateTime: dayjs(currentDate).format(DATE_TIME_FORMAT),
             quantity: 1,
             billingMethod: 'BBBBBB',
+            orderState: 'BBBBBB',
           },
           elemDefault
         );
@@ -169,10 +171,11 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             sum: 1,
-            deliveyAdress: 'BBBBBB',
+            deliveryAdress: 'BBBBBB',
             deliveryDateTime: dayjs(currentDate).format(DATE_TIME_FORMAT),
             quantity: 1,
             billingMethod: 'BBBBBB',
+            orderState: 'BBBBBB',
           },
           elemDefault
         );

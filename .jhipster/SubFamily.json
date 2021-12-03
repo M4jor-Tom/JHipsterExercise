@@ -12,14 +12,16 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "family",
       "otherEntityRelationshipName": "subFamily",
-      "relationshipName": "family"
+      "relationshipValidateRules": "required",
+      "relationshipName": "family",
+      "otherEntityField": "name"
     }
   ],
   "entityTableName": "sub_family",
   "dto": "no",
   "pagination": "no",
-  "service": "no",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

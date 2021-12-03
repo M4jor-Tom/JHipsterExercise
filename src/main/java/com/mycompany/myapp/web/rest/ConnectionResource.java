@@ -2,6 +2,9 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Connection;
 import com.mycompany.myapp.repository.ConnectionRepository;
+import com.mycompany.myapp.service.ConnectionQueryService;
+import com.mycompany.myapp.service.ConnectionService;
+import com.mycompany.myapp.service.criteria.ConnectionCriteria;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,15 +16,9 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -29,7 +26,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ConnectionResource {
 
     private final Logger log = LoggerFactory.getLogger(ConnectionResource.class);
@@ -39,10 +35,20 @@ public class ConnectionResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final ConnectionService connectionService;
+
     private final ConnectionRepository connectionRepository;
 
-    public ConnectionResource(ConnectionRepository connectionRepository) {
+    private final ConnectionQueryService connectionQueryService;
+
+    public ConnectionResource(
+        ConnectionService connectionService,
+        ConnectionRepository connectionRepository,
+        ConnectionQueryService connectionQueryService
+    ) {
+        this.connectionService = connectionService;
         this.connectionRepository = connectionRepository;
+        this.connectionQueryService = connectionQueryService;
     }
 
     /**
@@ -58,7 +64,7 @@ public class ConnectionResource {
         if (connection.getId() != null) {
             throw new BadRequestAlertException("A new connection cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Connection result = connectionRepository.save(connection);
+        Connection result = connectionService.save(connection);
         return ResponseEntity
             .created(new URI("/api/connections/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -92,7 +98,7 @@ public class ConnectionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Connection result = connectionRepository.save(connection);
+        Connection result = connectionService.save(connection);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, connection.getId().toString()))
@@ -127,19 +133,7 @@ public class ConnectionResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Connection> result = connectionRepository
-            .findById(connection.getId())
-            .map(existingConnection -> {
-                if (connection.getUsername() != null) {
-                    existingConnection.setUsername(connection.getUsername());
-                }
-                if (connection.getPassword() != null) {
-                    existingConnection.setPassword(connection.getPassword());
-                }
-
-                return existingConnection;
-            })
-            .map(connectionRepository::save);
+        Optional<Connection> result = connectionService.partialUpdate(connection);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -150,14 +144,26 @@ public class ConnectionResource {
     /**
      * {@code GET  /connections} : get all the connections.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of connections in body.
      */
     @GetMapping("/connections")
-    public ResponseEntity<List<Connection>> getAllFamilies(Pageable pageable) {
-        log.debug("REST request to get all Families");
-        Page<Connection> page = connectionRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<Connection>> getAllConnections(ConnectionCriteria criteria) {
+        log.debug("REST request to get Connections by criteria: {}", criteria);
+        List<Connection> entityList = connectionQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /connections/count} : count all the connections.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/connections/count")
+    public ResponseEntity<Long> countConnections(ConnectionCriteria criteria) {
+        log.debug("REST request to count Connections by criteria: {}", criteria);
+        return ResponseEntity.ok().body(connectionQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -169,7 +175,7 @@ public class ConnectionResource {
     @GetMapping("/connections/{id}")
     public ResponseEntity<Connection> getConnection(@PathVariable Long id) {
         log.debug("REST request to get Connection : {}", id);
-        Optional<Connection> connection = connectionRepository.findById(id);
+        Optional<Connection> connection = connectionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(connection);
     }
 
@@ -182,7 +188,7 @@ public class ConnectionResource {
     @DeleteMapping("/connections/{id}")
     public ResponseEntity<Void> deleteConnection(@PathVariable Long id) {
         log.debug("REST request to delete Connection : {}", id);
-        connectionRepository.deleteById(id);
+        connectionService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

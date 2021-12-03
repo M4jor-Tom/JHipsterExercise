@@ -45,20 +45,22 @@
       "otherEntityName": "connection",
       "otherEntityRelationshipName": "client",
       "relationshipName": "connection",
+      "otherEntityField": "username",
       "ownerSide": true
     },
     {
       "relationshipType": "one-to-many",
       "otherEntityName": "order",
       "otherEntityRelationshipName": "client",
-      "relationshipName": "order"
+      "relationshipName": "order",
+      "otherEntityField": "deliveryDateTime"
     }
   ],
   "entityTableName": "client",
   "dto": "no",
   "pagination": "no",
-  "service": "no",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

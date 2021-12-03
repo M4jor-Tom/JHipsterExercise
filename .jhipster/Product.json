@@ -35,19 +35,32 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "subFamily",
       "otherEntityRelationshipName": "product",
-      "relationshipName": "subFamily"
+      "relationshipValidateRules": "required",
+      "relationshipName": "subFamily",
+      "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "brand",
       "otherEntityRelationshipName": "product",
-      "relationshipName": "brand"
+      "relationshipValidateRules": "required",
+      "relationshipName": "brand",
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "seller",
+      "otherEntityRelationshipName": "product",
+      "relationshipValidateRules": "required",
+      "relationshipName": "seller",
+      "otherEntityField": "email"
     },
     {
       "relationshipType": "many-to-many",
       "otherEntityName": "tag",
       "otherEntityRelationshipName": "products",
       "relationshipName": "tags",
+      "otherEntityField": "name",
       "ownerSide": true
     },
     {
@@ -55,14 +68,15 @@
       "otherEntityName": "order",
       "otherEntityRelationshipName": "products",
       "relationshipName": "order",
+      "otherEntityField": "deliveryDateTime",
       "ownerSide": false
     }
   ],
   "entityTableName": "product",
   "dto": "no",
   "pagination": "no",
-  "service": "no",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

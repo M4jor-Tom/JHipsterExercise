@@ -9,7 +9,7 @@
         </button>
         <router-link :to="{ name: 'TagCreate' }" custom v-slot="{ navigate }">
           <button
-            v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+            v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
             @click="navigate"
             id="jh-create-entity"
             data-cy="entityCreateButton"
@@ -20,6 +20,8 @@
           </button>
         </router-link>
       </div>
+      <span v-text="$t('Filter')">Filter</span> <input type="text" v-model="filtered" class="form-control" />
+      
     </h2>
     <br />
     <div class="alert alert-warning" v-if="!isFetching && tags && tags.length === 0">
@@ -41,7 +43,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="tag in tags" :key="tag.id" data-cy="entityTable">
+          <tr v-for="tag in orderBy(filterBy(tags, filtered), propOrder, reverse === true ? 1 : -1)" :key="tag.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'TagView', params: { tagId: tag.id } }">{{ tag.id }}</router-link>
             </td>
@@ -56,7 +58,7 @@
                 </router-link>
                 <router-link :to="{ name: 'TagEdit', params: { tagId: tag.id } }" custom v-slot="{ navigate }">
                   <button
-                    v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+                    v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
                     @click="navigate"
                     class="btn btn-primary btn-sm edit"
                     data-cy="entityEditButton"
@@ -66,7 +68,7 @@
                   </button>
                 </router-link>
                 <b-button
-                  v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+                  v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
                   v-on:click="prepareRemove(tag)"
                   variant="danger"
                   class="btn btn-sm"

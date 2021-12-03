@@ -15,21 +15,19 @@ import { IClient } from '@/shared/model/client.model';
 import { IOrder, Order } from '@/shared/model/order.model';
 import OrderService from './order.service';
 import { BillingMethod } from '@/shared/model/enumerations/billing-method.model';
+import { OrderState } from '@/shared/model/enumerations/order-state.model';
 
 const validations: any = {
   order: {
     sum: {},
-    deliveyAdress: {
-      required,
-    },
-    deliveryDateTime: {
-      required,
-    },
+    deliveryAdress: {},
+    deliveryDateTime: {},
     quantity: {
       required,
       numeric,
     },
-    billingMethod: {
+    billingMethod: {},
+    orderState: {
       required,
     },
   },
@@ -52,6 +50,7 @@ export default class OrderUpdate extends Vue {
 
   public clients: IClient[] = [];
   public billingMethodValues: string[] = Object.keys(BillingMethod);
+  public orderStateValues: string[] = Object.keys(OrderState);
   public isSaving = false;
   public currentLanguage = '';
 

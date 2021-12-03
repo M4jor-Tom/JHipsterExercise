@@ -13,10 +13,10 @@
             <span>{{ order.sum }}</span>
           </dd>
           <dt>
-            <span v-text="$t('jHipsterExerciseApp.order.deliveyAdress')">Delivey Adress</span>
+            <span v-text="$t('jHipsterExerciseApp.order.deliveryAdress')">Delivery Adress</span>
           </dt>
           <dd>
-            <span>{{ order.deliveyAdress }}</span>
+            <span>{{ order.deliveryAdress }}</span>
           </dd>
           <dt>
             <span v-text="$t('jHipsterExerciseApp.order.deliveryDateTime')">Delivery Date Time</span>
@@ -37,12 +37,18 @@
             <span v-text="$t('jHipsterExerciseApp.BillingMethod.' + order.billingMethod)">{{ order.billingMethod }}</span>
           </dd>
           <dt>
+            <span v-text="$t('jHipsterExerciseApp.order.orderState')">Order State</span>
+          </dt>
+          <dd>
+            <span v-text="$t('jHipsterExerciseApp.OrderState.' + order.orderState)">{{ order.orderState }}</span>
+          </dd>
+          <dt>
             <span v-text="$t('jHipsterExerciseApp.order.products')">Products</span>
           </dt>
           <dd>
             <span v-for="(products, i) in order.products" :key="products.id"
               >{{ i > 0 ? ', ' : '' }}
-              <router-link :to="{ name: 'ProductView', params: { productId: products.id } }">{{ products.id }}</router-link>
+              <router-link :to="{ name: 'ProductView', params: { productId: products.id } }">{{ products.modelName }}</router-link>
             </span>
           </dd>
           <dt>

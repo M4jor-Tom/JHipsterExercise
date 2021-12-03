@@ -22,12 +22,15 @@ export default class Product extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
   private hasAnyAuthorityValue = false;
+  private hasSellerAuthorityValue = false;
+  private hasAdminAuthorityValue = false;
 
   public products: IProduct[] = [];
 
   public isFetching = false;
   public propOrder = 'id';
   public reverse = false;
+  public filtered = '';
 
   public mounted(): void {
     this.retrieveAllProducts();
@@ -102,6 +105,24 @@ export default class Product extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+  
+  public hasSellerAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasSellerAuthorityValue = value;
+      });
+    return this.hasSellerAuthorityValue;
+  }
+  
+  public hasAdminAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasAdminAuthorityValue = value;
+      });
+    return this.hasAdminAuthorityValue;
   }
 
   public changeOrder(propOrder: string): void {

@@ -34,16 +34,21 @@
           </div>
           <div class="form-group">
             <label class="form-control-label" v-text="$t('jHipsterExerciseApp.subFamily.family')" for="sub-family-family">Family</label>
-            <select class="form-control" id="sub-family-family" data-cy="family" name="family" v-model="subFamily.family">
-              <option v-bind:value="null"></option>
+            <select class="form-control" id="sub-family-family" data-cy="family" name="family" v-model="subFamily.family" required>
+              <option v-if="!subFamily.family" v-bind:value="null" selected></option>
               <option
                 v-bind:value="subFamily.family && familyOption.id === subFamily.family.id ? subFamily.family : familyOption"
                 v-for="familyOption in families"
                 :key="familyOption.id"
               >
-                {{ familyOption.id }}
+                {{ familyOption.name }}
               </option>
             </select>
+          </div>
+          <div v-if="$v.subFamily.family.$anyDirty && $v.subFamily.family.$invalid">
+            <small class="form-text text-danger" v-if="!$v.subFamily.family.required" v-text="$t('entity.validation.required')">
+              This field is required.
+            </small>
           </div>
         </div>
         <div>

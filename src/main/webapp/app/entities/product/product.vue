@@ -9,7 +9,7 @@
         </button>
         <router-link :to="{ name: 'ProductCreate' }" custom v-slot="{ navigate }">
           <button
-            v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+            v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
             @click="navigate"
             id="jh-create-entity"
             data-cy="entityCreateButton"
@@ -20,6 +20,8 @@
           </button>
         </router-link>
       </div>
+      <span v-text="$t('Filter')">Filter</span> <input type="text" v-model="filtered" class="form-control" />
+      
     </h2>
     <br />
     <div class="alert alert-warning" v-if="!isFetching && products && products.length === 0">
@@ -65,6 +67,10 @@
               <span v-text="$t('brand')">brand</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'brand'"></jhi-sort-indicator>
             </th>
+            <th scope="col" v-on:click="changeOrder('seller')">
+              <span v-text="$t('seller')">seller</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'seller'"></jhi-sort-indicator>
+            </th>
             <th scope="col" v-on:click="changeOrder('tags')">
               <span v-text="$t('tags')">tags</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'tags'"></jhi-sort-indicator>
@@ -73,7 +79,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id" data-cy="entityTable">
+          <tr v-for="product in orderBy(filterBy(products, filtered), propOrder, reverse === true ? 1 : -1)" :key="product.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'ProductView', params: { productId: product.id } }">{{ product.id }}</router-link>
             </td>
@@ -86,19 +92,24 @@
             <td>
               <div v-if="product.subFamily">
                 <router-link :to="{ name: 'SubFamilyView', params: { subFamilyId: product.subFamily.id } }">{{
-                  product.subFamily.id
+                  product.subFamily.name
                 }}</router-link>
               </div>
             </td>
             <td>
               <div v-if="product.brand">
-                <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.id }}</router-link>
+                <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.name }}</router-link>
+              </div>
+            </td>
+            <td>
+              <div v-if="product.seller">
+                <router-link :to="{ name: 'SellerView', params: { sellerId: product.seller.id } }">{{ product.seller.email }}</router-link>
               </div>
             </td>
             <td>
               <span v-for="(tags, i) in product.tags" :key="tags.id"
                 >{{ i > 0 ? ', ' : '' }}
-                <router-link class="form-control-static" :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.id }}</router-link>
+                <router-link class="form-control-static" :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.name }}</router-link>
               </span>
             </td>
             <td class="text-right">
@@ -111,7 +122,7 @@
                 </router-link>
                 <router-link :to="{ name: 'ProductEdit', params: { productId: product.id } }" custom v-slot="{ navigate }">
                   <button
-                    v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+                    v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
                     @click="navigate"
                     class="btn btn-primary btn-sm edit"
                     data-cy="entityEditButton"
@@ -121,7 +132,7 @@
                   </button>
                 </router-link>
                 <b-button
-                  v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+                  v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
                   v-on:click="prepareRemove(product)"
                   variant="danger"
                   class="btn btn-sm"

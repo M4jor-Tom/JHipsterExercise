@@ -5,8 +5,11 @@ import LoginService from '@/account/login.service';
 @Component
 export default class Home extends Vue {
   @Inject('loginService')
+
   private loginService: () => LoginService;
 
+  
+  
   public openLogin(): void {
     this.loginService().openLogin((<any>this).$root);
   }
@@ -18,4 +21,11 @@ export default class Home extends Vue {
   public get username(): string {
     return this.$store.getters.account?.login ?? '';
   }
+
+  public goProduct(param) : void{
+  this.$router.push(param);
+}
+
+  
+
 }
