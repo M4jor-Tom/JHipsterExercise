@@ -16,6 +16,7 @@ import entities from '@/router/entities';
 import pages from '@/router/pages';
 import cart from './cart';
 import list_produit from './list_produit';
+import contact from './contact';
 
 Vue.use(Router);
 
@@ -49,6 +50,7 @@ export default new Router({
     ...admin,
     ...cart,
     ...list_produit,
+    ...contact,
     ...entities,
     ...pages
   ]

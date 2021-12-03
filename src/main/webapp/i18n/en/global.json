@@ -148,5 +148,10 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "This is your footer"
+  "footer": "We sell everything you need: cars, clothes, phones...",
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message"
+  }
 }

@@ -148,5 +148,10 @@
       "not.image": "Le fichier doit être une image et non du type \"{{ fileType }}\""
     }
   },
-  "footer": "Ceci est votre pied de page"
+  "footer": "On vend tout ce dont vous avez besoin : voitures, vêtements, téléphones...",
+  "contact": {
+    "name": "Nom",
+    "email": "Email",
+    "message": "Message"
+  }
 }

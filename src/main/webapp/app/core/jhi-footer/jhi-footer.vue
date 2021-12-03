@@ -2,7 +2,7 @@
   <footer>
     <div class="footer-content">
       <h3>JHipster Exercise</h3>
-      <p>We sell cars.</p>
+      <p v-text="$t('footer')">We sell everything you need: cars, clothes, phones...</p>
       <ul class="socials">
         <li>
           <a href="#"><i class="fab fa-facebook-f fa-fw"></i></a>
