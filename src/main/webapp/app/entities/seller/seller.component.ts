@@ -27,6 +27,9 @@ export default class Seller extends Vue {
   public sellers: ISeller[] = [];
 
   public isFetching = false;
+  
+  public propOrder = 'id';
+  public reverse = false;
 
   public mounted(): void {
     this.retrieveAllSellers();
@@ -39,7 +42,9 @@ export default class Seller extends Vue {
   public retrieveAllSellers(): void {
     this.isFetching = true;
     this.sellerService()
-      .retrieve()
+       .retrieve({
+        sort: this.sort(),
+      })
       .then(
         res => {
           this.sellers = res.data;
@@ -100,4 +105,23 @@ export default class Seller extends Vue {
   public closeDialog(): void {
     (<any>this.$refs.removeEntity).hide();
   }
+  
+  public changeOrder(propOrder: string): void {
+    this.propOrder = propOrder;
+    this.reverse = !this.reverse;
+    this.transition();
+  }
+
+  public transition(): void {
+    this.retrieveAllSellers();
+  }
+
+  public sort(): any {
+    const result = [this.propOrder + ',' + (this.reverse ? 'desc' : 'asc')];
+    if (this.propOrder !== 'id') {
+      result.push('id');
+    }
+    return result;
+  }
+  
 }
