@@ -36,27 +36,31 @@
       "otherEntityName": "subFamily",
       "otherEntityRelationshipName": "product",
       "relationshipValidateRules": "required",
-      "relationshipName": "subFamily"
+      "relationshipName": "subFamily",
+      "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "brand",
       "otherEntityRelationshipName": "product",
       "relationshipValidateRules": "required",
-      "relationshipName": "brand"
+      "relationshipName": "brand",
+      "otherEntityField": "name"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "seller",
       "otherEntityRelationshipName": "product",
       "relationshipValidateRules": "required",
-      "relationshipName": "seller"
+      "relationshipName": "seller",
+      "otherEntityField": "email"
     },
     {
       "relationshipType": "many-to-many",
       "otherEntityName": "tag",
       "otherEntityRelationshipName": "products",
       "relationshipName": "tags",
+      "otherEntityField": "name",
       "ownerSide": true
     },
     {
@@ -64,6 +68,7 @@
       "otherEntityName": "order",
       "otherEntityRelationshipName": "products",
       "relationshipName": "order",
+      "otherEntityField": "deliveryDateTime",
       "ownerSide": false
     }
   ],

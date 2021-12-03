@@ -41,7 +41,7 @@
                 v-for="familyOption in families"
                 :key="familyOption.id"
               >
-                {{ familyOption.id }}
+                {{ familyOption.name }}
               </option>
             </select>
           </div>

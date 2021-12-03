@@ -31,13 +31,15 @@
       "otherEntityName": "connection",
       "otherEntityRelationshipName": "seller",
       "relationshipName": "connection",
+      "otherEntityField": "username",
       "ownerSide": true
     },
     {
       "relationshipType": "one-to-many",
       "otherEntityName": "product",
       "otherEntityRelationshipName": "seller",
-      "relationshipName": "product"
+      "relationshipName": "product",
+      "otherEntityField": "modelName"
     }
   ],
   "entityTableName": "seller",

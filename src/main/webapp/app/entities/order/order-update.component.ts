@@ -20,7 +20,7 @@ import { OrderState } from '@/shared/model/enumerations/order-state.model';
 const validations: any = {
   order: {
     sum: {},
-    deliveyAdress: {
+    deliveryAdress: {
       required,
     },
     deliveryDateTime: {

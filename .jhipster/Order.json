@@ -6,7 +6,7 @@
       "fieldType": "Double"
     },
     {
-      "fieldName": "deliveyAdress",
+      "fieldName": "deliveryAdress",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
@@ -39,6 +39,7 @@
       "otherEntityName": "product",
       "otherEntityRelationshipName": "order",
       "relationshipName": "products",
+      "otherEntityField": "modelName",
       "ownerSide": true
     },
     {

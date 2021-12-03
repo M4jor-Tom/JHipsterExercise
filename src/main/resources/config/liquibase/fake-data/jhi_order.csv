@@ -1,4 +1,4 @@
-id;sum;delivey_adress;delivery_date_time;quantity;billing_method;order_state
+id;sum;delivery_adress;delivery_date_time;quantity;billing_method;order_state
 1;48469;monitor;2021-11-24T16:16:49;76865;CREDIT_CARD;PROCESSING
 2;96959;Peso Handcrafted;2021-11-24T15:51:36;77186;PAYPAL;PAID
 3;44495;Buckinghamshire Orchestrator;2021-11-25T06:50:18;17935;CREDIT_CARD;PAID

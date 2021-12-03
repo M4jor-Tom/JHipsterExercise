@@ -131,8 +131,8 @@ public class OrderResource {
                 if (order.getSum() != null) {
                     existingOrder.setSum(order.getSum());
                 }
-                if (order.getDeliveyAdress() != null) {
-                    existingOrder.setDeliveyAdress(order.getDeliveyAdress());
+                if (order.getDeliveryAdress() != null) {
+                    existingOrder.setDeliveryAdress(order.getDeliveryAdress());
                 }
                 if (order.getDeliveryDateTime() != null) {
                     existingOrder.setDeliveryDateTime(order.getDeliveryDateTime());

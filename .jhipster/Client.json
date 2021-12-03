@@ -45,13 +45,15 @@
       "otherEntityName": "connection",
       "otherEntityRelationshipName": "client",
       "relationshipName": "connection",
+      "otherEntityField": "username",
       "ownerSide": true
     },
     {
       "relationshipType": "one-to-many",
       "otherEntityName": "order",
       "otherEntityRelationshipName": "client",
-      "relationshipName": "order"
+      "relationshipName": "order",
+      "otherEntityField": "deliveryDateTime"
     }
   ],
   "entityTableName": "client",

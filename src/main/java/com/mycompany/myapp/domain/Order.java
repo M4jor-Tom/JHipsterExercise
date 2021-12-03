@@ -31,8 +31,8 @@ public class Order implements Serializable {
     private Double sum;
 
     @NotNull
-    @Column(name = "delivey_adress", nullable = false)
-    private String deliveyAdress;
+    @Column(name = "delivery_adress", nullable = false)
+    private String deliveryAdress;
 
     @NotNull
     @Column(name = "delivery_date_time", nullable = false)
@@ -94,17 +94,17 @@ public class Order implements Serializable {
         this.sum = sum;
     }
 
-    public String getDeliveyAdress() {
-        return this.deliveyAdress;
+    public String getDeliveryAdress() {
+        return this.deliveryAdress;
     }
 
-    public Order deliveyAdress(String deliveyAdress) {
-        this.setDeliveyAdress(deliveyAdress);
+    public Order deliveryAdress(String deliveryAdress) {
+        this.setDeliveryAdress(deliveryAdress);
         return this;
     }
 
-    public void setDeliveyAdress(String deliveyAdress) {
-        this.deliveyAdress = deliveyAdress;
+    public void setDeliveryAdress(String deliveryAdress) {
+        this.deliveryAdress = deliveryAdress;
     }
 
     public ZonedDateTime getDeliveryDateTime() {
@@ -222,7 +222,7 @@ public class Order implements Serializable {
         return "Order{" +
             "id=" + getId() +
             ", sum=" + getSum() +
-            ", deliveyAdress='" + getDeliveyAdress() + "'" +
+            ", deliveryAdress='" + getDeliveryAdress() + "'" +
             ", deliveryDateTime='" + getDeliveryDateTime() + "'" +
             ", quantity=" + getQuantity() +
             ", billingMethod='" + getBillingMethod() + "'" +

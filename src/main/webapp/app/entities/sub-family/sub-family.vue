@@ -52,7 +52,9 @@
             <td>{{ subFamily.name }}</td>
             <td>
               <div v-if="subFamily.family">
-                <router-link :to="{ name: 'FamilyView', params: { familyId: subFamily.family.id } }">{{ subFamily.family.id }}</router-link>
+                <router-link :to="{ name: 'FamilyView', params: { familyId: subFamily.family.id } }">{{
+                  subFamily.family.name
+                }}</router-link>
               </div>
             </td>
             <td class="text-right">

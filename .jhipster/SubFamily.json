@@ -13,7 +13,8 @@
       "otherEntityName": "family",
       "otherEntityRelationshipName": "subFamily",
       "relationshipValidateRules": "required",
-      "relationshipName": "family"
+      "relationshipName": "family",
+      "otherEntityField": "name"
     }
   ],
   "entityTableName": "sub_family",

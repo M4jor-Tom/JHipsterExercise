@@ -133,7 +133,7 @@
                 v-for="subFamilyOption in subFamilies"
                 :key="subFamilyOption.id"
               >
-                {{ subFamilyOption.id }}
+                {{ subFamilyOption.name }}
               </option>
             </select>
           </div>
@@ -151,7 +151,7 @@
                 v-for="brandOption in brands"
                 :key="brandOption.id"
               >
-                {{ brandOption.id }}
+                {{ brandOption.name }}
               </option>
             </select>
           </div>
@@ -169,7 +169,7 @@
                 v-for="sellerOption in sellers"
                 :key="sellerOption.id"
               >
-                {{ sellerOption.id }}
+                {{ sellerOption.email }}
               </option>
             </select>
           </div>
@@ -190,7 +190,7 @@
               v-model="product.tags"
             >
               <option v-bind:value="getSelected(product.tags, tagOption)" v-for="tagOption in tags" :key="tagOption.id">
-                {{ tagOption.id }}
+                {{ tagOption.name }}
               </option>
             </select>
           </div>
