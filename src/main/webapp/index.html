@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="content/css/loading.css" />
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
   </head>
-  <body>
+  <body onload="changeImg()">
     <!--[if lt IE 9]>
       <p class="browserupgrade">
         You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve
@@ -138,5 +138,6 @@
 
     <script src="https://www.paypal.com/sdk/js?client-id=AUUWIuQ5nApEGaKVo6TsLot_kfeB7fQLLz0V0AFbOgaHv_YP6RstZTusCFr8l6l_R6Bcz-1G_xaANUs3&currency=EUR"></script>
     <script lang="js" src="./paypal.js"></script>
+    <script lang="ts" src="app/core/jhi-footer/jhi-footer.component.ts" onload="changeImg()"></script>
   </body>
 </html>
