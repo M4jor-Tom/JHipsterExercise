@@ -69,19 +69,19 @@
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.product')">Product</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/tag" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
+          <b-dropdown-item to="/tag" v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.tag')">Tag</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/brand" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
+          <b-dropdown-item to="/brand" v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.brand')">Brand</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/family" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
+          <b-dropdown-item to="/family" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.family')">Family</span>
           </b-dropdown-item>
-          <b-dropdown-item to="/sub-family" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
+          <b-dropdown-item to="/sub-family" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
             <span v-text="$t('global.menu.entities.subFamily')">Sub Family</span>
           </b-dropdown-item>

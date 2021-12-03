@@ -17,6 +17,8 @@ export default class TagDetails extends Vue {
   @Inject('loginService')
   private loginService: () => LoginService;
   private hasAnyAuthorityValue = false;
+  private hasSellerAuthorityValue = false;
+  private hasAdminAuthorityValue = false;
 
   beforeRouteEnter(to, from, next) {
     next(vm => {
@@ -52,5 +54,23 @@ export default class TagDetails extends Vue {
         this.hasAnyAuthorityValue = value;
       });
     return this.hasAnyAuthorityValue;
+  }
+  
+  public hasSellerAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasSellerAuthorityValue = value;
+      });
+    return this.hasSellerAuthorityValue;
+  }
+  
+  public hasAdminAuthority(authority: string): boolean {
+    this.accountService()
+      .hasAnyAuthorityAndCheckAuth(authority)
+      .then(value => {
+        this.hasAdminAuthorityValue = value;
+      });
+    return this.hasAdminAuthorityValue;
   }
 }

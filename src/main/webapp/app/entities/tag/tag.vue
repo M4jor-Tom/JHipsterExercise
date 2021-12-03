@@ -9,7 +9,7 @@
         </button>
         <router-link :to="{ name: 'TagCreate' }" custom v-slot="{ navigate }">
           <button
-            v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+            v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
             @click="navigate"
             id="jh-create-entity"
             data-cy="entityCreateButton"
@@ -56,7 +56,7 @@
                 </router-link>
                 <router-link :to="{ name: 'TagEdit', params: { tagId: tag.id } }" custom v-slot="{ navigate }">
                   <button
-                    v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+                    v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
                     @click="navigate"
                     class="btn btn-primary btn-sm edit"
                     data-cy="entityEditButton"
@@ -66,7 +66,7 @@
                   </button>
                 </router-link>
                 <b-button
-                  v-if="hasAnyAuthority('ROLE_ADMIN') && authenticated"
+                  v-if="(hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')) && authenticated"
                   v-on:click="prepareRemove(tag)"
                   variant="danger"
                   class="btn btn-sm"
