@@ -28,6 +28,7 @@ export default class Product extends Vue {
   public isFetching = false;
   public propOrder = 'id';
   public reverse = false;
+  public filtered = '';
 
   public mounted(): void {
     this.retrieveAllProducts();

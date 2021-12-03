@@ -20,6 +20,8 @@
           </button>
         </router-link>
       </div>
+      <span v-text="$t('Filter')">Filter</span> <input type="text" v-model="filtered" class="form-control" />
+      
     </h2>
     <br />
     <div class="alert alert-warning" v-if="!isFetching && products && products.length === 0">
@@ -77,7 +79,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in products" :key="product.id" data-cy="entityTable">
+          <tr v-for="product in orderBy(filterBy(products, filtered), propOrder, reverse === true ? 1 : -1)" :key="product.id" data-cy="entityTable">
             <td>
               <router-link :to="{ name: 'ProductView', params: { productId: product.id } }">{{ product.id }}</router-link>
             </td>
