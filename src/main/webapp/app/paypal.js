@@ -6,7 +6,7 @@ paypal
         purchase_units: [
           {
             amount: {
-              value: '1',
+              value: '300000',
             },
           },
         ],
