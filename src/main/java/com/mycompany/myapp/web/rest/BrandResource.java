@@ -2,9 +2,6 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Brand;
 import com.mycompany.myapp.repository.BrandRepository;
-import com.mycompany.myapp.service.BrandQueryService;
-import com.mycompany.myapp.service.BrandService;
-import com.mycompany.myapp.service.criteria.BrandCriteria;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,9 +13,15 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -26,6 +29,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
+@Transactional
 public class BrandResource {
 
     private final Logger log = LoggerFactory.getLogger(BrandResource.class);
@@ -35,16 +39,10 @@ public class BrandResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final BrandService brandService;
-
     private final BrandRepository brandRepository;
 
-    private final BrandQueryService brandQueryService;
-
-    public BrandResource(BrandService brandService, BrandRepository brandRepository, BrandQueryService brandQueryService) {
-        this.brandService = brandService;
+    public BrandResource(BrandRepository brandRepository) {
         this.brandRepository = brandRepository;
-        this.brandQueryService = brandQueryService;
     }
 
     /**
@@ -60,7 +58,7 @@ public class BrandResource {
         if (brand.getId() != null) {
             throw new BadRequestAlertException("A new brand cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Brand result = brandService.save(brand);
+        Brand result = brandRepository.save(brand);
         return ResponseEntity
             .created(new URI("/api/brands/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -92,7 +90,7 @@ public class BrandResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Brand result = brandService.save(brand);
+        Brand result = brandRepository.save(brand);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, brand.getId().toString()))
@@ -127,7 +125,16 @@ public class BrandResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Brand> result = brandService.partialUpdate(brand);
+        Optional<Brand> result = brandRepository
+            .findById(brand.getId())
+            .map(existingBrand -> {
+                if (brand.getName() != null) {
+                    existingBrand.setName(brand.getName());
+                }
+
+                return existingBrand;
+            })
+            .map(brandRepository::save);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -138,26 +145,14 @@ public class BrandResource {
     /**
      * {@code GET  /brands} : get all the brands.
      *
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of brands in body.
      */
     @GetMapping("/brands")
-    public ResponseEntity<List<Brand>> getAllBrands(BrandCriteria criteria) {
-        log.debug("REST request to get Brands by criteria: {}", criteria);
-        List<Brand> entityList = brandQueryService.findByCriteria(criteria);
-        return ResponseEntity.ok().body(entityList);
-    }
-
-    /**
-     * {@code GET  /brands/count} : count all the brands.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/brands/count")
-    public ResponseEntity<Long> countBrands(BrandCriteria criteria) {
-        log.debug("REST request to count Brands by criteria: {}", criteria);
-        return ResponseEntity.ok().body(brandQueryService.countByCriteria(criteria));
+    public ResponseEntity<List<Brand>> getAllFamilies(Pageable pageable) {
+        log.debug("REST request to get all Families");
+        Page<Brand> page = brandRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**
@@ -169,7 +164,7 @@ public class BrandResource {
     @GetMapping("/brands/{id}")
     public ResponseEntity<Brand> getBrand(@PathVariable Long id) {
         log.debug("REST request to get Brand : {}", id);
-        Optional<Brand> brand = brandService.findOne(id);
+        Optional<Brand> brand = brandRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(brand);
     }
 
@@ -182,7 +177,7 @@ public class BrandResource {
     @DeleteMapping("/brands/{id}")
     public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
         log.debug("REST request to delete Brand : {}", id);
-        brandService.delete(id);
+        brandRepository.deleteById(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

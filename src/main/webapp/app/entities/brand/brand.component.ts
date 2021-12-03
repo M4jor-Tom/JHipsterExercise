@@ -28,6 +28,7 @@ export default class Brand extends Vue {
 
   public propOrder = 'id';
   public reverse = false;
+  public filtered = '';
 
   public mounted(): void {
     this.retrieveAllBrands();
