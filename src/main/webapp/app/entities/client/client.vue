@@ -19,6 +19,8 @@
             <span v-text="$t('jHipsterExerciseApp.client.home.createLabel')"> Create a new Client </span>
           </button>
         </router-link>
+        <span v-text="$t('Filter')">Filter</span> <input type="text" v-model="filtered" class="form-control" />
+        
       </div>
     </h2>
     <br />
