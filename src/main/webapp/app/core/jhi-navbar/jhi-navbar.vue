@@ -67,6 +67,7 @@
             v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasSellerAuthority('ROLE_SELLER')"
           >
             <font-awesome-icon icon="asterisk" />
+            <span v-text="$t('global.menu.entities.product')">Product</span>
           </b-dropdown-item>
           <b-dropdown-item to="/tag" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
             <font-awesome-icon icon="asterisk" />

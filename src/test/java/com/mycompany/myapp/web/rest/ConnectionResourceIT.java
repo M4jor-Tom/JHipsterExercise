@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Connection;
 import com.mycompany.myapp.repository.ConnectionRepository;
+import com.mycompany.myapp.service.criteria.ConnectionCriteria;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -178,6 +179,219 @@ class ConnectionResourceIT {
             .andExpect(jsonPath("$.id").value(connection.getId().intValue()))
             .andExpect(jsonPath("$.username").value(DEFAULT_USERNAME))
             .andExpect(jsonPath("$.password").value(DEFAULT_PASSWORD));
+    }
+
+    @Test
+    @Transactional
+    void getConnectionsByIdFiltering() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        Long id = connection.getId();
+
+        defaultConnectionShouldBeFound("id.equals=" + id);
+        defaultConnectionShouldNotBeFound("id.notEquals=" + id);
+
+        defaultConnectionShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultConnectionShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultConnectionShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultConnectionShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByUsernameIsEqualToSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where username equals to DEFAULT_USERNAME
+        defaultConnectionShouldBeFound("username.equals=" + DEFAULT_USERNAME);
+
+        // Get all the connectionList where username equals to UPDATED_USERNAME
+        defaultConnectionShouldNotBeFound("username.equals=" + UPDATED_USERNAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByUsernameIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where username not equals to DEFAULT_USERNAME
+        defaultConnectionShouldNotBeFound("username.notEquals=" + DEFAULT_USERNAME);
+
+        // Get all the connectionList where username not equals to UPDATED_USERNAME
+        defaultConnectionShouldBeFound("username.notEquals=" + UPDATED_USERNAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByUsernameIsInShouldWork() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where username in DEFAULT_USERNAME or UPDATED_USERNAME
+        defaultConnectionShouldBeFound("username.in=" + DEFAULT_USERNAME + "," + UPDATED_USERNAME);
+
+        // Get all the connectionList where username equals to UPDATED_USERNAME
+        defaultConnectionShouldNotBeFound("username.in=" + UPDATED_USERNAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByUsernameIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where username is not null
+        defaultConnectionShouldBeFound("username.specified=true");
+
+        // Get all the connectionList where username is null
+        defaultConnectionShouldNotBeFound("username.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByUsernameContainsSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where username contains DEFAULT_USERNAME
+        defaultConnectionShouldBeFound("username.contains=" + DEFAULT_USERNAME);
+
+        // Get all the connectionList where username contains UPDATED_USERNAME
+        defaultConnectionShouldNotBeFound("username.contains=" + UPDATED_USERNAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByUsernameNotContainsSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where username does not contain DEFAULT_USERNAME
+        defaultConnectionShouldNotBeFound("username.doesNotContain=" + DEFAULT_USERNAME);
+
+        // Get all the connectionList where username does not contain UPDATED_USERNAME
+        defaultConnectionShouldBeFound("username.doesNotContain=" + UPDATED_USERNAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByPasswordIsEqualToSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where password equals to DEFAULT_PASSWORD
+        defaultConnectionShouldBeFound("password.equals=" + DEFAULT_PASSWORD);
+
+        // Get all the connectionList where password equals to UPDATED_PASSWORD
+        defaultConnectionShouldNotBeFound("password.equals=" + UPDATED_PASSWORD);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByPasswordIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where password not equals to DEFAULT_PASSWORD
+        defaultConnectionShouldNotBeFound("password.notEquals=" + DEFAULT_PASSWORD);
+
+        // Get all the connectionList where password not equals to UPDATED_PASSWORD
+        defaultConnectionShouldBeFound("password.notEquals=" + UPDATED_PASSWORD);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByPasswordIsInShouldWork() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where password in DEFAULT_PASSWORD or UPDATED_PASSWORD
+        defaultConnectionShouldBeFound("password.in=" + DEFAULT_PASSWORD + "," + UPDATED_PASSWORD);
+
+        // Get all the connectionList where password equals to UPDATED_PASSWORD
+        defaultConnectionShouldNotBeFound("password.in=" + UPDATED_PASSWORD);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByPasswordIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where password is not null
+        defaultConnectionShouldBeFound("password.specified=true");
+
+        // Get all the connectionList where password is null
+        defaultConnectionShouldNotBeFound("password.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByPasswordContainsSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where password contains DEFAULT_PASSWORD
+        defaultConnectionShouldBeFound("password.contains=" + DEFAULT_PASSWORD);
+
+        // Get all the connectionList where password contains UPDATED_PASSWORD
+        defaultConnectionShouldNotBeFound("password.contains=" + UPDATED_PASSWORD);
+    }
+
+    @Test
+    @Transactional
+    void getAllConnectionsByPasswordNotContainsSomething() throws Exception {
+        // Initialize the database
+        connectionRepository.saveAndFlush(connection);
+
+        // Get all the connectionList where password does not contain DEFAULT_PASSWORD
+        defaultConnectionShouldNotBeFound("password.doesNotContain=" + DEFAULT_PASSWORD);
+
+        // Get all the connectionList where password does not contain UPDATED_PASSWORD
+        defaultConnectionShouldBeFound("password.doesNotContain=" + UPDATED_PASSWORD);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultConnectionShouldBeFound(String filter) throws Exception {
+        restConnectionMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(connection.getId().intValue())))
+            .andExpect(jsonPath("$.[*].username").value(hasItem(DEFAULT_USERNAME)))
+            .andExpect(jsonPath("$.[*].password").value(hasItem(DEFAULT_PASSWORD)));
+
+        // Check, that the count call also returns 1
+        restConnectionMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultConnectionShouldNotBeFound(String filter) throws Exception {
+        restConnectionMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restConnectionMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

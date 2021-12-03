@@ -6,8 +6,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
+import com.mycompany.myapp.domain.Connection;
+import com.mycompany.myapp.domain.Product;
 import com.mycompany.myapp.domain.Seller;
 import com.mycompany.myapp.repository.SellerRepository;
+import com.mycompany.myapp.service.criteria.SellerCriteria;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,6 +43,7 @@ class SellerResourceIT {
 
     private static final Long DEFAULT_PHONE = 1L;
     private static final Long UPDATED_PHONE = 2L;
+    private static final Long SMALLER_PHONE = 1L - 1L;
 
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
@@ -223,6 +227,534 @@ class SellerResourceIT {
             .andExpect(jsonPath("$.siretNumber").value(DEFAULT_SIRET_NUMBER))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.intValue()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL));
+    }
+
+    @Test
+    @Transactional
+    void getSellersByIdFiltering() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        Long id = seller.getId();
+
+        defaultSellerShouldBeFound("id.equals=" + id);
+        defaultSellerShouldNotBeFound("id.notEquals=" + id);
+
+        defaultSellerShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultSellerShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultSellerShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultSellerShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySocialReasonIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where socialReason equals to DEFAULT_SOCIAL_REASON
+        defaultSellerShouldBeFound("socialReason.equals=" + DEFAULT_SOCIAL_REASON);
+
+        // Get all the sellerList where socialReason equals to UPDATED_SOCIAL_REASON
+        defaultSellerShouldNotBeFound("socialReason.equals=" + UPDATED_SOCIAL_REASON);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySocialReasonIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where socialReason not equals to DEFAULT_SOCIAL_REASON
+        defaultSellerShouldNotBeFound("socialReason.notEquals=" + DEFAULT_SOCIAL_REASON);
+
+        // Get all the sellerList where socialReason not equals to UPDATED_SOCIAL_REASON
+        defaultSellerShouldBeFound("socialReason.notEquals=" + UPDATED_SOCIAL_REASON);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySocialReasonIsInShouldWork() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where socialReason in DEFAULT_SOCIAL_REASON or UPDATED_SOCIAL_REASON
+        defaultSellerShouldBeFound("socialReason.in=" + DEFAULT_SOCIAL_REASON + "," + UPDATED_SOCIAL_REASON);
+
+        // Get all the sellerList where socialReason equals to UPDATED_SOCIAL_REASON
+        defaultSellerShouldNotBeFound("socialReason.in=" + UPDATED_SOCIAL_REASON);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySocialReasonIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where socialReason is not null
+        defaultSellerShouldBeFound("socialReason.specified=true");
+
+        // Get all the sellerList where socialReason is null
+        defaultSellerShouldNotBeFound("socialReason.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySocialReasonContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where socialReason contains DEFAULT_SOCIAL_REASON
+        defaultSellerShouldBeFound("socialReason.contains=" + DEFAULT_SOCIAL_REASON);
+
+        // Get all the sellerList where socialReason contains UPDATED_SOCIAL_REASON
+        defaultSellerShouldNotBeFound("socialReason.contains=" + UPDATED_SOCIAL_REASON);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySocialReasonNotContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where socialReason does not contain DEFAULT_SOCIAL_REASON
+        defaultSellerShouldNotBeFound("socialReason.doesNotContain=" + DEFAULT_SOCIAL_REASON);
+
+        // Get all the sellerList where socialReason does not contain UPDATED_SOCIAL_REASON
+        defaultSellerShouldBeFound("socialReason.doesNotContain=" + UPDATED_SOCIAL_REASON);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByAddressIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where address equals to DEFAULT_ADDRESS
+        defaultSellerShouldBeFound("address.equals=" + DEFAULT_ADDRESS);
+
+        // Get all the sellerList where address equals to UPDATED_ADDRESS
+        defaultSellerShouldNotBeFound("address.equals=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByAddressIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where address not equals to DEFAULT_ADDRESS
+        defaultSellerShouldNotBeFound("address.notEquals=" + DEFAULT_ADDRESS);
+
+        // Get all the sellerList where address not equals to UPDATED_ADDRESS
+        defaultSellerShouldBeFound("address.notEquals=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByAddressIsInShouldWork() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where address in DEFAULT_ADDRESS or UPDATED_ADDRESS
+        defaultSellerShouldBeFound("address.in=" + DEFAULT_ADDRESS + "," + UPDATED_ADDRESS);
+
+        // Get all the sellerList where address equals to UPDATED_ADDRESS
+        defaultSellerShouldNotBeFound("address.in=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByAddressIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where address is not null
+        defaultSellerShouldBeFound("address.specified=true");
+
+        // Get all the sellerList where address is null
+        defaultSellerShouldNotBeFound("address.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByAddressContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where address contains DEFAULT_ADDRESS
+        defaultSellerShouldBeFound("address.contains=" + DEFAULT_ADDRESS);
+
+        // Get all the sellerList where address contains UPDATED_ADDRESS
+        defaultSellerShouldNotBeFound("address.contains=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByAddressNotContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where address does not contain DEFAULT_ADDRESS
+        defaultSellerShouldNotBeFound("address.doesNotContain=" + DEFAULT_ADDRESS);
+
+        // Get all the sellerList where address does not contain UPDATED_ADDRESS
+        defaultSellerShouldBeFound("address.doesNotContain=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySiretNumberIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where siretNumber equals to DEFAULT_SIRET_NUMBER
+        defaultSellerShouldBeFound("siretNumber.equals=" + DEFAULT_SIRET_NUMBER);
+
+        // Get all the sellerList where siretNumber equals to UPDATED_SIRET_NUMBER
+        defaultSellerShouldNotBeFound("siretNumber.equals=" + UPDATED_SIRET_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySiretNumberIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where siretNumber not equals to DEFAULT_SIRET_NUMBER
+        defaultSellerShouldNotBeFound("siretNumber.notEquals=" + DEFAULT_SIRET_NUMBER);
+
+        // Get all the sellerList where siretNumber not equals to UPDATED_SIRET_NUMBER
+        defaultSellerShouldBeFound("siretNumber.notEquals=" + UPDATED_SIRET_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySiretNumberIsInShouldWork() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where siretNumber in DEFAULT_SIRET_NUMBER or UPDATED_SIRET_NUMBER
+        defaultSellerShouldBeFound("siretNumber.in=" + DEFAULT_SIRET_NUMBER + "," + UPDATED_SIRET_NUMBER);
+
+        // Get all the sellerList where siretNumber equals to UPDATED_SIRET_NUMBER
+        defaultSellerShouldNotBeFound("siretNumber.in=" + UPDATED_SIRET_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySiretNumberIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where siretNumber is not null
+        defaultSellerShouldBeFound("siretNumber.specified=true");
+
+        // Get all the sellerList where siretNumber is null
+        defaultSellerShouldNotBeFound("siretNumber.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySiretNumberContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where siretNumber contains DEFAULT_SIRET_NUMBER
+        defaultSellerShouldBeFound("siretNumber.contains=" + DEFAULT_SIRET_NUMBER);
+
+        // Get all the sellerList where siretNumber contains UPDATED_SIRET_NUMBER
+        defaultSellerShouldNotBeFound("siretNumber.contains=" + UPDATED_SIRET_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersBySiretNumberNotContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where siretNumber does not contain DEFAULT_SIRET_NUMBER
+        defaultSellerShouldNotBeFound("siretNumber.doesNotContain=" + DEFAULT_SIRET_NUMBER);
+
+        // Get all the sellerList where siretNumber does not contain UPDATED_SIRET_NUMBER
+        defaultSellerShouldBeFound("siretNumber.doesNotContain=" + UPDATED_SIRET_NUMBER);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone equals to DEFAULT_PHONE
+        defaultSellerShouldBeFound("phone.equals=" + DEFAULT_PHONE);
+
+        // Get all the sellerList where phone equals to UPDATED_PHONE
+        defaultSellerShouldNotBeFound("phone.equals=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone not equals to DEFAULT_PHONE
+        defaultSellerShouldNotBeFound("phone.notEquals=" + DEFAULT_PHONE);
+
+        // Get all the sellerList where phone not equals to UPDATED_PHONE
+        defaultSellerShouldBeFound("phone.notEquals=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsInShouldWork() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone in DEFAULT_PHONE or UPDATED_PHONE
+        defaultSellerShouldBeFound("phone.in=" + DEFAULT_PHONE + "," + UPDATED_PHONE);
+
+        // Get all the sellerList where phone equals to UPDATED_PHONE
+        defaultSellerShouldNotBeFound("phone.in=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone is not null
+        defaultSellerShouldBeFound("phone.specified=true");
+
+        // Get all the sellerList where phone is null
+        defaultSellerShouldNotBeFound("phone.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone is greater than or equal to DEFAULT_PHONE
+        defaultSellerShouldBeFound("phone.greaterThanOrEqual=" + DEFAULT_PHONE);
+
+        // Get all the sellerList where phone is greater than or equal to UPDATED_PHONE
+        defaultSellerShouldNotBeFound("phone.greaterThanOrEqual=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone is less than or equal to DEFAULT_PHONE
+        defaultSellerShouldBeFound("phone.lessThanOrEqual=" + DEFAULT_PHONE);
+
+        // Get all the sellerList where phone is less than or equal to SMALLER_PHONE
+        defaultSellerShouldNotBeFound("phone.lessThanOrEqual=" + SMALLER_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsLessThanSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone is less than DEFAULT_PHONE
+        defaultSellerShouldNotBeFound("phone.lessThan=" + DEFAULT_PHONE);
+
+        // Get all the sellerList where phone is less than UPDATED_PHONE
+        defaultSellerShouldBeFound("phone.lessThan=" + UPDATED_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByPhoneIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where phone is greater than DEFAULT_PHONE
+        defaultSellerShouldNotBeFound("phone.greaterThan=" + DEFAULT_PHONE);
+
+        // Get all the sellerList where phone is greater than SMALLER_PHONE
+        defaultSellerShouldBeFound("phone.greaterThan=" + SMALLER_PHONE);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByEmailIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where email equals to DEFAULT_EMAIL
+        defaultSellerShouldBeFound("email.equals=" + DEFAULT_EMAIL);
+
+        // Get all the sellerList where email equals to UPDATED_EMAIL
+        defaultSellerShouldNotBeFound("email.equals=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByEmailIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where email not equals to DEFAULT_EMAIL
+        defaultSellerShouldNotBeFound("email.notEquals=" + DEFAULT_EMAIL);
+
+        // Get all the sellerList where email not equals to UPDATED_EMAIL
+        defaultSellerShouldBeFound("email.notEquals=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByEmailIsInShouldWork() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where email in DEFAULT_EMAIL or UPDATED_EMAIL
+        defaultSellerShouldBeFound("email.in=" + DEFAULT_EMAIL + "," + UPDATED_EMAIL);
+
+        // Get all the sellerList where email equals to UPDATED_EMAIL
+        defaultSellerShouldNotBeFound("email.in=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByEmailIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where email is not null
+        defaultSellerShouldBeFound("email.specified=true");
+
+        // Get all the sellerList where email is null
+        defaultSellerShouldNotBeFound("email.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByEmailContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where email contains DEFAULT_EMAIL
+        defaultSellerShouldBeFound("email.contains=" + DEFAULT_EMAIL);
+
+        // Get all the sellerList where email contains UPDATED_EMAIL
+        defaultSellerShouldNotBeFound("email.contains=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByEmailNotContainsSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+
+        // Get all the sellerList where email does not contain DEFAULT_EMAIL
+        defaultSellerShouldNotBeFound("email.doesNotContain=" + DEFAULT_EMAIL);
+
+        // Get all the sellerList where email does not contain UPDATED_EMAIL
+        defaultSellerShouldBeFound("email.doesNotContain=" + UPDATED_EMAIL);
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByConnectionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+        Connection connection;
+        if (TestUtil.findAll(em, Connection.class).isEmpty()) {
+            connection = ConnectionResourceIT.createEntity(em);
+            em.persist(connection);
+            em.flush();
+        } else {
+            connection = TestUtil.findAll(em, Connection.class).get(0);
+        }
+        em.persist(connection);
+        em.flush();
+        seller.setConnection(connection);
+        sellerRepository.saveAndFlush(seller);
+        Long connectionId = connection.getId();
+
+        // Get all the sellerList where connection equals to connectionId
+        defaultSellerShouldBeFound("connectionId.equals=" + connectionId);
+
+        // Get all the sellerList where connection equals to (connectionId + 1)
+        defaultSellerShouldNotBeFound("connectionId.equals=" + (connectionId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllSellersByProductIsEqualToSomething() throws Exception {
+        // Initialize the database
+        sellerRepository.saveAndFlush(seller);
+        Product product;
+        if (TestUtil.findAll(em, Product.class).isEmpty()) {
+            product = ProductResourceIT.createEntity(em);
+            em.persist(product);
+            em.flush();
+        } else {
+            product = TestUtil.findAll(em, Product.class).get(0);
+        }
+        em.persist(product);
+        em.flush();
+        seller.addProduct(product);
+        sellerRepository.saveAndFlush(seller);
+        Long productId = product.getId();
+
+        // Get all the sellerList where product equals to productId
+        defaultSellerShouldBeFound("productId.equals=" + productId);
+
+        // Get all the sellerList where product equals to (productId + 1)
+        defaultSellerShouldNotBeFound("productId.equals=" + (productId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultSellerShouldBeFound(String filter) throws Exception {
+        restSellerMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(seller.getId().intValue())))
+            .andExpect(jsonPath("$.[*].socialReason").value(hasItem(DEFAULT_SOCIAL_REASON)))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].siretNumber").value(hasItem(DEFAULT_SIRET_NUMBER)))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.intValue())))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
+
+        // Check, that the count call also returns 1
+        restSellerMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultSellerShouldNotBeFound(String filter) throws Exception {
+        restSellerMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restSellerMockMvc
+            .perform(get(ENTITY_API_URL + "/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
     }
 
     @Test

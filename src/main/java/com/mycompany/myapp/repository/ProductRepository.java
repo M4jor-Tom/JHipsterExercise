@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
  * Spring Data SQL repository for the Product entity.
  */
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
     @Query(
         value = "select distinct product from Product product left join fetch product.tags",
         countQuery = "select count(distinct product) from Product product"
