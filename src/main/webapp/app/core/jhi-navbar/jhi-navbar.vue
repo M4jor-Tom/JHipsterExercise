@@ -30,26 +30,22 @@
         <b-nav-item to="/" exact>
           <span>
             <font-awesome-icon icon="home" />
-            <span v-text="$t('global.menu.home')">Home</span>
           </span>
         </b-nav-item>
         <b-nav-item to="/list_produit" exact>
           <span>
             <font-awesome-icon icon="gifts" />
-            <span v-text="$t('global.menu.list_product')">Home</span>
           </span>
         </b-nav-item>
         <b-nav-item to="/cart" exact>
           <span>
             <font-awesome-icon icon="shopping-bag" />
-            <span v-text="$t('global.menu.cart')">Home</span>
           </span>
         </b-nav-item>
         
         <b-nav-item-dropdown right id="entity-menu" v-if="authenticated" active-class="active" class="pointer" data-cy="entity">
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="th-list" />
-            <span class="no-bold" v-text="$t('global.menu.entities.main')">Entities</span>
           </span>
           <b-dropdown-item to="/client" v-if="hasAdminAuthority('ROLE_ADMIN')">
             <font-awesome-icon icon="asterisk" />
@@ -71,7 +67,6 @@
             v-if="hasAdminAuthority('ROLE_ADMIN') || hasUserAuthority('ROLE_USER') || hasSellerAuthority('ROLE_SELLER')"
           >
             <font-awesome-icon icon="asterisk" />
-            <span v-text="$t('global.menu.entities.product')">Product</span>
           </b-dropdown-item>
           <b-dropdown-item to="/tag" v-if="hasAdminAuthority('ROLE_ADMIN') || hasSellerAuthority('ROLE_SELLER')">
             <font-awesome-icon icon="asterisk" />
@@ -106,7 +101,6 @@
         >
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="users-cog" />
-            <span class="no-bold" v-text="$t('global.menu.admin.main')">Administration</span>
           </span>
           <b-dropdown-item to="/admin/user-management" active-class="active">
             <font-awesome-icon icon="users" />
@@ -140,7 +134,6 @@
         <b-nav-item-dropdown id="languagesnavBarDropdown" right v-if="languages && Object.keys(languages).length > 1">
           <span slot="button-content">
             <font-awesome-icon icon="flag" />
-            <span class="no-bold" v-text="$t('global.menu.language')">Language</span>
           </span>
           <b-dropdown-item
             v-for="(value, key) in languages"
@@ -162,7 +155,6 @@
         >
           <span slot="button-content" class="navbar-dropdown-menu">
             <font-awesome-icon icon="user" />
-            <span class="no-bold" v-text="$t('global.menu.account.main')"> Account </span>
           </span>
           <b-dropdown-item data-cy="settings" to="/account/settings" tag="b-dropdown-item" v-if="authenticated" active-class="active">
             <font-awesome-icon icon="wrench" />
