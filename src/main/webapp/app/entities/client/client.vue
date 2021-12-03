@@ -88,7 +88,7 @@
             <td>
               <div v-if="client.connection">
                 <router-link :to="{ name: 'ConnectionView', params: { connectionId: client.connection.id } }">{{
-                  client.connection.id
+                  client.connection.username
                 }}</router-link>
               </div>
             </td>

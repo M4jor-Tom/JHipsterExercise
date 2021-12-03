@@ -17,7 +17,7 @@
             <column name="sum" type="double">
                 <constraints nullable="true" />
             </column>
-            <column name="delivey_adress" type="varchar(255)">
+            <column name="delivery_adress" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="delivery_date_time" type="${datetimeType}">
@@ -72,7 +72,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="sum" type="numeric"/>
-            <column name="delivey_adress" type="string"/>
+            <column name="delivery_adress" type="string"/>
             <column name="delivery_date_time" type="date"/>
             <column name="quantity" type="numeric"/>
             <column name="billing_method" type="string"/>

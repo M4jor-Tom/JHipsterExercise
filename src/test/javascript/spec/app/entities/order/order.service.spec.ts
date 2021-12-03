@@ -99,7 +99,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             sum: 1,
-            deliveyAdress: 'BBBBBB',
+            deliveryAdress: 'BBBBBB',
             deliveryDateTime: dayjs(currentDate).format(DATE_TIME_FORMAT),
             quantity: 1,
             billingMethod: 'BBBBBB',
@@ -171,7 +171,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             sum: 1,
-            deliveyAdress: 'BBBBBB',
+            deliveryAdress: 'BBBBBB',
             deliveryDateTime: dayjs(currentDate).format(DATE_TIME_FORMAT),
             quantity: 1,
             billingMethod: 'BBBBBB',

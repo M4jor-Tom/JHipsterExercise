@@ -165,7 +165,7 @@
                 v-for="connectionOption in connections"
                 :key="connectionOption.id"
               >
-                {{ connectionOption.id }}
+                {{ connectionOption.username }}
               </option>
             </select>
           </div>

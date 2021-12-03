@@ -6,7 +6,7 @@
       "fieldType": "Double"
     },
     {
-      "fieldName": "deliveyAdress",
+      "fieldName": "deliveryAdress",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
@@ -39,6 +39,7 @@
       "otherEntityName": "product",
       "otherEntityRelationshipName": "order",
       "relationshipName": "products",
+      "otherEntityField": "modelName",
       "ownerSide": true
     },
     {
@@ -51,8 +52,8 @@
   "entityTableName": "jhi_order",
   "dto": "no",
   "pagination": "no",
-  "service": "no",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

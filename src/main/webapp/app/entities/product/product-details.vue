@@ -48,7 +48,7 @@
           <dd>
             <div v-if="product.subFamily">
               <router-link :to="{ name: 'SubFamilyView', params: { subFamilyId: product.subFamily.id } }">{{
-                product.subFamily.id
+                product.subFamily.name
               }}</router-link>
             </div>
           </dd>
@@ -57,7 +57,7 @@
           </dt>
           <dd>
             <div v-if="product.brand">
-              <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.id }}</router-link>
+              <router-link :to="{ name: 'BrandView', params: { brandId: product.brand.id } }">{{ product.brand.name }}</router-link>
             </div>
           </dd>
           <dt>
@@ -65,7 +65,7 @@
           </dt>
           <dd>
             <div v-if="product.seller">
-              <router-link :to="{ name: 'SellerView', params: { sellerId: product.seller.id } }">{{ product.seller.id }}</router-link>
+              <router-link :to="{ name: 'SellerView', params: { sellerId: product.seller.id } }">{{ product.seller.email }}</router-link>
             </div>
           </dd>
           <dt>
@@ -74,7 +74,7 @@
           <dd>
             <span v-for="(tags, i) in product.tags" :key="tags.id"
               >{{ i > 0 ? ', ' : '' }}
-              <router-link :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.id }}</router-link>
+              <router-link :to="{ name: 'TagView', params: { tagId: tags.id } }">{{ tags.name }}</router-link>
             </span>
           </dd>
         </dl>

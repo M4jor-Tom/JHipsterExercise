@@ -13,14 +13,15 @@
       "otherEntityName": "family",
       "otherEntityRelationshipName": "subFamily",
       "relationshipValidateRules": "required",
-      "relationshipName": "family"
+      "relationshipName": "family",
+      "otherEntityField": "name"
     }
   ],
   "entityTableName": "sub_family",
   "dto": "no",
   "pagination": "no",
-  "service": "no",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

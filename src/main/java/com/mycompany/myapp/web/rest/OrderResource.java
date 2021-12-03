@@ -2,6 +2,9 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Order;
 import com.mycompany.myapp.repository.OrderRepository;
+import com.mycompany.myapp.service.OrderQueryService;
+import com.mycompany.myapp.service.OrderService;
+import com.mycompany.myapp.service.criteria.OrderCriteria;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,15 +16,9 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -29,7 +26,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class OrderResource {
 
     private final Logger log = LoggerFactory.getLogger(OrderResource.class);
@@ -39,10 +35,16 @@ public class OrderResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final OrderService orderService;
+
     private final OrderRepository orderRepository;
 
-    public OrderResource(OrderRepository orderRepository) {
+    private final OrderQueryService orderQueryService;
+
+    public OrderResource(OrderService orderService, OrderRepository orderRepository, OrderQueryService orderQueryService) {
+        this.orderService = orderService;
         this.orderRepository = orderRepository;
+        this.orderQueryService = orderQueryService;
     }
 
     /**
@@ -58,7 +60,7 @@ public class OrderResource {
         if (order.getId() != null) {
             throw new BadRequestAlertException("A new order cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Order result = orderRepository.save(order);
+        Order result = orderService.save(order);
         return ResponseEntity
             .created(new URI("/api/orders/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -90,7 +92,7 @@ public class OrderResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Order result = orderRepository.save(order);
+        Order result = orderService.save(order);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, order.getId().toString()))
@@ -125,31 +127,7 @@ public class OrderResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Order> result = orderRepository
-            .findById(order.getId())
-            .map(existingOrder -> {
-                if (order.getSum() != null) {
-                    existingOrder.setSum(order.getSum());
-                }
-                if (order.getDeliveyAdress() != null) {
-                    existingOrder.setDeliveyAdress(order.getDeliveyAdress());
-                }
-                if (order.getDeliveryDateTime() != null) {
-                    existingOrder.setDeliveryDateTime(order.getDeliveryDateTime());
-                }
-                if (order.getQuantity() != null) {
-                    existingOrder.setQuantity(order.getQuantity());
-                }
-                if (order.getBillingMethod() != null) {
-                    existingOrder.setBillingMethod(order.getBillingMethod());
-                }
-                if (order.getOrderState() != null) {
-                    existingOrder.setOrderState(order.getOrderState());
-                }
-
-                return existingOrder;
-            })
-            .map(orderRepository::save);
+        Optional<Order> result = orderService.partialUpdate(order);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -160,15 +138,26 @@ public class OrderResource {
     /**
      * {@code GET  /orders} : get all the orders.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of orders in body.
      */
     @GetMapping("/orders")
-    public ResponseEntity<List<Order>> getAllOrders(Pageable pageable) {
-        log.debug("REST request to get all Orders");
-        Page<Order> page = orderRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<Order>> getAllOrders(OrderCriteria criteria) {
+        log.debug("REST request to get Orders by criteria: {}", criteria);
+        List<Order> entityList = orderQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /orders/count} : count all the orders.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/orders/count")
+    public ResponseEntity<Long> countOrders(OrderCriteria criteria) {
+        log.debug("REST request to count Orders by criteria: {}", criteria);
+        return ResponseEntity.ok().body(orderQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -180,7 +169,7 @@ public class OrderResource {
     @GetMapping("/orders/{id}")
     public ResponseEntity<Order> getOrder(@PathVariable Long id) {
         log.debug("REST request to get Order : {}", id);
-        Optional<Order> order = orderRepository.findOneWithEagerRelationships(id);
+        Optional<Order> order = orderService.findOne(id);
         return ResponseUtil.wrapOrNotFound(order);
     }
 
@@ -193,7 +182,7 @@ public class OrderResource {
     @DeleteMapping("/orders/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         log.debug("REST request to delete Order : {}", id);
-        orderRepository.deleteById(id);
+        orderService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

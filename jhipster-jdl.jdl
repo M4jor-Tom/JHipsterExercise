@@ -11,10 +11,12 @@ entity Client {
     country String required,
     postalCode String required
 }
+service * with serviceClass
+filter *
 // Table contenant le détail de la commande
 entity Order {
 	sum Double,
-    deliveyAdress String required,
+    deliveryAdress String required,
     deliveryDateTime ZonedDateTime required,
     quantity Long required,
     billingMethod BillingMethod required
@@ -82,30 +84,28 @@ entity SubFamily {
 }
 
 relationship ManyToMany {
-	Product{tags} to Tag{products}
+	Product{tags(name)} to Tag{products(modelName)}
     
     
-    Order{products} to Product{order}
+    Order{products(modelName)} to Product{order(deliveryDateTime)}
 }
 
 relationship ManyToOne {
-	Product{subFamily required} to SubFamily
+	Product{subFamily(name) required} to SubFamily
     
-    SubFamily{family required} to Family
+    SubFamily{family(name) required} to Family
     
-    Product{brand required} to Brand
+    Product{brand(name) required} to Brand
     
-	Product{Seller required} to Seller{product}
+	Product{Seller(email) required} to Seller{product(modelName)}
 }
 
 relationship OneToMany {
-	Client{order} to Order
+	Client{order(deliveryDateTime)} to Order
 }
 
 relationship OneToOne {
-	Client{connection} to Connection
+	Client{connection(username)} to Connection
     
-	Seller{connection} to Connection
+	Seller{connection(username)} to Connection
 }
-
-

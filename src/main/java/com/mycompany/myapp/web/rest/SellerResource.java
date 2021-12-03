@@ -2,6 +2,9 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Seller;
 import com.mycompany.myapp.repository.SellerRepository;
+import com.mycompany.myapp.service.SellerQueryService;
+import com.mycompany.myapp.service.SellerService;
+import com.mycompany.myapp.service.criteria.SellerCriteria;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -24,7 +26,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class SellerResource {
 
     private final Logger log = LoggerFactory.getLogger(SellerResource.class);
@@ -34,10 +35,16 @@ public class SellerResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final SellerService sellerService;
+
     private final SellerRepository sellerRepository;
 
-    public SellerResource(SellerRepository sellerRepository) {
+    private final SellerQueryService sellerQueryService;
+
+    public SellerResource(SellerService sellerService, SellerRepository sellerRepository, SellerQueryService sellerQueryService) {
+        this.sellerService = sellerService;
         this.sellerRepository = sellerRepository;
+        this.sellerQueryService = sellerQueryService;
     }
 
     /**
@@ -53,7 +60,7 @@ public class SellerResource {
         if (seller.getId() != null) {
             throw new BadRequestAlertException("A new seller cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Seller result = sellerRepository.save(seller);
+        Seller result = sellerService.save(seller);
         return ResponseEntity
             .created(new URI("/api/sellers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -87,7 +94,7 @@ public class SellerResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Seller result = sellerRepository.save(seller);
+        Seller result = sellerService.save(seller);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, seller.getId().toString()))
@@ -122,28 +129,7 @@ public class SellerResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Seller> result = sellerRepository
-            .findById(seller.getId())
-            .map(existingSeller -> {
-                if (seller.getSocialReason() != null) {
-                    existingSeller.setSocialReason(seller.getSocialReason());
-                }
-                if (seller.getAddress() != null) {
-                    existingSeller.setAddress(seller.getAddress());
-                }
-                if (seller.getSiretNumber() != null) {
-                    existingSeller.setSiretNumber(seller.getSiretNumber());
-                }
-                if (seller.getPhone() != null) {
-                    existingSeller.setPhone(seller.getPhone());
-                }
-                if (seller.getEmail() != null) {
-                    existingSeller.setEmail(seller.getEmail());
-                }
-
-                return existingSeller;
-            })
-            .map(sellerRepository::save);
+        Optional<Seller> result = sellerService.partialUpdate(seller);
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -154,12 +140,26 @@ public class SellerResource {
     /**
      * {@code GET  /sellers} : get all the sellers.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of sellers in body.
      */
     @GetMapping("/sellers")
-    public List<Seller> getAllSellers() {
-        log.debug("REST request to get all Sellers");
-        return sellerRepository.findAll();
+    public ResponseEntity<List<Seller>> getAllSellers(SellerCriteria criteria) {
+        log.debug("REST request to get Sellers by criteria: {}", criteria);
+        List<Seller> entityList = sellerQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /sellers/count} : count all the sellers.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/sellers/count")
+    public ResponseEntity<Long> countSellers(SellerCriteria criteria) {
+        log.debug("REST request to count Sellers by criteria: {}", criteria);
+        return ResponseEntity.ok().body(sellerQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -171,7 +171,7 @@ public class SellerResource {
     @GetMapping("/sellers/{id}")
     public ResponseEntity<Seller> getSeller(@PathVariable Long id) {
         log.debug("REST request to get Seller : {}", id);
-        Optional<Seller> seller = sellerRepository.findById(id);
+        Optional<Seller> seller = sellerService.findOne(id);
         return ResponseUtil.wrapOrNotFound(seller);
     }
 
@@ -184,7 +184,7 @@ public class SellerResource {
     @DeleteMapping("/sellers/{id}")
     public ResponseEntity<Void> deleteSeller(@PathVariable Long id) {
         log.debug("REST request to delete Seller : {}", id);
-        sellerRepository.deleteById(id);
+        sellerService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

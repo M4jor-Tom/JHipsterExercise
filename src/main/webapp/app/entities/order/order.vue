@@ -37,9 +37,9 @@
               <span v-text="$t('global.field.sum')">Sum</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'sum'"></jhi-sort-indicator>
             </th>
-            <th scope="col" v-on:click="changeOrder('deliveyAdress')">
-              <span v-text="$t('jHipsterExerciseApp.order.deliveyAdress')">deliveyAdress</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'deliveyAdress'"></jhi-sort-indicator>
+            <th scope="col" v-on:click="changeOrder('deliveryAdress')">
+              <span v-text="$t('jHipsterExerciseApp.order.deliveryAdress')">deliveryAdress</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'deliveryAdress'"></jhi-sort-indicator>
             </th>
             <th scope="col" v-on:click="changeOrder('deliveryDateTime')">
               <span v-text="$t('jHipsterExerciseApp.order.deliveryDateTime')">deliveryDateTime</span>
@@ -70,7 +70,7 @@
               <router-link :to="{ name: 'OrderView', params: { orderId: order.id } }">{{ order.id }}</router-link>
             </td>
             <td>{{ order.sum }}</td>
-            <td>{{ order.deliveyAdress }}</td>
+            <td>{{ order.deliveryAdress }}</td>
             <td>{{ order.deliveryDateTime ? $d(Date.parse(order.deliveryDateTime), 'short') : '' }}</td>
             <td>{{ order.quantity }}</td>
             <td v-text="$t('jHipsterExerciseApp.BillingMethod.' + order.billingMethod)">{{ order.billingMethod }}</td>
@@ -79,7 +79,7 @@
               <span v-for="(products, i) in order.products" :key="products.id"
                 >{{ i > 0 ? ', ' : '' }}
                 <router-link class="form-control-static" :to="{ name: 'ProductView', params: { productId: products.id } }">{{
-                  products.id
+                  products.modelName
                 }}</router-link>
               </span>
             </td>

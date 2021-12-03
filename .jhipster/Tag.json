@@ -13,14 +13,15 @@
       "otherEntityName": "product",
       "otherEntityRelationshipName": "tags",
       "relationshipName": "products",
+      "otherEntityField": "modelName",
       "ownerSide": false
     }
   ],
   "entityTableName": "tag",
   "dto": "no",
   "pagination": "no",
-  "service": "no",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,

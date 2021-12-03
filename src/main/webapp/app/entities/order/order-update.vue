@@ -27,21 +27,21 @@
             />
           </div>
           <div class="form-group">
-            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.order.deliveyAdress')" for="order-deliveyAdress"
-              >Delivey Adress</label
+            <label class="form-control-label" v-text="$t('jHipsterExerciseApp.order.deliveryAdress')" for="order-deliveryAdress"
+              >Delivery Adress</label
             >
             <input
               type="text"
               class="form-control"
-              name="deliveyAdress"
-              id="order-deliveyAdress"
-              data-cy="deliveyAdress"
-              :class="{ valid: !$v.order.deliveyAdress.$invalid, invalid: $v.order.deliveyAdress.$invalid }"
-              v-model="$v.order.deliveyAdress.$model"
+              name="deliveryAdress"
+              id="order-deliveryAdress"
+              data-cy="deliveryAdress"
+              :class="{ valid: !$v.order.deliveryAdress.$invalid, invalid: $v.order.deliveryAdress.$invalid }"
+              v-model="$v.order.deliveryAdress.$model"
               required
             />
-            <div v-if="$v.order.deliveyAdress.$anyDirty && $v.order.deliveyAdress.$invalid">
-              <small class="form-text text-danger" v-if="!$v.order.deliveyAdress.required" v-text="$t('entity.validation.required')">
+            <div v-if="$v.order.deliveryAdress.$anyDirty && $v.order.deliveryAdress.$invalid">
+              <small class="form-text text-danger" v-if="!$v.order.deliveryAdress.required" v-text="$t('entity.validation.required')">
                 This field is required.
               </small>
             </div>
@@ -163,7 +163,7 @@
               v-model="order.products"
             >
               <option v-bind:value="getSelected(order.products, productOption)" v-for="productOption in products" :key="productOption.id">
-                {{ productOption.id }}
+                {{ productOption.modelName }}
               </option>
             </select>
           </div>
