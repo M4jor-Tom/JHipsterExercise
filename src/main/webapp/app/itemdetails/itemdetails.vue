@@ -8,7 +8,7 @@
         <p class="text">Wonderful Ferrari 458.</p>
 
         <div class="imgBx">
-          <img src="/content/images/ferrari458.png" />
+          <img src="/content/images/product/1.png" />
         </div>
         <div class="contentBx">
             <h2>Ferrari 458</h2>

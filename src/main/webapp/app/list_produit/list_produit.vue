@@ -38,7 +38,9 @@
           <p class="text">{{product.description}}.</p>
 
           <div class="imgBx">
+          <a href="http://localhost:8080/ItemDetails">
             <img :src="'/content/images/product/' + product.id + '.png'" />
+            </a>
           </div>
           <div class="contentBx">
             <h2>{{product.brandNameWithModelName}}</h2>

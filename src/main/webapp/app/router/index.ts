@@ -12,6 +12,7 @@ const Paypal = () => import('@/core/paypal/paypal.vue');
 const LoginServlet = () => import('@/core/loginServlet/loginServlet.vue')
 const Adyen = () => import('@/core/adyen/adyen.vue')
 const Error = () => import('@/core/error/error.vue');
+const ItemDetails = () => import('@/itemdetails/itemdetails.vue');
 import account from '@/router/account';
 import admin from '@/router/admin';
 import entities from '@/router/entities';
@@ -58,6 +59,11 @@ export default new Router({
       name: 'NotFound',
       component: Error,
       meta: { error404: true }
+    },
+    {
+      path: '/ItemDetails',
+      name: 'ItemDetails',
+      component: ItemDetails
     },
     ...account,
     ...admin,
