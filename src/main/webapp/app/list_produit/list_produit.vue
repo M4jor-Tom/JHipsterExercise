@@ -16,9 +16,13 @@
         <div class="dropdown categ">
           <button class="dropbtn" style="font-size:20px"> Categorie :</button>
           <div class="dropdown-content">
-            <a href="http://localhost:8080/list_produit?cat=enfant"> Enfant </a>
+            <a :href="'http://localhost:8080/list_produit?cat=' + family.name" 
+            v-for="family in families" :key="family.id" :id="family.name" >
+             {{family.name}} </a>
+
+           <!-- <a href="http://localhost:8080/list_produit?cat=enfant"> Enfant </a>
             <a href="http://localhost:8080/list_produit?cat=adulte"> Adulte </a>
-            <a href="http://localhost:8080/list_produit?cat=alcool"> Alcool </a>
+            <a href="http://localhost:8080/list_produit?cat=alcool"> Alcool </a>-->
           </div>
         </div> 
 
@@ -52,7 +56,9 @@
                 <span></span>
                 <span></span>
             </div>
-            <button>Add to Cart</button>
+            <div id="example">
+              <button @click="AddCart(product)">Add to cart</button>
+            </div>
           </div>
 
         </div>
@@ -66,6 +72,7 @@
 
   
 </template>
+
 
 <script>
 export default {
