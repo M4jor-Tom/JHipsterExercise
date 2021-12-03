@@ -22,7 +22,7 @@
                                           <div class="aside" v-show="product.modelName">
                                               <img  :src="'/content/images/product/' + product.id + '.png'" class="img-sm">
                                           </div>
-                                          <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">{{ product.modelName }}</a>
+                                          <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">{{ product.brandNameWithModelName }}</a>
                                                    <!--<p class="small text-muted">SIZE:M <br> Brand: Cantabil</p>-->
                                           </figcaption>
                                       </figure>
