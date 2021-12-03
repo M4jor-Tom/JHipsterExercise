@@ -153,5 +153,9 @@
     "name": "Name",
     "email": "Email",
     "message": "Message"
-  }
+  },
+  "search": "Search...",
+  "search2": "Search",
+  "cate": "Category :",
+  "addCart": "Add to cart"
 }

@@ -2,7 +2,7 @@
   <div >
 
     <div class="img_banniere">
-        <img src="/content/images/home/Noel_banniere.png" />
+        <img src="/content/images/home/Noel_banniere.jpg" />
     </div>
     <div> 
       <p class="customfont" style="text-align: center; font-size:100px;"> Un Noel pour tous</p>      

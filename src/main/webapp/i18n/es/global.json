@@ -152,5 +152,9 @@
     "name": "Nombre",
     "email": "Correo electrónico",
     "message": "Mensaje"
-  }
+  },
+  "search": "Buscar...",
+  "search2": "Buscar",
+  "cate": "Categoría",
+  "addCart" :"Añadir a la cesta"
 }

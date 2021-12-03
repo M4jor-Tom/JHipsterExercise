@@ -28,10 +28,10 @@
 }
 .container .card {
   position: relative;
-  /*width: 320px;
-  height: 450px;*/
-  width: 250px;
-  height: 350px;
+  width: 320px;
+  height: 450px;
+  /*width: 280px;
+  height: 380px;*/
   border-radius: 20px;
   background: linear-gradient(315deg, #ffffff, #e0f2f9);
   box-shadow: -20px -20px 25px #dcf4fd, 20px 20px 25px #E5E5E5;
@@ -78,7 +78,7 @@
 }
 .container .card:hover .imgBx {
   top: 0%;
-  transform: translateY(-25%);
+  transform: translateY(0%);
 }
 .container .card .imgBx img {
   position: absolute;
@@ -128,7 +128,7 @@
 }
 .container .card .contentBx .size h3,
 .container .card .contentBx .color h3 {
-  color: #fff;
+  color: black;
   font-weight: 300;
   font-size: 14px;
   text-transform: uppercase;
@@ -196,7 +196,7 @@
   position: absolute;
   top: 1em;
   left: 1em;
-  color: #fff;
+  color: black;
   cursor: pointer;
   z-index: 300;
 }
