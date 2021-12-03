@@ -18,6 +18,7 @@ export interface IProduct {
   seller?: ISeller;
   tags?: ITag[] | null;
   orders?: IOrder[] | null;
+  brandNameWithModelName?: string;
 }
 
 export class Product implements IProduct {

@@ -76,6 +76,10 @@ public class Product implements Serializable {
     @JsonIgnoreProperties(value = { "products", "client" }, allowSetters = true)
     private Set<Order> orders = new HashSet<>();
 
+    public String getBrandNameWithModelName() {
+        return getBrand().getName() + " " + getModelName();
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
